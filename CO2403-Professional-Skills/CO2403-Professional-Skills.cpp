@@ -1,6 +1,7 @@
 // CO2403-Professional-Skills.cpp: A program using the TL-Engine
 
 #include <TL-Engine.h>	// TL-Engine include file and namespace
+#include "CPlayer.h"
 using namespace tle;
 
 void main()
@@ -13,7 +14,7 @@ void main()
 	myEngine->AddMediaFolder( "C:\\ProgramData\\TL-Engine\\Media" );
 
 	/**** Set up your scene here ****/
-
+	CPlayer* pThePlayer = new CPlayer();
 
 	// The main game loop, repeat until engine is stopped
 	while (myEngine->IsRunning())
@@ -24,6 +25,8 @@ void main()
 		/**** Update your scene each frame here ****/
 
 	}
+	// Cleanup
+	delete pThePlayer;
 
 	// Delete the 3D engine now we are finished with it
 	myEngine->Delete();
