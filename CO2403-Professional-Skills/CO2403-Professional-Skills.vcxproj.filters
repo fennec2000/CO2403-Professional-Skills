@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="CO2403-Professional-Skills.cpp" />
+    <ClCompile Include="CBaseSpritecpp.cpp">
+      <Filter>SpriteSystem</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Maths">
+      <UniqueIdentifier>{6836e862-7900-4c73-aca4-56d534d0c8b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpriteSystem">
+      <UniqueIdentifier>{8406cb94-c179-497e-a54c-775165d5094a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SVector2D.h">
+      <Filter>Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="SVector3D.h">
+      <Filter>Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="CUISprite.h">
+      <Filter>SpriteSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CWorldSprite.h">
+      <Filter>SpriteSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="BUILD_ORDER.h" />
+    <ClInclude Include="CBaseSprite.h">
+      <Filter>SpriteSystem</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
