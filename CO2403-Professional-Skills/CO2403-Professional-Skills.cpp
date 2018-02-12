@@ -1,8 +1,10 @@
 // CO2403-Professional-Skills.cpp: A program using the TL-Engine
 
 #include "BUILD_ORDER.h"
-#include "CPlayer.h"
+#include "CPlayer.h"	// the player class
+#include "CCore.h"		// singleton class
 using namespace tle;
+
 
 // Tempory Keys
 EKeyCode G_PAN_FORWARDS = Key_W;
@@ -19,16 +21,22 @@ const float G_UI_MOVE_SPEED = 10.0f;
 
 void main()
 {
-	// Create a 3D engine (using TLX engine here) and open a window for it
-	I3DEngine* myEngine = New3DEngine( kTLX );
-	myEngine->StartWindowed();
+	// Creat core
+	CCore* c = CCore::getInstance();
 
-	// Add default folder for meshes and other media
-	//myEngine->AddMediaFolder( "C:\\ProgramData\\TL-Engine\\Media" );
-	myEngine->AddMediaFolder( "TestMedia" );
+	// Create a 3D engine (using TLX engine here) and open a window for it
+	I3DEngine* myEngine = c->getTLEngine();
 
 	/**** Set up your scene here ****/
+	// Player
 	CPlayer* pThePlayer = new CPlayer();
+	// Player test values
+	float playerPos[3] = { 4.9f, 8.0f, 5.0f };
+	float move = 0.1f;
+	pThePlayer->SetPos(playerPos[0], playerPos[1], playerPos[2]);
+
+
+	// Camera
 	ICamera* myCamera = myEngine->CreateCamera(kManual);
 	myCamera->RotateX(90.0f);
 	myCamera->SetPosition(5.0f, 10.0f, 5.0f);
@@ -54,6 +62,29 @@ void main()
 
 		/**** Update your scene each frame here ****/
 
+		// player testing
+		if (myEngine->KeyHeld(Key_Numpad4))
+			playerPos[0] -= move;
+		if (myEngine->KeyHeld(Key_Numpad7))
+			playerPos[0] += move;
+		if (myEngine->KeyHeld(Key_Numpad5))
+			playerPos[1] -= move;
+		if (myEngine->KeyHeld(Key_Numpad8))
+			playerPos[1] += move;
+		if (myEngine->KeyHeld(Key_Numpad6))
+			playerPos[2] -= move;
+		if (myEngine->KeyHeld(Key_Numpad9))
+			playerPos[2] += move;
+		if (myEngine->KeyHeld(Key_Numpad0))
+			cout << "pos: " << playerPos[0] << ", " << playerPos[1] << ", " << playerPos[2] << endl;
+
+		pThePlayer->SetPos(playerPos[0], playerPos[1], playerPos[2]);
+		//pThePlayer->SetLookAt(playerPos[0], playerPos[1] + 1.0f, playerPos[2]);
+		pThePlayer->SetLookAt(myCamera);
+		pThePlayer->SetScale(0.1f);
+
+
+		// keybindings for camera
 		if (myEngine->KeyHeld(G_PAN_FORWARDS))
 		{
 			myCamera->MoveZ(G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);

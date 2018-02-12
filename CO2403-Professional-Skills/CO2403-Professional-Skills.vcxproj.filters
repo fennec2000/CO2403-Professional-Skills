@@ -11,6 +11,13 @@
     <ClCompile Include="CBaseSprite.cpp">
       <Filter>SpriteSystem</Filter>
     </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Charactor</Filter>
+    </ClCompile>
+    <ClCompile Include="CCharacter.cpp">
+      <Filter>Charactor</Filter>
+    </ClCompile>
+    <ClCompile Include="CCore.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -21,6 +28,9 @@
     </Filter>
     <Filter Include="SpriteSystem">
       <UniqueIdentifier>{8406cb94-c179-497e-a54c-775165d5094a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Charactor">
+      <UniqueIdentifier>{ca7f58a1-8b8f-4e63-831d-94a8a0ee4cea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,5 +50,12 @@
     <ClInclude Include="CBaseSprite.h">
       <Filter>SpriteSystem</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Charactor</Filter>
+    </ClInclude>
+    <ClInclude Include="CCharacter.h">
+      <Filter>Charactor</Filter>
+    </ClInclude>
+    <ClInclude Include="CCore.h" />
   </ItemGroup>
 </Project>
