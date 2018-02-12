@@ -8,11 +8,13 @@ EKeyCode G_PAN_FORWARDS = Key_W;
 EKeyCode G_PAN_BACKWARDS = Key_S;
 EKeyCode G_PAN_RIGHT = Key_D;
 EKeyCode G_PAN_LEFT = Key_A;
+EKeyCode G_PAN_OUT = Key_E;
+EKeyCode G_PAN_IN = Key_Q;
 EKeyCode G_EXIT = Key_Escape;
 
 // Tempory speed
 const float G_GAME_SPEED = 1.0f;
-const float G_UI_MOVE_SPEED = 250.0f;
+const float G_UI_MOVE_SPEED = 10.0f;
 
 void main()
 {
@@ -21,11 +23,24 @@ void main()
 	myEngine->StartWindowed();
 
 	// Add default folder for meshes and other media
-	myEngine->AddMediaFolder( "C:\\ProgramData\\TL-Engine\\Media" );
+	//myEngine->AddMediaFolder( "C:\\ProgramData\\TL-Engine\\Media" );
 	myEngine->AddMediaFolder( "TestMedia" );
 
 	/**** Set up your scene here ****/
-	CUISprite* artUI = new CUISprite(myEngine, "AnArt.png", { 20.0f, 50.0f } );
+	ICamera* myCamera = myEngine->CreateCamera(kManual);
+	myCamera->RotateX(90.0f);
+	myCamera->SetPosition(5.0f, 10.0f, 5.0f);
+
+	// Creates test sprites
+	CWorldSprite* pWorldSprite; // for testing delete;
+	const int testAmount = 10;
+	for (int i = 0; i < testAmount; i++)
+	{
+		for (int j = 0; j < testAmount; j++)
+		{
+			pWorldSprite = new CWorldSprite(myEngine, "TestGrass.png", { static_cast<float>(i), 0.5f, static_cast<float>(j) });
+		}
+	}
 
 	float deltaTime;
 	// The main game loop, repeat until engine is stopped
@@ -39,19 +54,35 @@ void main()
 
 		if (myEngine->KeyHeld(G_PAN_FORWARDS))
 		{
-			artUI->MoveY(G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
+			myCamera->MoveZ(G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
 		}
 		else if (myEngine->KeyHeld(G_PAN_BACKWARDS))
 		{
-			artUI->MoveY(-G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
+			myCamera->MoveZ(-G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
 		}
 		if (myEngine->KeyHeld(G_PAN_RIGHT))
 		{
-			artUI->MoveX(G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
+			myCamera->MoveX(G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
 		}
 		else if (myEngine->KeyHeld(G_PAN_LEFT))
 		{
-			artUI->MoveX(-G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
+			myCamera->MoveX(-G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
+		}
+		if (myEngine->KeyHeld(G_PAN_IN))
+		{
+			myCamera->MoveY(-G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
+		}
+		else if (myEngine->KeyHeld(G_PAN_OUT))
+		{
+			myCamera->MoveY(G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
+			std::cout << myCamera->GetY() << std::endl;
+		}
+
+		// For testing if sprites can be deleted;
+		if (myEngine->KeyHit(Key_9) && pWorldSprite != nullptr)
+		{
+			delete pWorldSprite;
+			pWorldSprite = nullptr;
 		}
 
 		if (myEngine->KeyHit(G_EXIT))

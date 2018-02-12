@@ -1,3 +1,7 @@
+// CUISprite.h 12-02-2018
+// William John Atkin WJAtkin@UCLan.ac.uk
+
+
 #pragma once
 #include "BUILD_ORDER.h"
 
@@ -37,8 +41,4 @@ private:
 
 	// This UIs sprite
 	tle::ISprite* mpSprite;
-
-	// Z position that the UI will default to if one
-	// is not specifiyed
-	const float DEFAULT_Z_POS = 0.5f;
 };

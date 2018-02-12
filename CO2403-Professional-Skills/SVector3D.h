@@ -1,4 +1,8 @@
+// SVector3D.h 10-02-2018
+// William John Atkin WJAtkin@UCLan.ac.uk
+
 #pragma once
+#include "BUILD_ORDER.h"
 
 template <class T>
 struct SVector3D
