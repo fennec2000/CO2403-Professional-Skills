@@ -125,8 +125,10 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CBaseSpritecpp.cpp" />
+    <ClCompile Include="CBaseSprite.cpp" />
     <ClCompile Include="CO2403-Professional-Skills.cpp" />
+    <ClCompile Include="CUISprite.cpp" />
+    <ClCompile Include="CWorldSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

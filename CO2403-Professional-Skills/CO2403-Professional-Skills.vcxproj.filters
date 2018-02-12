@@ -2,7 +2,13 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="CO2403-Professional-Skills.cpp" />
-    <ClCompile Include="CBaseSpritecpp.cpp">
+    <ClCompile Include="CWorldSprite.cpp">
+      <Filter>SpriteSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CUISprite.cpp">
+      <Filter>SpriteSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CBaseSprite.cpp">
       <Filter>SpriteSystem</Filter>
     </ClCompile>
   </ItemGroup>

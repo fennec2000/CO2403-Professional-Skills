@@ -10,7 +10,7 @@ struct SVector3D
 };
 
 template <class T>
-SVector3D::SVector3D()
+SVector3D<T>::SVector3D()
 {
 	x = static_cast<T>(0);
 	y = static_cast<T>(0);
@@ -18,7 +18,7 @@ SVector3D::SVector3D()
 }
 
 template <class T>
-SVector3D::SVector3D(T newX, T newY, T newZ)
+SVector3D<T>::SVector3D(T newX, T newY, T newZ)
 {
 	x = newX;
 	y = newY;

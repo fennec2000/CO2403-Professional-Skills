@@ -1,4 +1,5 @@
 #pragma once
+#include "BUILD_ORDER.h"
 
 template <class T>
 struct SVector2D
@@ -10,14 +11,14 @@ struct SVector2D
 };
 
 template <class T>
-SVector2D::SVector2D()
+SVector2D<T>::SVector2D()
 {
 	x = static_cast<T>(0);
 	y = static_cast<T>(0);
 }
 
 template <class T>
-SVector2D::SVector2D(T newX, T newY)
+SVector2D<T>::SVector2D(T newX, T newY)
 {
 	x = newX;
 	y = newY;
