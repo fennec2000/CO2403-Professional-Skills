@@ -5,6 +5,7 @@ class CPlayer : public CCharacter
 {
 public:
 	CPlayer();
+	CPlayer(float x, float y, float z);
 	~CPlayer();
 };
 

@@ -5,6 +5,9 @@
 #include "CCore.h"		// singleton class
 using namespace tle;
 
+// global sprite layers floats
+enum ESpriteLayers { Floor, Enemy, Player, UI, NumOfESpriteLayers };
+const float G_SPRITE_LAYER_Y_POS[ESpriteLayers::NumOfESpriteLayers] = { 0.1f, 0.2f, 0.3f, 1.0f };
 
 // Tempory Keys
 EKeyCode G_PAN_FORWARDS = Key_W;
@@ -29,11 +32,8 @@ void main()
 
 	/**** Set up your scene here ****/
 	// Player
-	CPlayer* pThePlayer = new CPlayer();
+	CPlayer* pThePlayer = new CPlayer(0.0f, G_SPRITE_LAYER_Y_POS[ESpriteLayers::Player], 0.0f);
 	// Player test values
-	float playerPos[3] = { 4.9f, 8.0f, 5.0f };
-	float move = 0.1f;
-	pThePlayer->SetPos(playerPos[0], playerPos[1], playerPos[2]);
 
 
 	// Camera
@@ -48,7 +48,7 @@ void main()
 	{
 		for (int j = 0; j < testAmount; j++)
 		{
-			pWorldSprite = new CWorldSprite(myEngine, "TestGrass.png", { static_cast<float>(i), 0.5f, static_cast<float>(j) });
+			pWorldSprite = new CWorldSprite(myEngine, "TestGrass.png", { static_cast<float>(i), G_SPRITE_LAYER_Y_POS[ESpriteLayers::Floor], static_cast<float>(j) });
 		}
 	}
 
@@ -61,27 +61,6 @@ void main()
 		myEngine->DrawScene();
 
 		/**** Update your scene each frame here ****/
-
-		// player testing
-		if (myEngine->KeyHeld(Key_Numpad4))
-			playerPos[0] -= move;
-		if (myEngine->KeyHeld(Key_Numpad7))
-			playerPos[0] += move;
-		if (myEngine->KeyHeld(Key_Numpad5))
-			playerPos[1] -= move;
-		if (myEngine->KeyHeld(Key_Numpad8))
-			playerPos[1] += move;
-		if (myEngine->KeyHeld(Key_Numpad6))
-			playerPos[2] -= move;
-		if (myEngine->KeyHeld(Key_Numpad9))
-			playerPos[2] += move;
-		if (myEngine->KeyHeld(Key_Numpad0))
-			cout << "pos: " << playerPos[0] << ", " << playerPos[1] << ", " << playerPos[2] << endl;
-
-		pThePlayer->SetPos(playerPos[0], playerPos[1], playerPos[2]);
-		//pThePlayer->SetLookAt(playerPos[0], playerPos[1] + 1.0f, playerPos[2]);
-		pThePlayer->SetLookAt(myCamera);
-		pThePlayer->SetScale(0.1f);
 
 
 		// keybindings for camera
