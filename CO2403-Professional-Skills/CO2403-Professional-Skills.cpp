@@ -52,13 +52,12 @@ void main()
 		}
 	}
 
-	float deltaTime;
+	float* deltaTime = c->getFrameTimer();
 	// The main game loop, repeat until engine is stopped
 	while (myEngine->IsRunning())
 	{
-		// Draw the scene
-		deltaTime = myEngine->Timer();
-		myEngine->DrawScene();
+		// CCore update - this calls both draw frame and update frame time
+		c->UpdateCore();
 
 		/**** Update your scene each frame here ****/
 
@@ -66,27 +65,27 @@ void main()
 		// keybindings for camera
 		if (myEngine->KeyHeld(G_PAN_FORWARDS))
 		{
-			myCamera->MoveZ(G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
+			myCamera->MoveZ(G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
 		}
 		else if (myEngine->KeyHeld(G_PAN_BACKWARDS))
 		{
-			myCamera->MoveZ(-G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
+			myCamera->MoveZ(-G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
 		}
 		if (myEngine->KeyHeld(G_PAN_RIGHT))
 		{
-			myCamera->MoveX(G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
+			myCamera->MoveX(G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
 		}
 		else if (myEngine->KeyHeld(G_PAN_LEFT))
 		{
-			myCamera->MoveX(-G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
+			myCamera->MoveX(-G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
 		}
 		if (myEngine->KeyHeld(G_PAN_IN))
 		{
-			myCamera->MoveY(-G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
+			myCamera->MoveY(-G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
 		}
 		else if (myEngine->KeyHeld(G_PAN_OUT))
 		{
-			myCamera->MoveY(G_UI_MOVE_SPEED * deltaTime * G_GAME_SPEED);
+			myCamera->MoveY(G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
 			std::cout << myCamera->GetY() << std::endl;
 		}
 

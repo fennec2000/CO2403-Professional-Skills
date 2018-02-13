@@ -7,5 +7,8 @@ public:
 	CPlayer();
 	CPlayer(float x, float y, float z);
 	~CPlayer();
+
+	// public functions
+	void Update();
 };
 

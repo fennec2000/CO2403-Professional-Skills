@@ -7,21 +7,26 @@ using namespace tle;
 class CCore
 {
 private:
-	//Here will be the instance stored.
+	// Here will be the instance stored.
 	static CCore* mInstance;
 
 	// Stored data
-	I3DEngine* mTLEngine;
-	IMesh* mQuadMesh;
+	I3DEngine* mTLEngine;	// pointer to the tl engine
+	float mFrameTime;		// time between each frame
 
-	//Private constructor to prevent instancing.
+	// Private constructor to prevent instancing.
 	CCore();
 
 public:
 	//Static access method.
 	static CCore* getInstance();
 
-	// public functions
+	// Public functions
+	void UpdateCore();
+
+	// Getters
 	I3DEngine* getTLEngine() { return mTLEngine; };
-	IMesh* getQuadMesh() { return mQuadMesh; };
+	float* getFrameTimer() { return &mFrameTime; };
+
+	// Setters
 };

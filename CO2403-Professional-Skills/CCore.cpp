@@ -21,8 +21,11 @@ CCore::CCore()
 	// Engine settings
 	mTLEngine->StartWindowed();
 	mTLEngine->AddMediaFolder("TestMedia");
+}
 
-	// Setup extra data
-	mQuadMesh = mTLEngine->LoadMesh("quad.x");
-	//mQuadMesh = mTLEngine->LoadMesh("cube.x");
+void CCore::UpdateCore()
+{
+	// Draw the scene
+	mFrameTime = mTLEngine->Timer();	// update the frame timer
+	mTLEngine->DrawScene();				// draw the frame 
 }
