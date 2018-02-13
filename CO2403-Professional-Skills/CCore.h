@@ -1,5 +1,6 @@
 #pragma once
 #include "BUILD_ORDER.h"
+
 using namespace tle;
 // Core file
 // This holds data core to the game that needs to be passed arround

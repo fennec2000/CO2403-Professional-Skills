@@ -1,6 +1,8 @@
 // CO2403-Professional-Skills.cpp: A program using the TL-Engine
 
 #include "BUILD_ORDER.h"
+#include "CPlayer.h"	// the player class
+#include "CCore.h"		// singleton class
 using namespace tle;
 
 // global sprite layers floats
@@ -92,6 +94,7 @@ void main()
 			myEngine->Stop();
 		}
 	}
+  
 	// Cleanup
 	delete pThePlayer;
 	delete pWorldSprite;
