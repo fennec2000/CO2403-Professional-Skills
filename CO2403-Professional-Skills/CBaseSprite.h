@@ -10,14 +10,12 @@ protected:
 	SVector3D<float> mOrigin;
 	SVector3D<float> mOffset;
 
-	tle::I3DEngine* mpEngine;
-
 	// Z position that the UI will default to if one
 	// is not specifiyed
 	const float DEFAULT_Z_POS = 0.5f;
 
 	// Putting the constructer as protected prevents an instance
 	// of this object ever being created
-	CBaseSprite(tle::I3DEngine* pEngine);
+	CBaseSprite();
 
 };

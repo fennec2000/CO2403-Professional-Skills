@@ -4,24 +4,22 @@
 #include "BUILD_ORDER.h"
 
 // Constructers
-CUISprite::CUISprite(tle::I3DEngine* pEngine, const char* pSpriteName, SVector3D<float> position)
-	: CBaseSprite(pEngine)
+CUISprite::CUISprite(const char* pSpriteName, SVector3D<float> position)
 {
-	mpSprite = mpEngine->CreateSprite(pSpriteName, position.x, position.y, position.z);
+	mpSprite = CCore::getInstance()->getTLEngine()->CreateSprite(pSpriteName, position.x, position.y, position.z);
 	mOrigin = position;
 }
 
-CUISprite::CUISprite(tle::I3DEngine* pEngine, const char* pSpriteName, SVector2D<float> position)
-	: CBaseSprite(pEngine)
+CUISprite::CUISprite(const char* pSpriteName, SVector2D<float> position)
 {
-	mpSprite = mpEngine->CreateSprite(pSpriteName, position.x, position.y, DEFAULT_Z_POS);
+	mpSprite = CCore::getInstance()->getTLEngine()->CreateSprite(pSpriteName, position.x, position.y, DEFAULT_Z_POS);
 	mOrigin = { position.x, position.y, DEFAULT_Z_POS };
 }
 
 // Destructer
 CUISprite::~CUISprite()
 {
-	mpEngine->RemoveSprite(mpSprite);
+	CCore::getInstance()->getTLEngine()->RemoveSprite(mpSprite);
 }
 
 // For sprite movement

@@ -8,24 +8,24 @@ int CWorldSprite::mInstanceCount = 0;
 tle::IMesh* CWorldSprite::mpMesh = nullptr;
 
 // Constructers
-CWorldSprite::CWorldSprite(tle::I3DEngine* pEngine, const char* pSpriteName, SVector3D<float> position) : CBaseSprite(pEngine)
+CWorldSprite::CWorldSprite(const char* pSpriteName, SVector3D<float> position)
 {
 	// Sets the variables
-	mpEngine = pEngine;
 	mOrigin = { position.x, position.y, position.z };
 
 	// Checks if this is the first instance
 	if (mInstanceCount == 0)
 	{
 		// Loads the mesh in
-		mpMesh = mpEngine->LoadMesh(SPRITE_WORLD_MODEL);
+		mpMesh = CCore::getInstance()->getTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
 	}
 
 	// Creates the model
 	mpSpriteModel = mpMesh->CreateModel(mOrigin.x, mOrigin.y, mOrigin.z);
 
-	// Sets the size
-	mpSpriteModel->Scale(0.1f);
+	// Sets the size and rotates
+	mpSpriteModel->RotateX(90.0f);
+	//mpSpriteModel->Scale(0.1f);
 
 	// Sets the skin
 	mpSpriteModel->SetSkin(pSpriteName);
@@ -34,17 +34,16 @@ CWorldSprite::CWorldSprite(tle::I3DEngine* pEngine, const char* pSpriteName, SVe
 	mInstanceCount++;
 }
 
-CWorldSprite::CWorldSprite(tle::I3DEngine* pEngine, const char* pSpriteName, SVector2D<float> position) : CBaseSprite(pEngine)
+CWorldSprite::CWorldSprite(const char* pSpriteName, SVector2D<float> position)
 {
 	// Sets the variables
-	mpEngine = pEngine;
 	mOrigin = { position.x, position.y, DEFAULT_Z_POS };
 
 	// Checks if this is the first instance
 	if (mInstanceCount == 0)
 	{
 		// Loads the mesh in
-		mpMesh = mpEngine->LoadMesh(SPRITE_WORLD_MODEL);
+		mpMesh = CCore::getInstance()->getTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
 	}
 
 	// Creates the model
@@ -70,11 +69,54 @@ CWorldSprite::~CWorldSprite()
 	if (mInstanceCount == 1)
 	{
 		// Removes the mesh to finish clean up
-		mpEngine->RemoveMesh(mpMesh);
+		CCore::getInstance()->getTLEngine()->RemoveMesh(mpMesh);
 	}
 
 	// Decrementation
 	mInstanceCount--;
+}
+
+// Lookat functions
+void CWorldSprite::LookAt(tle::ISceneNode* target)
+{
+	LookAt(target->GetX(), target->GetY(), target->GetZ());
+}
+
+void CWorldSprite::LookAt(CWorldSprite* target)
+{
+	LookAt(target->GetX(), target->GetY(), target->GetZ());
+}
+
+void CWorldSprite::LookAt(SVector3D<float> target)
+{
+	LookAt(target.x, target.y, target.z);
+}
+
+void CWorldSprite::LookAt(float fX, float fY, float fZ)
+{
+	// Calculates matrix axes for this sprite
+	// Gets the facing (z) vector from positions
+	SVector3D<float> vectorZ = (SVector3D<float>(fX, fY, fZ) - GetPosition3D()).Normalised();
+	// Uses cross product to get the other axes
+	// Must be normalised first
+	SVector3D<float> vectorX = SVector3D<float>::CrossProduct(&maths::Y_AXIS_VECTOR, &vectorZ).Normalised();
+	SVector3D<float> vectorY = SVector3D<float>::CrossProduct(&vectorZ, &vectorX).Normalised();
+
+	// Builds the matrix from axes & position row by row
+	SMatrix4x4 dummyMat;
+	dummyMat.MakeIdentity();
+	dummyMat.SetRow(0, vectorX);
+	dummyMat.SetRow(1, vectorY);
+	dummyMat.SetRow(2, vectorZ);
+	dummyMat.SetRow(3, GetPosition3D());
+
+	// Sets the matrix of this sprite
+	mpSpriteModel->SetMatrix(&dummyMat.e00);
+
+	// Rotates the sprite by 180 on its local X and Z axis so 
+	// that it is facing the corect direction
+	mpSpriteModel->RotateLocalX(180.0f);
+	mpSpriteModel->RotateLocalZ(180.0f);
 }
 
 // For sprite movement

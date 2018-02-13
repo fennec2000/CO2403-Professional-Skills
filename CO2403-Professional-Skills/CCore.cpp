@@ -1,4 +1,4 @@
-#include "CCore.h"
+#include "BUILD_ORDER.h"
 
 // Setup instance
 CCore* CCore::mInstance = 0;

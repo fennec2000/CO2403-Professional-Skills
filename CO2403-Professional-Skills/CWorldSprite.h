@@ -8,10 +8,16 @@ class CWorldSprite : public CBaseSprite
 {
 public:
 	// Constructers
-	CWorldSprite(tle::I3DEngine* pEngine, const char* pSpriteName, SVector3D<float> position);
-	CWorldSprite(tle::I3DEngine* pEngine, const char* pSpriteName, SVector2D<float> position);
+	CWorldSprite(const char* pSpriteName, SVector3D<float> position);
+	CWorldSprite(const char* pSpriteName, SVector2D<float> position);
 	// Destructers
 	~CWorldSprite();
+
+	// Lookat functions
+	void LookAt(tle::ISceneNode* target);
+	void LookAt(CWorldSprite* target);
+	void LookAt(SVector3D<float> target);
+	void LookAt(float fX, float fY, float fZ);
 
 	// For sprite movement
 	// By translation
@@ -42,6 +48,6 @@ private:
 	static int mInstanceCount;
 	static tle::IMesh* mpMesh;
 
-	const char* SPRITE_WORLD_MODEL = "SpriteQuad.x";
+	const char* SPRITE_WORLD_MODEL = "quad.x";
 };
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "CCharacter.h"
+#include "BUILD_ORDER.h"
 
 class CPlayer : protected CCharacter
 {
