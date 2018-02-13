@@ -59,7 +59,11 @@ void main()
 		// CCore update - this calls both draw frame and update frame time
 		c->UpdateCore();
 
+		// player update
+		pThePlayer->Update();
+
 		/**** Update your scene each frame here ****/
+
 
 
 		// keybindings for camera
