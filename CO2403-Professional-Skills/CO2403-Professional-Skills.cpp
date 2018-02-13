@@ -14,8 +14,8 @@ EKeyCode G_PAN_FORWARDS = Key_W;
 EKeyCode G_PAN_BACKWARDS = Key_S;
 EKeyCode G_PAN_RIGHT = Key_D;
 EKeyCode G_PAN_LEFT = Key_A;
-EKeyCode G_PAN_OUT = Key_E;
-EKeyCode G_PAN_IN = Key_Q;
+EKeyCode G_PAN_OUT = Key_Q;
+EKeyCode G_PAN_IN = Key_E;
 EKeyCode G_EXIT = Key_Escape;
 
 // Tempory speed
@@ -41,16 +41,9 @@ void main()
 	myCamera->RotateX(90.0f);
 	myCamera->SetPosition(5.0f, 10.0f, 5.0f);
 
-	// Creates test sprites
-	CWorldSprite* pWorldSprite; // for testing delete;
-	const int testAmount = 10;
-	for (int i = 0; i < testAmount; i++)
-	{
-		for (int j = 0; j < testAmount; j++)
-		{
-			pWorldSprite = new CWorldSprite(myEngine, "TestGrass.png", { static_cast<float>(i), G_SPRITE_LAYER_Y_POS[ESpriteLayers::Floor], static_cast<float>(j) });
-		}
-	}
+	// Creates test sprite
+	CWorldSprite* pWorldSprite;
+	pWorldSprite = new CWorldSprite("UpArrow.png", { 1.0f, G_SPRITE_LAYER_Y_POS[ESpriteLayers::Floor], 1.0 });
 
 	float* deltaTime = c->getFrameTimer();
 	// The main game loop, repeat until engine is stopped
@@ -63,8 +56,6 @@ void main()
 		pThePlayer->Update();
 
 		/**** Update your scene each frame here ****/
-
-
 
 		// keybindings for camera
 		if (myEngine->KeyHeld(G_PAN_FORWARDS))
@@ -90,14 +81,12 @@ void main()
 		else if (myEngine->KeyHeld(G_PAN_OUT))
 		{
 			myCamera->MoveY(G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
-			std::cout << myCamera->GetY() << std::endl;
 		}
 
-		// For testing if sprites can be deleted;
-		if (myEngine->KeyHit(Key_9) && pWorldSprite != nullptr)
+		// For testing sprites look at;
+		if (myEngine->KeyHit(Key_9))
 		{
-			delete pWorldSprite;
-			pWorldSprite = nullptr;
+			pWorldSprite->LookAt(myCamera);
 		}
 
 		if (myEngine->KeyHit(G_EXIT))
@@ -105,8 +94,10 @@ void main()
 			myEngine->Stop();
 		}
 	}
+  
 	// Cleanup
 	delete pThePlayer;
+	delete pWorldSprite;
 
 	// Delete the 3D engine now we are finished with it
 	myEngine->Delete();

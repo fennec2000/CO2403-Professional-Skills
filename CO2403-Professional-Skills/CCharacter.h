@@ -1,6 +1,4 @@
 #pragma once
-#include <TL-Engine.h>
-#include "CCore.h"
 #include "BUILD_ORDER.h"
 // This class has the base functions that both the player and enemies have
 
