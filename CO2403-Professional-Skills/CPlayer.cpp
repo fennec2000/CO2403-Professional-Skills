@@ -1,12 +1,13 @@
 #include "BUILD_ORDER.h"
 
-CPlayer::CPlayer()
+CPlayer::CPlayer(EPlayers player)
 {
-
+	mpC->AddPlayer(player, *this);
 }
 
-CPlayer::CPlayer(float x, float y, float z)
+CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 {
+	mpC->AddPlayer(player, *this);
 	SetPosition(x, y, z);
 }
 

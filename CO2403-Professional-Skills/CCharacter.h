@@ -5,9 +5,9 @@
 class CCharacter
 {
 private:
-	CCore* mpC;
 
 protected:
+	CCore* mpC;
 	CWorldSprite* mpCharSprite;
 	tle::I3DEngine* mpTLEngine;
 	float* mpFrameTimer;

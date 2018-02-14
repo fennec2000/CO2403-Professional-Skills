@@ -6,20 +6,20 @@
 // Constructers
 CUISprite::CUISprite(const char* pSpriteName, SVector3D<float> position)
 {
-	mpSprite = CCore::getInstance()->getTLEngine()->CreateSprite(pSpriteName, position.x, position.y, position.z);
+	mpSprite = CCore::GetInstance()->GetTLEngine()->CreateSprite(pSpriteName, position.x, position.y, position.z);
 	mOrigin = position;
 }
 
 CUISprite::CUISprite(const char* pSpriteName, SVector2D<float> position)
 {
-	mpSprite = CCore::getInstance()->getTLEngine()->CreateSprite(pSpriteName, position.x, position.y, DEFAULT_Z_POS);
+	mpSprite = CCore::GetInstance()->GetTLEngine()->CreateSprite(pSpriteName, position.x, position.y, DEFAULT_Z_POS);
 	mOrigin = { position.x, position.y, DEFAULT_Z_POS };
 }
 
 // Destructer
 CUISprite::~CUISprite()
 {
-	CCore::getInstance()->getTLEngine()->RemoveSprite(mpSprite);
+	CCore::GetInstance()->GetTLEngine()->RemoveSprite(mpSprite);
 }
 
 // For sprite movement

@@ -25,14 +25,14 @@ const float G_UI_MOVE_SPEED = 10.0f;
 void main()
 {
 	// Creat core
-	CCore* c = CCore::getInstance();
+	CCore* c = CCore::GetInstance();
 
 	// Create a 3D engine (using TLX engine here) and open a window for it
-	I3DEngine* myEngine = c->getTLEngine();
+	I3DEngine* myEngine = c->GetTLEngine();
 
 	/**** Set up your scene here ****/
 	// Player
-	CPlayer* pThePlayer = new CPlayer(0.0f, 0.05f, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
+	CPlayer* pThePlayer = new CPlayer(EPlayers::Player1, 0.0f, 0.05f G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
 	// Player test values
 
 	// Camera
@@ -48,7 +48,7 @@ void main()
 		}
 	}
 
-	float* deltaTime = c->getFrameTimer();
+	float* deltaTime = c->GetFrameTimer();
 	// The main game loop, repeat until engine is stopped
 	while (myEngine->IsRunning())
 	{
