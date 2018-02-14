@@ -5,6 +5,10 @@ using namespace tle;
 // Core file
 // This holds data core to the game that needs to be passed arround
 
+class CPlayer;
+
+enum EPlayers { Player1, Player2, NumOfEPlayers };
+
 class CCore
 {
 private:
@@ -14,20 +18,24 @@ private:
 	// Stored data
 	I3DEngine* mTLEngine;	// pointer to the tl engine
 	float mFrameTime;		// time between each frame
+	CPlayer* mpPlayer[EPlayers::NumOfEPlayers];		// holds pointers to the players - possiable 2 player
+	// vector<enemies>		// holds a list of enemies
 
 	// Private constructor to prevent instancing.
 	CCore();
 
 public:
 	//Static access method.
-	static CCore* getInstance();
+	static CCore* GetInstance();
 
 	// Public functions
 	void UpdateCore();
 
 	// Getters
-	I3DEngine* getTLEngine() { return mTLEngine; };
-	float* getFrameTimer() { return &mFrameTime; };
+	I3DEngine* GetTLEngine() { return mTLEngine; };
+	float* GetFrameTimer() { return &mFrameTime; };
+	CPlayer* GetPlayer(EPlayers player) { return mpPlayer[player]; };
 
 	// Setters
+	void AddPlayer(EPlayers player, CPlayer &givenPlayer);
 };

@@ -17,15 +17,11 @@ CWorldSprite::CWorldSprite(const char* pSpriteName, SVector3D<float> position)
 	if (mInstanceCount == 0)
 	{
 		// Loads the mesh in
-		mpMesh = CCore::getInstance()->getTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
+		mpMesh = CCore::GetInstance()->GetTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
 	}
 
 	// Creates the model
 	mpSpriteModel = mpMesh->CreateModel(mOrigin.x, mOrigin.y, mOrigin.z);
-
-	// Sets the size and rotates
-	mpSpriteModel->RotateX(90.0f);
-	//mpSpriteModel->Scale(0.1f);
 
 	// Sets the skin
 	mpSpriteModel->SetSkin(pSpriteName);
@@ -43,14 +39,11 @@ CWorldSprite::CWorldSprite(const char* pSpriteName, SVector2D<float> position)
 	if (mInstanceCount == 0)
 	{
 		// Loads the mesh in
-		mpMesh = CCore::getInstance()->getTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
+		mpMesh = CCore::GetInstance()->GetTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
 	}
 
 	// Creates the model
 	mpSpriteModel = mpMesh->CreateModel(mOrigin.x, mOrigin.y, mOrigin.z);
-
-	// Sets the size
-	mpSpriteModel->Scale(0.1f);
 
 	// Sets the skin
 	mpSpriteModel->SetSkin(pSpriteName);
@@ -69,7 +62,7 @@ CWorldSprite::~CWorldSprite()
 	if (mInstanceCount == 1)
 	{
 		// Removes the mesh to finish clean up
-		CCore::getInstance()->getTLEngine()->RemoveMesh(mpMesh);
+		CCore::GetInstance()->GetTLEngine()->RemoveMesh(mpMesh);
 	}
 
 	// Decrementation
@@ -168,19 +161,22 @@ void CWorldSprite::SetPosition(SVector2D<float> moveAmount)
 
 void CWorldSprite::SetX(float newX)
 {
-	mOffset.x = newX;
+	mOffset.x = 0.0f;
+	mOrigin.x = newX;
 	mpSpriteModel->SetLocalX(mOrigin.x + mOffset.x);
 }
 
 void CWorldSprite::SetY(float newY)
 {
-	mOffset.y = newY;
+	mOffset.y = 0.0f;
+	mOrigin.y = newY;
 	mpSpriteModel->SetLocalY(mOrigin.y + mOffset.y);
 }
 
 void CWorldSprite::SetZ(float newZ)
 {
-	mOffset.z = newZ;
+	mOffset.z = 0.0f;
+	mOrigin.z = newZ;
 	mpSpriteModel->SetLocalZ(mOrigin.z + mOffset.z);
 }
 
