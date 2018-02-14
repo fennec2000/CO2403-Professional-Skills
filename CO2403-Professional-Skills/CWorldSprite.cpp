@@ -17,7 +17,7 @@ CWorldSprite::CWorldSprite(const char* pSpriteName, SVector3D<float> position)
 	if (mInstanceCount == 0)
 	{
 		// Loads the mesh in
-		mpMesh = CCore::getInstance()->getTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
+		mpMesh = CCore::GetInstance()->GetTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
 	}
 
 	// Creates the model
@@ -43,7 +43,7 @@ CWorldSprite::CWorldSprite(const char* pSpriteName, SVector2D<float> position)
 	if (mInstanceCount == 0)
 	{
 		// Loads the mesh in
-		mpMesh = CCore::getInstance()->getTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
+		mpMesh = CCore::GetInstance()->GetTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
 	}
 
 	// Creates the model
@@ -69,7 +69,7 @@ CWorldSprite::~CWorldSprite()
 	if (mInstanceCount == 1)
 	{
 		// Removes the mesh to finish clean up
-		CCore::getInstance()->getTLEngine()->RemoveMesh(mpMesh);
+		CCore::GetInstance()->GetTLEngine()->RemoveMesh(mpMesh);
 	}
 
 	// Decrementation

@@ -17,8 +17,8 @@ private:
 	void InputCheck();
 
 public:
-	CPlayer();
-	CPlayer(float x, float y, float z);
+	CPlayer(EPlayers player);
+	CPlayer(EPlayers player, float x, float y, float z);
 	~CPlayer();
 
 	// public functions

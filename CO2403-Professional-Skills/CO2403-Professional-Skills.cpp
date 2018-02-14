@@ -25,14 +25,14 @@ const float G_UI_MOVE_SPEED = 10.0f;
 void main()
 {
 	// Creat core
-	CCore* c = CCore::getInstance();
+	CCore* c = CCore::GetInstance();
 
 	// Create a 3D engine (using TLX engine here) and open a window for it
-	I3DEngine* myEngine = c->getTLEngine();
+	I3DEngine* myEngine = c->GetTLEngine();
 
 	/**** Set up your scene here ****/
 	// Player
-	CPlayer* pThePlayer = new CPlayer(0.0f, G_SPRITE_LAYER_Y_POS[ESpriteLayers::Player], 0.0f);
+	CPlayer* pThePlayer = new CPlayer(EPlayers::Player1, 0.0f, G_SPRITE_LAYER_Y_POS[ESpriteLayers::Player], 0.0f);
 	// Player test values
 
 
@@ -45,7 +45,7 @@ void main()
 	CWorldSprite* pWorldSprite;
 	pWorldSprite = new CWorldSprite("UpArrow.png", { 1.0f, G_SPRITE_LAYER_Y_POS[ESpriteLayers::Floor], 1.0 });
 
-	float* deltaTime = c->getFrameTimer();
+	float* deltaTime = c->GetFrameTimer();
 	// The main game loop, repeat until engine is stopped
 	while (myEngine->IsRunning())
 	{

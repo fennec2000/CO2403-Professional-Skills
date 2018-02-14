@@ -3,7 +3,7 @@
 // Setup instance
 CCore* CCore::mInstance = 0;
 
-CCore* CCore::getInstance()
+CCore* CCore::GetInstance()
 {
 	if (mInstance == 0)
 	{
@@ -21,6 +21,10 @@ CCore::CCore()
 	// Engine settings
 	mTLEngine->StartWindowed();
 	mTLEngine->AddMediaFolder("TestMedia");
+
+	// Data setup
+	for (int i = 0; i < EPlayers::NumOfEPlayers; ++i)
+		mpPlayer[i] = nullptr;
 }
 
 void CCore::UpdateCore()
@@ -28,4 +32,10 @@ void CCore::UpdateCore()
 	// Draw the scene
 	mFrameTime = mTLEngine->Timer();	// update the frame timer
 	mTLEngine->DrawScene();				// draw the frame 
+}
+
+void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)
+{
+	if (mpPlayer[player] == nullptr)
+		mpPlayer[player] = &givenPlayer;
 }
