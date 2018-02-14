@@ -35,6 +35,8 @@ void main()
 	CPlayer* pThePlayer = new CPlayer(0.0f, G_SPRITE_LAYER_Y_POS[ESpriteLayers::Player], 0.0f);
 	// Player test values
 
+	// Monster
+	CTestEnemy* mMonster = new CTestEnemy(3.0f, G_SPRITE_LAYER_Y_POS[ESpriteLayers::Enemy], 0.0f, true);
 
 	// Camera
 	ICamera* myCamera = myEngine->CreateCamera(kManual);
@@ -44,6 +46,10 @@ void main()
 	// Creates test sprite
 	CWorldSprite* pWorldSprite;
 	pWorldSprite = new CWorldSprite("UpArrow.png", { 1.0f, G_SPRITE_LAYER_Y_POS[ESpriteLayers::Floor], 1.0 });
+
+	// Monster Test
+	CWorldSprite* mWorldSprite;
+	mWorldSprite = new CWorldSprite("derp.png", { 1.0f, G_SPRITE_LAYER_Y_POS[ESpriteLayers::Enemy], 1.0 });
 
 	float* deltaTime = c->getFrameTimer();
 	// The main game loop, repeat until engine is stopped

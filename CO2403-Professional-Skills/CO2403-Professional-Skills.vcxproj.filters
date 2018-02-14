@@ -26,6 +26,9 @@
     <ClCompile Include="SMatrix4x4.cpp">
       <Filter>Maths</Filter>
     </ClCompile>
+    <ClCompile Include="CTestEnemy.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -75,6 +78,9 @@
     </ClInclude>
     <ClInclude Include="SMatrix4x4.h">
       <Filter>Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="CTestEnemy.h">
+      <Filter>Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

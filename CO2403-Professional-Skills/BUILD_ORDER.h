@@ -25,3 +25,4 @@
 // Entity
 #include "CCharacter.h"
 #include "CPlayer.h"
+#include "CTestEnemy.h"
