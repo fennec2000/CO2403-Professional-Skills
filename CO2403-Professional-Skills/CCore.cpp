@@ -21,6 +21,7 @@ CCore::CCore()
 	// Engine settings
 	mTLEngine->StartWindowed();
 	mTLEngine->AddMediaFolder("TestMedia");
+	mTLEngine->AddMediaFolder("Media");
 
 	// Data setup
 	for (int i = 0; i < EPlayers::NumOfEPlayers; ++i)
