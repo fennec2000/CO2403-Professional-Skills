@@ -35,17 +35,16 @@ void main()
 	CPlayer* pThePlayer = new CPlayer(0.0f, 0.05f, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
 	// Player test values
 
-
 	// Camera
 	ICamera* myCamera = myEngine->CreateCamera(kManual, 0.0f, 0.0f, -20.0f);
 
 	// Temp sprites
 	vector<CWorldSprite*> pSprites;
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 10; i ++)
 	{
-		for (int j = 0; j < 10; j++)
+		for (int j = 0; j < 10; j ++)
 		{
-			pSprites.push_back(new CWorldSprite("testGrass.png", { static_cast<float>(i), static_cast<float>(j), G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor] }));
+			pSprites.push_back(new CWorldSprite("Floor.png", { static_cast<float>(i), static_cast<float>(j), G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor] }));
 		}
 	}
 

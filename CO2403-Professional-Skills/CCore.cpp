@@ -21,6 +21,7 @@ CCore::CCore()
 	// Engine settings
 	mTLEngine->StartWindowed();
 	mTLEngine->AddMediaFolder("TestMedia");
+	mTLEngine->AddMediaFolder("Media");
 }
 
 void CCore::UpdateCore()
