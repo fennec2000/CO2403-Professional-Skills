@@ -32,15 +32,14 @@ void main()
 
 	/**** Set up your scene here ****/
 	// Player
-	CPlayer* pThePlayer = new CPlayer(EPlayers::Player1, 0.0f, 0.05f G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
+	CPlayer* pThePlayer = new CPlayer(EPlayers::Player1, 0.0f, 0.05f, 0);
 	// Player test values
 
-<<<<<<< HEAD
-	// Monster
-	CTestEnemy* mMonster = new CTestEnemy(3.0f, G_SPRITE_LAYER_Y_POS[ESpriteLayers::Enemy], 0.0f, true);
 
-=======
->>>>>>> master
+	// Monster
+	CTestEnemy* mMonster = new CTestEnemy(3.0f, 0, 0.0f, true);
+
+
 	// Camera
 	ICamera* myCamera = myEngine->CreateCamera(kManual, 0.0f, 0.0f, -20.0f);
 
@@ -54,15 +53,15 @@ void main()
 		}
 	}
 
-<<<<<<< HEAD
+
 	// Monster Test
 	CWorldSprite* mWorldSprite;
-	mWorldSprite = new CWorldSprite("derp.png", { 1.0f, G_SPRITE_LAYER_Y_POS[ESpriteLayers::Enemy], 1.0 });
+	mWorldSprite = new CWorldSprite("derp.png", { 1.0f, 0, 1.0 });
 
-	float* deltaTime = c->getFrameTimer();
-=======
 	float* deltaTime = c->GetFrameTimer();
->>>>>>> master
+
+	
+
 	// The main game loop, repeat until engine is stopped
 	while (myEngine->IsRunning())
 	{
@@ -71,6 +70,7 @@ void main()
 
 		// player update
 		pThePlayer->Update();
+		mMonster->Update();
 
 		/**** Update your scene each frame here ****/
 

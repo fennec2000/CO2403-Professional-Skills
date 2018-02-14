@@ -25,7 +25,7 @@ void CPlayer::InputCheck()
 {
 	if (mpTLEngine->KeyHeld(mPlayerMoveUp))
 	{
-		mpCharSprite->MoveZ(mMoveSpeed * *mpFrameTimer);
+		mpCharSprite->MoveY(mMoveSpeed * *mpFrameTimer);
 	}
 	if (mpTLEngine->KeyHeld(mPlayerMoveLeft))
 	{
@@ -33,7 +33,7 @@ void CPlayer::InputCheck()
 	}
 	if (mpTLEngine->KeyHeld(mPlayerMoveDown))
 	{
-		mpCharSprite->MoveZ(-mMoveSpeed * *mpFrameTimer);
+		mpCharSprite->MoveY(-mMoveSpeed * *mpFrameTimer);
 	}
 	if (mpTLEngine->KeyHeld(mPlayerMoveRight))
 	{

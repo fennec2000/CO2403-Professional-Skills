@@ -5,7 +5,7 @@ class CTestEnemy : protected CCharacter
 {
 private:
 	// data
-	bool isActive;
+	bool isActive = false;
 
 	float mMoveSpeed = 0.5f;
 
@@ -19,4 +19,5 @@ public:
 	// public functions
 
 	void Update();
+	void toggleActive() { isActive = !isActive; };
 };
