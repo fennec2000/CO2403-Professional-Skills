@@ -42,4 +42,16 @@ void CTestEnemy::Update()
 			mpCharSprite->MoveY(mMoveSpeed * *mpFrameTimer);
 		}
 	}
+	if (shot == false)
+	{
+		mpC->AddBullet(enemyX, enemyY, 0);	
+
+	}
+	else if (shot == true)
+	{
+
+	}
+	
+	
+
 }

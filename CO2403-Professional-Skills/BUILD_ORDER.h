@@ -26,4 +26,6 @@
 // Entity
 #include "CCharacter.h"
 #include "CPlayer.h"
+#include "CEProjectile.h"
 #include "CTestEnemy.h"
+

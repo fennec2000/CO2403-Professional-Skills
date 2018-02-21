@@ -6,6 +6,7 @@ using namespace tle;
 // This holds data core to the game that needs to be passed arround
 
 class CPlayer;
+class CEProjectile;
 
 enum EPlayers { Player1, Player2, NumOfEPlayers };
 
@@ -20,6 +21,7 @@ private:
 	float mFrameTime;		// time between each frame
 	CPlayer* mpPlayer[EPlayers::NumOfEPlayers];		// holds pointers to the players - possiable 2 player
 	// vector<enemies>		// holds a list of enemies
+	vector<CEProjectile*> eBullets;
 
 	// Private constructor to prevent instancing.
 	CCore();
@@ -38,4 +40,7 @@ public:
 
 	// Setters
 	void AddPlayer(EPlayers player, CPlayer &givenPlayer);
+	void AddBullet(float ex, float ey, float ez);
+	void updateBullets();
+	void removeBullets();
 };
