@@ -42,6 +42,9 @@ public:
 	float GetY();
 	float GetZ();
 
+	// Spirte utills
+	void SetSpriteSkin(const char* pSpriteName);
+
 private:
 	tle::IModel* mpSpriteModel;
 	
