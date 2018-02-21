@@ -45,9 +45,9 @@ void main()
 
 	// Temp sprites
 	vector<CWorldSprite*> pSprites;
-	for (int i = 0; i < 10; i ++)
+	for (int i = 0; i < 10; i++)
 	{
-		for (int j = 0; j < 10; j ++)
+		for (int j = 0; j < 10; j++)
 		{
 			pSprites.push_back(new CWorldSprite("Floor.png", { static_cast<float>(i), static_cast<float>(j), G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor] }));
 		}
@@ -59,8 +59,6 @@ void main()
 	mWorldSprite = new CWorldSprite("derp.png", { 1.0f, 0, 1.0 });
 
 	float* deltaTime = c->GetFrameTimer();
-
-	
 
 	// The main game loop, repeat until engine is stopped
 	while (myEngine->IsRunning())
@@ -108,7 +106,7 @@ void main()
   
 	// Cleanup
 	delete pThePlayer;
-	for (int i = 0; i < pSprites.size(); i++)
+	for (unsigned int i = 0; i < pSprites.size(); i++)
 	{
 		delete (pSprites.back());
 		pSprites.pop_back();
