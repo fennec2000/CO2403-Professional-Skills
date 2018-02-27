@@ -19,5 +19,6 @@ public:
 	// public functions
 
 	void Update();
+	void Death();
 	void toggleActive() { isActive = !isActive; };
 };

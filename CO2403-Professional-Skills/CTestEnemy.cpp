@@ -43,3 +43,8 @@ void CTestEnemy::Update()
 		}
 	}
 }
+
+void CTestEnemy::Death()
+{
+
+}

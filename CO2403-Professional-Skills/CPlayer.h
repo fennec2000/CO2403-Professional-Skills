@@ -23,6 +23,7 @@ public:
 
 	// public functions
 	void Update();
+	void Death();
 	float GetX() { return mpCharSprite->GetX(); };
 	float GetY() { return mpCharSprite->GetY(); };
 };

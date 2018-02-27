@@ -40,3 +40,8 @@ void CPlayer::InputCheck()
 		mpCharSprite->MoveX(mMoveSpeed * *mpFrameTimer);
 	}
 }
+
+void CPlayer::Death()
+{
+
+}
