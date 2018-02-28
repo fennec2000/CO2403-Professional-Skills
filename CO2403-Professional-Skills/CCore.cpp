@@ -1,42 +1,49 @@
 #include "BUILD_ORDER.h"
 
 // Setup instance
-CCore* CCore::mInstance = 0;
+CCore* CCore::pInstance = 0;
 
 CCore* CCore::GetInstance()
 {
-	if (mInstance == 0)
+	if (pInstance == 0)
 	{
-		mInstance = new CCore();
+		pInstance = new CCore();
 	}
 
-	return mInstance;
+	return pInstance;
 }
 
 CCore::CCore()
 {
 	// Load engine
-	mTLEngine = New3DEngine(kTLX);
+	pTLEngine = New3DEngine(kTLX);
 
 	// Engine settings
-	mTLEngine->StartWindowed();
-	mTLEngine->AddMediaFolder("TestMedia");
-	mTLEngine->AddMediaFolder("Media");
+	pTLEngine->StartWindowed();
+	pTLEngine->AddMediaFolder("TestMedia");
+	pTLEngine->AddMediaFolder("Media");
+
+	// Camera
+	pCamera = pTLEngine->CreateCamera(kManual, 0.0f, 0.0f, -20.0f);
 
 	// Data setup
 	for (int i = 0; i < EPlayers::NumOfEPlayers; ++i)
-		mpPlayer[i] = nullptr;
+		pPlayer[i] = nullptr;
+
+	// set playing
+	mGameState = EGameState::Playing;
+	mGameScore = 0;
 }
 
 void CCore::UpdateCore()
 {
 	// Draw the scene
-	mFrameTime = mTLEngine->Timer();	// update the frame timer
-	mTLEngine->DrawScene();				// draw the frame 
+	mFrameTime = pTLEngine->Timer();	// update the frame timer
+	pTLEngine->DrawScene();				// draw the frame 
 }
 
 void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)
 {
-	if (mpPlayer[player] == nullptr)
-		mpPlayer[player] = &givenPlayer;
+	if (pPlayer[player] == nullptr)
+		pPlayer[player] = &givenPlayer;
 }

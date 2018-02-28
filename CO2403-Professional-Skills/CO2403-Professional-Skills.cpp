@@ -5,22 +5,10 @@
 #include "CCore.h"		// singleton class
 using namespace tle;
 
-// global sprite layers floats
-enum ESpriteLayers { Floor, Enemy, Player, UI, NumOfESpriteLayers };
-const float G_SPRITE_LAYER_Z_POS[ESpriteLayers::NumOfESpriteLayers] = {  1.0f, 0.3f, 0.2f, 0.1f };
 
 // Tempory Keys
-EKeyCode G_PAN_FORWARDS = Key_W;
-EKeyCode G_PAN_BACKWARDS = Key_S;
-EKeyCode G_PAN_RIGHT = Key_D;
-EKeyCode G_PAN_LEFT = Key_A;
-EKeyCode G_PAN_OUT = Key_Q;
-EKeyCode G_PAN_IN = Key_E;
 EKeyCode G_EXIT = Key_Escape;
 
-// Tempory speed
-const float G_GAME_SPEED = 1.0f;
-const float G_UI_MOVE_SPEED = 10.0f;
 
 void main()
 {
@@ -32,16 +20,12 @@ void main()
 
 	/**** Set up your scene here ****/
 	// Player
-	CPlayer* pThePlayer = new CPlayer(EPlayers::Player1, 0.0f, 0.05f, 0);
+	CPlayer* pThePlayer = new CPlayer(EPlayers::Player1, 0.0f, G_SPRITE_LAYER_Z_POS[ESpriteLayers::UI], 0);
 	// Player test values
 
 
 	// Monster
 	CTestEnemy* mMonster = new CTestEnemy(3.0f, 0, 0.0f, true);
-
-
-	// Camera
-	ICamera* myCamera = myEngine->CreateCamera(kManual, 0.0f, 0.0f, -20.0f);
 
 	// Temp sprites
 	vector<CWorldSprite*> pSprites;
@@ -60,7 +44,6 @@ void main()
 
 	float* deltaTime = c->GetFrameTimer();
 
-	
 
 	// The main game loop, repeat until engine is stopped
 	while (myEngine->IsRunning())
@@ -74,32 +57,7 @@ void main()
 
 		/**** Update your scene each frame here ****/
 
-		// keybindings for camera
-		if (myEngine->KeyHeld(G_PAN_FORWARDS))
-		{
-			myCamera->MoveY(G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
-		}
-		else if (myEngine->KeyHeld(G_PAN_BACKWARDS))
-		{
-			myCamera->MoveY(-G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
-		}
-		if (myEngine->KeyHeld(G_PAN_RIGHT))
-		{
-			myCamera->MoveX(G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
-		}
-		else if (myEngine->KeyHeld(G_PAN_LEFT))
-		{
-			myCamera->MoveX(-G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
-		}
-		if (myEngine->KeyHeld(G_PAN_IN))
-		{
-			myCamera->MoveZ(G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
-		}
-		else if (myEngine->KeyHeld(G_PAN_OUT))
-		{
-			myCamera->MoveZ(-G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
-		}
-
+		// exit key
 		if (myEngine->KeyHit(G_EXIT))
 		{
 			myEngine->Stop();

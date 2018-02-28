@@ -5,13 +5,28 @@ class CPlayer : protected CCharacter
 {
 private:
 	// data
-	// keybindings
-	EKeyCode mPlayerMoveUp = EKeyCode::Key_Numpad8;
-	EKeyCode mPlayerMoveLeft = EKeyCode::Key_Numpad4;
-	EKeyCode mPlayerMoveDown = EKeyCode::Key_Numpad5;
-	EKeyCode mPlayerMoveRight = EKeyCode::Key_Numpad6;
+	CWorldSprite* pCursor;
+	ICamera* pCamera;
 
+	// keybindings
+	EKeyCode mPlayerMoveUp = EKeyCode::Key_W;
+	EKeyCode mPlayerMoveLeft = EKeyCode::Key_A;
+	EKeyCode mPlayerMoveDown = EKeyCode::Key_S;
+	EKeyCode mPlayerMoveRight = EKeyCode::Key_D;
+	EKeyCode mPlayerRoll = EKeyCode::Key_Space;
+	EKeyCode mPlayerFire = EKeyCode::Mouse_LButton;
+
+	const SVector3D<float> mCAMERA_OFFSET = { 0.0f, 0.0f, -10.0f };
 	float mMoveSpeed = 1.0f;
+
+	// roll
+	SVector2D<float> mRollVector;
+	const float mROLL_DISTANCE_MAX = 3.0f;
+	const float mROLL_SPEED = 5.0f;
+	float mRollCurrent;
+
+	// cheats
+	bool mCheatGod = false;
 
 	// functions
 	void InputCheck();
@@ -24,7 +39,8 @@ public:
 	// public functions
 	void Update();
 	void Death();
-	float GetX() { return mpCharSprite->GetX(); };
-	float GetY() { return mpCharSprite->GetY(); };
+	void ChangeHealth(int change);
+	float GetX() { return pCharSprite->GetX(); };
+	float GetY() { return pCharSprite->GetY(); };
 };
 

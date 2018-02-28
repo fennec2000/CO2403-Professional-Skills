@@ -3,10 +3,10 @@
 
 CCharacter::CCharacter()
 {
-	mpC = CCore::GetInstance();
-	mpTLEngine = mpC->GetTLEngine();
-	mpFrameTimer = mpC->GetFrameTimer();
-	mpCharSprite = new CWorldSprite("UglyTile.png", { 5.0f, 0.1f, 5.0f });
+	pC = CCore::GetInstance();
+	pTLEngine = pC->GetTLEngine();
+	pFrameTimer = pC->GetFrameTimer();
+	pCharSprite = new CWorldSprite("UglyTile.png", { 5.0f, 0.1f, 5.0f });
 	mHealthMax = 1;
 	mHealthCurrent = mHealthMax;
 }
@@ -29,9 +29,6 @@ void CCharacter::ChangeHealth(int change)
 		mHealthMax = mHealthMax;
 		return;
 	}
-
-	if (mCheatGod)
-		return;
 
 	mHealthCurrent += change;
 }
