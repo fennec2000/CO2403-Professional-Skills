@@ -3,22 +3,10 @@
 #include "BUILD_ORDER.h"
 using namespace tle;
 
-// global sprite layers floats
-enum ESpriteLayers { Floor, Enemy, Player, UI, NumOfESpriteLayers = 4};
-const float G_SPRITE_LAYER_Z_POS[ESpriteLayers::NumOfESpriteLayers] = {  1.0f, 0.3f, 0.2f, 0.1f };
 
 // Tempory Keys
-EKeyCode G_PAN_FORWARDS = Key_W;
-EKeyCode G_PAN_BACKWARDS = Key_S;
-EKeyCode G_PAN_RIGHT = Key_D;
-EKeyCode G_PAN_LEFT = Key_A;
-EKeyCode G_PAN_OUT = Key_Q;
-EKeyCode G_PAN_IN = Key_E;
 EKeyCode G_EXIT = Key_Escape;
 
-// Tempory speed
-const float G_GAME_SPEED = 1.0f;
-const float G_UI_MOVE_SPEED = 10.0f;
 
 void main()
 {
@@ -59,32 +47,7 @@ void main()
 
 		/**** Update your scene each frame here ****/
 
-		// keybindings for camera
-		if (myEngine->KeyHeld(G_PAN_FORWARDS))
-		{
-			myCamera->MoveY(G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
-		}
-		else if (myEngine->KeyHeld(G_PAN_BACKWARDS))
-		{
-			myCamera->MoveY(-G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
-		}
-		if (myEngine->KeyHeld(G_PAN_RIGHT))
-		{
-			myCamera->MoveX(G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
-		}
-		else if (myEngine->KeyHeld(G_PAN_LEFT))
-		{
-			myCamera->MoveX(-G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
-		}
-		if (myEngine->KeyHeld(G_PAN_IN))
-		{
-			myCamera->MoveZ(G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
-		}
-		else if (myEngine->KeyHeld(G_PAN_OUT))
-		{
-			myCamera->MoveZ(-G_UI_MOVE_SPEED * *deltaTime * G_GAME_SPEED);
-		}
-
+		// exit key
 		if (myEngine->KeyHit(G_EXIT))
 		{
 			myEngine->Stop();

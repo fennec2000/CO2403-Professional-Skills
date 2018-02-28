@@ -7,16 +7,20 @@ class CCharacter
 private:
 
 protected:
-	CCore* mpC;
-	CWorldSprite* mpCharSprite;
-	tle::I3DEngine* mpTLEngine;
-	float* mpFrameTimer;
+	CCore* pC;
+	CWorldSprite* pCharSprite;
+	tle::I3DEngine* pTLEngine;
+	float* pFrameTimer;
+	unsigned int mHealthMax;
+	unsigned int mHealthCurrent;
 
 public:
 	CCharacter();
 	~CCharacter();
 
 	virtual void Update() = 0;
+	virtual void Death() = 0;
 
-	void SetPosition(float x, float y, float z) { mpCharSprite->SetPosition({x, y, z}); };
+	void ChangeHealth(int change); // Changes the characters health, use -ve to damage, use +ve to heal
+	void SetPosition(float x, float y, float z) { pCharSprite->SetPosition({x, y, z}); };
 };

@@ -9,6 +9,7 @@ CTestEnemy::CTestEnemy(float x, float y, float z, bool activate)
 {
 	SetPosition(x, y, z);
 	isActive = activate;
+	pCharSprite->SetSpriteSkin("derp.png");
 }
 
 CTestEnemy::~CTestEnemy()
@@ -18,28 +19,43 @@ CTestEnemy::~CTestEnemy()
 
 void CTestEnemy::Update()
 {
-	float playerX = mpC->GetPlayer(Player1)->GetX();
-	float playerY = mpC->GetPlayer(Player1)->GetY();
-	float enemyX = mpCharSprite->GetX();
-	float enemyY = mpCharSprite->GetY();
+	float playerX = pC->GetPlayer(Player1)->GetX();
+	float playerY = pC->GetPlayer(Player1)->GetY();
+	float enemyX = pCharSprite->GetX();
+	float enemyY = pCharSprite->GetY();
 	
 	if(isActive)
 	{
 		if (enemyX > playerX)
 		{
-			mpCharSprite->MoveX(-mMoveSpeed * *mpFrameTimer);
+			pCharSprite->MoveX(-mMoveSpeed * *pFrameTimer);
 		}
 		if (enemyX < playerX)
 		{
-			mpCharSprite->MoveX(mMoveSpeed * *mpFrameTimer);
+			pCharSprite->MoveX(mMoveSpeed * *pFrameTimer);
 		}
 		if (enemyY > playerY)
 		{
-			mpCharSprite->MoveY(-mMoveSpeed * *mpFrameTimer);
+			pCharSprite->MoveY(-mMoveSpeed * *pFrameTimer);
 		}
 		if (enemyY < playerY)
 		{
-			mpCharSprite->MoveY(mMoveSpeed * *mpFrameTimer);
+			pCharSprite->MoveY(mMoveSpeed * *pFrameTimer);
 		}
 	}
+  
+	if (shot == false)
+	{
+		pC->AddBullet(enemyX, enemyY, 0);	
+
+	}
+	else if (shot == true)
+	{
+
+  }
+}
+
+void CTestEnemy::Death()
+{
+
 }
