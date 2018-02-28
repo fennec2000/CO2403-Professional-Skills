@@ -32,6 +32,9 @@
     <ClCompile Include="CEProjectile.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
+    <ClCompile Include="CLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -90,6 +93,11 @@
     </ClInclude>
     <ClInclude Include="CEProjectile.h">
       <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ESpriteLayers.h" />
+    <ClInclude Include="ETileType.h" />
+    <ClInclude Include="CLevel.h">
+      <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

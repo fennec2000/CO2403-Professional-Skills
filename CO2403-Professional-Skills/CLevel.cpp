@@ -18,6 +18,16 @@ SVector2D<float> CLevel::GetSpawnPos()
 	return mSpawnPos;
 }
 
+ETileType CLevel::GetTile(int x, int y)
+{
+	return mTileMap->at(y)->at(x);
+}
+
+ETileType CLevel::GetTile(SVector2D<int> position)
+{
+	return mTileMap->at(position.y)->at(position.x);
+}
+
 void CLevel::GenerateLevel()
 {
 	mWorldSprites = new vector<CWorldSprite*>;

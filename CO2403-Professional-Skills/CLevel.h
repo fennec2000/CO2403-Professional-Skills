@@ -13,6 +13,9 @@ public:
 	void LoadLevelFromMapFile(const char* pFilePath);
 	SVector2D<float> GetSpawnPos();
 
+	ETileType GetTile(int x, int y);
+	ETileType GetTile(SVector2D<int> position);
+
 private:
 
 	void GenerateLevel();
