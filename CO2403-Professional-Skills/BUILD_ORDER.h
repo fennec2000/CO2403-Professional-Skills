@@ -6,6 +6,7 @@
 // Standard Libary files
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 // Other files
 
@@ -26,3 +27,7 @@
 // Entity
 #include "CCharacter.h"
 #include "CPlayer.h"
+
+// World Generation
+#include "ETileType.h"
+#include "CLevel.h"

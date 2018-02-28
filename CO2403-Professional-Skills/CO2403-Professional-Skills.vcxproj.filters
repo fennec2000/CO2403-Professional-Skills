@@ -26,6 +26,9 @@
     <ClCompile Include="SMatrix4x4.cpp">
       <Filter>Maths</Filter>
     </ClCompile>
+    <ClCompile Include="CLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -42,6 +45,9 @@
     </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{d8776632-4a05-4f7f-831b-133324e9d750}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{7bccba00-d0cc-46d3-adbb-6623162f76e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +81,15 @@
     </ClInclude>
     <ClInclude Include="SMatrix4x4.h">
       <Filter>Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="ETileType.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="ESpriteLayers.h">
+      <Filter>SpriteSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

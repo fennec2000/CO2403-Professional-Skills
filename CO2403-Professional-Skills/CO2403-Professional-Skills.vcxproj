@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{09E3BFC2-BE9D-42C6-AD13-08A2F474390E}</ProjectGuid>
     <RootNamespace>CO2403-Professional-Skills</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -131,6 +131,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="CO2403-Professional-Skills.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CUISprite.cpp" />
+    <ClCompile Include="CLevel.cpp" />
     <ClCompile Include="CWorldSprite.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="SMatrix4x4.cpp" />
@@ -145,7 +146,10 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CUISprite.h" />
+    <ClInclude Include="CLevel.h" />
     <ClInclude Include="CWorldSprite.h" />
+    <ClInclude Include="ESpriteLayers.h" />
+    <ClInclude Include="ETileType.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="SMatrix4x4.h" />
     <ClInclude Include="SVector2D.h" />
