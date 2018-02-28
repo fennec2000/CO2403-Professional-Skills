@@ -56,6 +56,6 @@ public:
 
 	// Setters
 	void AddPlayer(EPlayers player, CPlayer &givenPlayer);
-	void AddBullet(float ex, float ey, float ez);
+	void AddBullet(float ex, float ey, SVector2D<float> bulletVector);
 	void updateBullets();
 };

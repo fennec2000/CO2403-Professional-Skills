@@ -9,7 +9,7 @@ private:
 	bool shot = false;
 	CEProjectile* bullet;
 	float mMoveSpeed = 0.5f;
-
+	SVector2D<float> mFireVector;
 	// functions
 
 public:
@@ -23,4 +23,5 @@ public:
 	void Update();
 	void Death();
 	void toggleActive() { isActive = !isActive; };
+	void Shoot();
 };

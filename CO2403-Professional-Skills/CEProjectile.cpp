@@ -5,10 +5,11 @@ CEProjectile::CEProjectile()
 	
 }
 
-CEProjectile::CEProjectile(float x, float y, float z)
+CEProjectile::CEProjectile(float x, float y, float z, SVector2D<float> bulletVector)
 {
 	SetPosition(x, y, z);
 	pCharSprite->SetSpriteSkin("Cacodemon_tlxcutout.png");
+	mVector = bulletVector;
 }
 
 CEProjectile::~CEProjectile()
@@ -20,8 +21,9 @@ void CEProjectile::Update()
 {
 	if (lifetime < maxLifetime)
 	{
-		pCharSprite->MoveX(-eMoveSpeed * *pFrameTimer);
 		lifetime = lifetime + *pFrameTimer;
+		pCharSprite->MoveX(mVector.x * *pFrameTimer * eMoveSpeed);
+		pCharSprite->MoveY(mVector.y * *pFrameTimer * eMoveSpeed);
 	}
 	else
 	{
