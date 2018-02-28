@@ -41,12 +41,33 @@ CCore::CCore()
 void CCore::UpdateCore()
 {
 	// Draw the scene
-	mFrameTime = pTLEngine->Timer();	// update the frame timer
-	pTLEngine->DrawScene();				// draw the frame 
+	mFrameTime = mTLEngine->Timer();	// update the frame timer
+	mTLEngine->DrawScene();				// draw the frame 
+
+	for (std::vector<CEProjectile*>::iterator it = eBullets.begin(); it != eBullets.end(); it++)
+	{
+		(*it)->Update();
+		if ((*it)->getLifetime() > 2.9f)
+		{
+			delete(*it);
+			eBullets.erase((it));
+			it = eBullets.begin();
+		}
+  }
 }
 
 void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)
 {
-	if (pPlayer[player] == nullptr)
-		pPlayer[player] = &givenPlayer;
+	if (mpPlayer[player] == nullptr)
+		mpPlayer[player] = &givenPlayer;
+}
+
+void CCore::AddBullet(float ex, float ey, float ez)
+{
+	eBullets.push_back(new CEProjectile(ex, ey, ez));
+}
+
+void CCore::updateBullets()
+{
+  
 }
