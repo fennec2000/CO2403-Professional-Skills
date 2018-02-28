@@ -40,7 +40,16 @@ void CLevel::GenerateLevel()
 			}
 			else if (mTileMap->at(i)->at(j) == WALL)
 			{
-				mWorldSprites->push_back(new CWorldSprite("Wall.png", SVector2D<float>(xAxis, yAxis)));
+				mWorldSprites->push_back(new CWorldSprite("FullWall.png", SVector2D<float>(xAxis, yAxis)));
+			}
+			else if (mTileMap->at(i)->at(j) == WALL_WITH_SIDE)
+			{
+				mWorldSprites->push_back(new CWorldSprite("WallSide.png", SVector2D<float>(xAxis, yAxis)));
+			}
+			else if (mTileMap->at(i)->at(j) == WALL_WITH_SIDE_FLIPPED_Y)
+			{
+				mWorldSprites->push_back(new CWorldSprite("WallSide.png", SVector2D<float>(xAxis, yAxis)));
+				mWorldSprites->back()->RotateZ(180.0f);
 			}
 			else if (mTileMap->at(i)->at(j) == SPAWN)
 			{
@@ -91,6 +100,14 @@ void CLevel::ReadFileToTileMap(const char* pFilePath)
 
 		case '2':
 			mTileMap->at(lineNumber - 1)->push_back(FLOOR);
+			break;
+
+		case '4':
+			mTileMap->at(lineNumber - 1)->push_back(WALL_WITH_SIDE);
+			break;
+
+		case '5':
+			mTileMap->at(lineNumber - 1)->push_back(WALL_WITH_SIDE_FLIPPED_Y);
 			break;
 
 		case 'S':
