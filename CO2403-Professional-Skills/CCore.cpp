@@ -41,7 +41,6 @@ CCore::CCore()
 void CCore::UpdateCore()
 {
 	// Draw the scene
-<<<<<<< HEAD
 	mFrameTime = mTLEngine->Timer();	// update the frame timer
 	mTLEngine->DrawScene();				// draw the frame 
 
@@ -54,32 +53,21 @@ void CCore::UpdateCore()
 			eBullets.erase((it));
 			it = eBullets.begin();
 		}
-	}
-=======
-	mFrameTime = pTLEngine->Timer();	// update the frame timer
-	pTLEngine->DrawScene();				// draw the frame 
->>>>>>> master
+  }
 }
 
 void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)
 {
-<<<<<<< HEAD
 	if (mpPlayer[player] == nullptr)
 		mpPlayer[player] = &givenPlayer;
 }
 
 void CCore::AddBullet(float ex, float ey, float ez)
 {
-	
 	eBullets.push_back(new CEProjectile(ex, ey, ez));
 }
 
 void CCore::updateBullets()
 {
-	
-
-=======
-	if (pPlayer[player] == nullptr)
-		pPlayer[player] = &givenPlayer;
->>>>>>> master
+  
 }

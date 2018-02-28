@@ -7,11 +7,10 @@ using namespace tle;
 
 // players
 class CPlayer;
-<<<<<<< HEAD
 class CEProjectile;
-=======
-class CLevel;enum EPlayers { Player1, Player2, NumOfEPlayers };
->>>>>>> master
+class CLevel;
+enum EPlayers { Player1, Player2, NumOfEPlayers };
+
 
 // game states
 enum EGameState { Playing, Paused };
@@ -30,17 +29,12 @@ private:
 	I3DEngine* pTLEngine;	// pointer to the tl engine
 	ICamera* pCamera;		// pointer to the game camera
 	float mFrameTime;		// time between each frame
-<<<<<<< HEAD
-	CPlayer* mpPlayer[EPlayers::NumOfEPlayers];		// holds pointers to the players - possiable 2 player
-	// vector<enemies>		// holds a list of enemies
-	
-=======
+
 	CPlayer* pPlayer[EPlayers::NumOfEPlayers];		// holds pointers to the players - possiable 2 player
 	CLevel* mpLevel; // A pointer to the games level
 	// vector<enemies>		// holds a list of enemies
 	EGameState mGameState;	// the current game state
 	unsigned int mGameScore;// the current score of the game
->>>>>>> master
 
 	// Private constructor to prevent instancing.
 	CCore();
@@ -48,11 +42,8 @@ private:
 public:
 	//Static access method.
 	static CCore* GetInstance();
-<<<<<<< HEAD
 	vector<CEProjectile*> eBullets;
-=======
-
->>>>>>> master
+  
 	// Public functions
 	void UpdateCore();
 
@@ -60,12 +51,8 @@ public:
 	I3DEngine* GetTLEngine() { return pTLEngine; };
 	ICamera* GetCamera() { return pCamera; };
 	float* GetFrameTimer() { return &mFrameTime; };
-<<<<<<< HEAD
-	CPlayer* GetPlayer(EPlayers player) { return mpPlayer[player]; };
-=======
 	CPlayer* GetPlayer(EPlayers player) { return pPlayer[player]; };
 	CLevel* GetLevel() { return mpLevel; };
->>>>>>> master
 
 	// Setters
 	void AddPlayer(EPlayers player, CPlayer &givenPlayer);

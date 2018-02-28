@@ -36,25 +36,25 @@ void CLevel::GenerateLevel()
 			}
 			else if (mTileMap->at(i)->at(j) == FLOOR)
 			{
-				mWorldSprites->push_back(new CWorldSprite("Floor.png", SVector2D<float>(xAxis, yAxis)));
+				mWorldSprites->push_back(new CWorldSprite("Floor.png", SVector3D<float>(xAxis, yAxis, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor])));
 			}
 			else if (mTileMap->at(i)->at(j) == WALL)
 			{
-				mWorldSprites->push_back(new CWorldSprite("FullWall.png", SVector2D<float>(xAxis, yAxis)));
+				mWorldSprites->push_back(new CWorldSprite("FullWall.png", SVector3D<float>(xAxis, yAxis, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor])));
 			}
 			else if (mTileMap->at(i)->at(j) == WALL_WITH_SIDE)
 			{
-				mWorldSprites->push_back(new CWorldSprite("WallSide.png", SVector2D<float>(xAxis, yAxis)));
+				mWorldSprites->push_back(new CWorldSprite("WallSide.png", SVector3D<float>(xAxis, yAxis, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor])));
 			}
 			else if (mTileMap->at(i)->at(j) == WALL_WITH_SIDE_FLIPPED_Y)
 			{
-				mWorldSprites->push_back(new CWorldSprite("WallSide.png", SVector2D<float>(xAxis, yAxis)));
+				mWorldSprites->push_back(new CWorldSprite("WallSide.png", SVector3D<float>(xAxis, yAxis, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor])));
 				mWorldSprites->back()->RotateZ(180.0f);
 			}
 			else if (mTileMap->at(i)->at(j) == SPAWN)
 			{
 				// This is a floor but will also serve as a spawn point
-				mWorldSprites->push_back(new CWorldSprite("Floor.png", SVector2D<float>(xAxis, yAxis)));
+				mWorldSprites->push_back(new CWorldSprite("Floor.png", SVector3D<float>(xAxis, yAxis, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor])));
 				mSpawnPos = { xAxis, yAxis };
 			}
 		}

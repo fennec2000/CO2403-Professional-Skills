@@ -43,7 +43,7 @@ void CTestEnemy::Update()
 			pCharSprite->MoveY(mMoveSpeed * *pFrameTimer);
 		}
 	}
-<<<<<<< HEAD
+  
 	if (shot == false)
 	{
 		mpC->AddBullet(enemyX, enemyY, 0);	
@@ -52,14 +52,10 @@ void CTestEnemy::Update()
 	else if (shot == true)
 	{
 
-	}
-	
-	
-=======
+  }
 }
 
 void CTestEnemy::Death()
 {
->>>>>>> master
 
 }
