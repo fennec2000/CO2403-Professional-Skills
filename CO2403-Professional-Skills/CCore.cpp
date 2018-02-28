@@ -33,6 +33,9 @@ CCore::CCore()
 	// set playing
 	mGameState = EGameState::Playing;
 	mGameScore = 0;
+
+	// Creates the level
+	mpLevel = new CLevel();
 }
 
 void CCore::UpdateCore()
