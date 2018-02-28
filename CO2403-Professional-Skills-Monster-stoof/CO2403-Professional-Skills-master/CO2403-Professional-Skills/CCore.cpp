@@ -62,9 +62,9 @@ void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)
 		pPlayer[player] = &givenPlayer;
 }
 
-void CCore::AddBullet(float ex, float ey, SVector2D<float> bulletVector)
+void CCore::AddBullet(float ex, float ey, float ez)
 {
-	eBullets.push_back(new CEProjectile(ex, ey, 0, bulletVector));
+	eBullets.push_back(new CEProjectile(ex, ey, ez));
 }
 
 void CCore::updateBullets()

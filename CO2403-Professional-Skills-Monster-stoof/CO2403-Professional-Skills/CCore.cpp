@@ -44,16 +44,24 @@ void CCore::UpdateCore()
 	mFrameTime = pTLEngine->Timer();	// update the frame timer
 	pTLEngine->DrawScene();				// draw the frame 
 
+	for (std::vector<CTestEnemy*>::iterator it = enemies.begin(); it != enemies.end(); it++)
+	{
+		(*it)->Update();
+	}
+
 	for (std::vector<CEProjectile*>::iterator it = eBullets.begin(); it != eBullets.end(); it++)
 	{
 		(*it)->Update();
-		if ((*it)->getLifetime() > 2.9f)
+		if (!(*it)->getLifetime())
 		{
 			delete(*it);
 			eBullets.erase((it));
 			it = eBullets.begin();
 		}
   }
+
+
+
 }
 
 void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)
@@ -67,7 +75,7 @@ void CCore::AddBullet(float ex, float ey, SVector2D<float> bulletVector)
 	eBullets.push_back(new CEProjectile(ex, ey, 0, bulletVector));
 }
 
-void CCore::updateBullets()
+void CCore::addEnemy()
 {
-  
+	enemies.push_back(new CTestEnemy(3.0f, 0, 0.0f, true));
 }

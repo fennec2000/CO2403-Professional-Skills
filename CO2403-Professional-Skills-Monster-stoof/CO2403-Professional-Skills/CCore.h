@@ -8,6 +8,7 @@ using namespace tle;
 // players
 class CPlayer;
 class CEProjectile;
+class CTestEnemy;
 class CLevel;
 enum EPlayers { Player1, Player2, NumOfEPlayers };
 
@@ -32,7 +33,6 @@ private:
 
 	CPlayer* pPlayer[EPlayers::NumOfEPlayers];		// holds pointers to the players - possiable 2 player
 	CLevel* mpLevel; // A pointer to the games level
-	// vector<enemies>		// holds a list of enemies
 	EGameState mGameState;	// the current game state
 	unsigned int mGameScore;// the current score of the game
 
@@ -43,6 +43,7 @@ public:
 	//Static access method.
 	static CCore* GetInstance();
 	vector<CEProjectile*> eBullets;
+	vector<CTestEnemy*> enemies;
   
 	// Public functions
 	void UpdateCore();
@@ -57,5 +58,5 @@ public:
 	// Setters
 	void AddPlayer(EPlayers player, CPlayer &givenPlayer);
 	void AddBullet(float ex, float ey, SVector2D<float> bulletVector);
-	void updateBullets();
+	void addEnemy();
 };

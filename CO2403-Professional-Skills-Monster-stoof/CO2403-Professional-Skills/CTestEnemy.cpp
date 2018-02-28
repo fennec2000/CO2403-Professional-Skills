@@ -44,15 +44,17 @@ void CTestEnemy::Update()
 		}
 	}
   
-	if (shot == false)
+	if (bulletTimer < MAX_BULLET_TIMER)
+	{
+		bulletTimer = bulletTimer + *pFrameTimer;
+	}
+	else
 	{
 		Shoot();
-
+		bulletTimer = 0;
 	}
-	else if (shot == true)
-	{
 
-  }
+
 }
 
 void CTestEnemy::Shoot()

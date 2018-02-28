@@ -11,7 +11,8 @@ private:
 	float mMoveSpeed = 0.5f;
 	SVector2D<float> mFireVector;
 	// functions
-
+	float bulletTimer = 0.0f;
+	const float MAX_BULLET_TIMER = 0.5f;
 public:
 	CTestEnemy();
 	CTestEnemy(float x, float y, float z, bool activate);
@@ -24,4 +25,5 @@ public:
 	void Death();
 	void toggleActive() { isActive = !isActive; };
 	void Shoot();
+	void ReleaseBullet();
 };

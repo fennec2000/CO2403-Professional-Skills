@@ -33,8 +33,15 @@ void CEProjectile::Update()
 
 }
 
-float CEProjectile::getLifetime()
+bool CEProjectile::getLifetime()
 {
-	return lifetime;
+	if (lifetime < maxLifetime)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 

@@ -21,5 +21,5 @@ public:
 
 	void Death() {};
 	void Update();
-	float getLifetime();
+	bool getLifetime();
 };
