@@ -22,6 +22,7 @@ CWorldSprite::CWorldSprite(const char* pSpriteName, SVector3D<float> position)
 
 	// Creates the model
 	mpSpriteModel = mpMesh->CreateModel(mOrigin.x, mOrigin.y, mOrigin.z);
+	mpSpriteModel->RotateLocalZ(180.0f); // Rotates the sprites the correct way up
 
 	// Sets the skin
 	mpSpriteModel->SetSkin(pSpriteName);
@@ -44,6 +45,7 @@ CWorldSprite::CWorldSprite(const char* pSpriteName, SVector2D<float> position)
 
 	// Creates the model
 	mpSpriteModel = mpMesh->CreateModel(mOrigin.x, mOrigin.y, mOrigin.z);
+	mpSpriteModel->RotateLocalZ(180.0f); // Rotates the sprites the correct way up
 
 	// Sets the skin
 	mpSpriteModel->SetSkin(pSpriteName);
@@ -188,6 +190,12 @@ void CWorldSprite::ResetPosition()
 	mOffset.z = 0.0f;
 
 	mpSpriteModel->SetPosition(mOrigin.x, mOrigin.y, mOrigin.z);
+}
+
+// By rotation
+void CWorldSprite::RotateZ(float amount)
+{
+	mpSpriteModel->RotateLocalZ(amount);
 }
 
 // Getters
