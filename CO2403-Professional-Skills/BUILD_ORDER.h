@@ -24,10 +24,10 @@
 #include "CUISprite.h"
 #include "CWorldSprite.h"
 
-// Entity
-#include "CCharacter.h"
-#include "CPlayer.h"
-
 // World Generation
 #include "ETileType.h"
 #include "CLevel.h"
+
+// Entity
+#include "CCharacter.h"
+#include "CPlayer.h"

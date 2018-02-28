@@ -32,8 +32,8 @@ void main()
 
 	/**** Set up your scene here ****/
 	// Level test
-	CLevel::LoadLevelFromMapFile("testMap1.txt");
-	SVector2D<float> spawnPos = CLevel::GetSpawnPos();
+	c->GetLevel()->LoadLevelFromMapFile("testMap1.txt");
+	SVector2D<float> spawnPos = c->GetLevel()->GetSpawnPos();
 
 	// Player
 	CPlayer* pThePlayer = new CPlayer(EPlayers::Player1, spawnPos.x, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);

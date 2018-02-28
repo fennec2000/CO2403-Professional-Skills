@@ -7,19 +7,20 @@
 class CLevel
 {
 public:
-	static void LoadLevelFromMapFile(const char* pFilePath);
-
-	static SVector2D<float> GetSpawnPos();
-
-private:
 	CLevel();
 	~CLevel();
 
-	static void GenerateLevel();
-	static void ReadFileToTileMap(const char* pFilePath);
+	void LoadLevelFromMapFile(const char* pFilePath);
+	SVector2D<float> GetSpawnPos();
 
-	static vector<vector<ETileType>*>* mTileMap;
-	static vector<CWorldSprite*>* mWorldSprites;
+private:
 
-	static SVector2D<float>* spawnPos;
+	void GenerateLevel();
+	void ReadFileToTileMap(const char* pFilePath);
+	void ClearLevel();
+
+	vector<vector<ETileType>*>* mTileMap;
+	vector<CWorldSprite*>* mWorldSprites;
+
+	SVector2D<float> mSpawnPos;
 };

@@ -3,9 +3,9 @@
 
 #include "BUILD_ORDER.h"
 
-vector<vector<ETileType>*>* CLevel::mTileMap = nullptr;
-vector<CWorldSprite*>* CLevel::mWorldSprites = nullptr;
-SVector2D<float>* CLevel::spawnPos = nullptr;
+CLevel::CLevel() { }
+
+CLevel::~CLevel() { }
 
 void CLevel::LoadLevelFromMapFile(const char* pFilePath)
 {
@@ -15,7 +15,7 @@ void CLevel::LoadLevelFromMapFile(const char* pFilePath)
 
 SVector2D<float> CLevel::GetSpawnPos()
 {
-	return *spawnPos;
+	return mSpawnPos;
 }
 
 void CLevel::GenerateLevel()
@@ -46,7 +46,7 @@ void CLevel::GenerateLevel()
 			{
 				// This is a floor but will also serve as a spawn point
 				mWorldSprites->push_back(new CWorldSprite("Floor.png", SVector2D<float>(xAxis, yAxis)));
-				spawnPos = new SVector2D<float>(xAxis, yAxis);
+				mSpawnPos = { xAxis, yAxis };
 			}
 		}
 	}
@@ -125,6 +125,8 @@ void CLevel::ReadFileToTileMap(const char* pFilePath)
 	mapFile.close();
 }
 
-CLevel::CLevel() { }
+// Cleans up the level
+void CLevel::ClearLevel()
+{
 
-CLevel::~CLevel() { }
+}
