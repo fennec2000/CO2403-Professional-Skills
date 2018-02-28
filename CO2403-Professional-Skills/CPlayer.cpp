@@ -15,7 +15,7 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 	pC->AddPlayer(player, *this);
 	SetPosition(x, y, z);
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
-	pCursor = new CWorldSprite("UglyTile.png", { playerPos.x, G_SPRITE_LAYER_Z_POS[ESpriteLayers::UI], playerPos.y });
+	pCursor = new CWorldSprite("UglyTile.png", { playerPos.x, playerPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::UI] });
 	pTLEngine->StartMouseCapture();
 }
 
