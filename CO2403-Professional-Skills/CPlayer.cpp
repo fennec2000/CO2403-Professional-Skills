@@ -9,9 +9,12 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 {
 	// varable setup
 	mRollCurrent = 0.0f;
+	mScreenSize[0] = pTLEngine->GetHeight();
+	mScreenSize[1] = pTLEngine->GetWidth();
 
 	// setup
 	pCamera = pC->GetCamera();
+	pLevel = pC->GetLevel();
 	pC->AddPlayer(player, *this);
 	SetPosition(x, y, z);
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
@@ -41,8 +44,6 @@ void CPlayer::Update()
 	else if (mMovement.x != 0.0f || mMovement.y != 0.0f)
 		Move(mMovement);
 
-	CollisionCheck();
-
 	// update camera
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
 	pCamera->SetPosition(playerPos.x + mCAMERA_OFFSET.x, playerPos.y + mCAMERA_OFFSET.y, mCAMERA_OFFSET.z);
@@ -52,14 +53,17 @@ void CPlayer::InputCheck()
 {
 	pCursor->MoveX(pTLEngine->GetMouseMovementX() * *pFrameTimer);
 	pCursor->MoveY(-pTLEngine->GetMouseMovementY() * *pFrameTimer);
-	
+
+	// player rotation
+
+
 	// keybindings
-	if (pTLEngine->KeyHeld(mPlayerFire))
-	{
-		
-	}
 	if (mRollCurrent <= 0.0f)
 	{
+		if (pTLEngine->KeyHeld(mPlayerFire))
+		{
+
+		}
 		if (pTLEngine->KeyHeld(mPlayerRoll))
 		{
 			// roll
@@ -68,10 +72,12 @@ void CPlayer::InputCheck()
 			mRollVector.x = cursorPos.x - charPos.x;
 			mRollVector.y = cursorPos.y - charPos.y;
 			float lenght = sqrt(mRollVector.x * mRollVector.x + mRollVector.y * mRollVector.y);
-			mRollVector.x /= lenght;
-			mRollVector.y /= lenght;
-
-			mRollCurrent = mROLL_DISTANCE_MAX;
+			if (lenght != 0.0f)
+			{
+				mRollVector.x /= lenght;
+				mRollVector.y /= lenght;
+				mRollCurrent = mROLL_DISTANCE_MAX;
+			}
 		}
 		if (pTLEngine->KeyHeld(mPlayerMoveUp))
 		{
@@ -95,10 +101,30 @@ void CPlayer::InputCheck()
 void CPlayer::Move(SVector2D<float> movement)
 {
 	mOldPos = GetPos2D();
-	pCharSprite->MoveX(movement.x);
-	pCursor->MoveX(movement.x);
-	pCharSprite->MoveY(movement.y);
-	pCursor->MoveY(movement.y);
+	SVector2D<float> test = mOldPos;
+	test.x += movement.x;
+	SVector2D<float> opposit = test;
+	opposit.x += mCharSize.x;
+
+	if (!CollisionCheck(test) && !CollisionCheck(opposit))
+	{
+		pCharSprite->MoveX(movement.x);
+		pCursor->MoveX(movement.x);
+	}
+	else
+	{
+		test.x = mOldPos.x;
+		opposit.x = mOldPos.x + mCharSize.x;
+	}
+
+
+	test.y += movement.y;
+	opposit.y = test.y + mCharSize.y;
+	if (!CollisionCheck(test) && !CollisionCheck(opposit))
+	{
+		pCharSprite->MoveY(movement.y);
+		pCursor->MoveY(movement.y);
+	}
 }
 
 void CPlayer::Death()
@@ -112,7 +138,10 @@ void CPlayer::ChangeHealth(int change)
 		CCharacter::ChangeHealth(change);
 }
 
-void CPlayer::CollisionCheck()
+bool CPlayer::CollisionCheck(SVector2D<float> pos)
 {
-	 
+	ETileType test = pLevel->GetTile(pos);
+	if (test == ETileType::WALL || test == ETileType::WALL_WITH_SIDE || test == ETileType::WALL_WITH_SIDE_FLIPPED_Y)
+		return true;
+	return false;
 }

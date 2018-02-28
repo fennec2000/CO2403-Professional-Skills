@@ -7,6 +7,7 @@ private:
 	// data
 	CWorldSprite* pCursor;
 	ICamera* pCamera;
+	CLevel* pLevel;
 
 	// keybindings
 	EKeyCode mPlayerMoveUp = EKeyCode::Key_W;
@@ -17,10 +18,11 @@ private:
 	EKeyCode mPlayerFire = EKeyCode::Mouse_LButton;
 
 	const SVector3D<float> mCAMERA_OFFSET = { 0.0f, 0.0f, -10.0f };
-	float mMoveSpeed = 1.0f;
+	float mMoveSpeed = 2.0f;
 	SVector2D<float> mOldPos;
 	SVector2D<float> mMovement;
-	const SVector2D<float> mCharSize = { 1.0f, 1.0f };
+	const SVector2D<float> mCharSize = { 1.0f, 1.0f }; // x, y
+	int mScreenSize[2]; // 0 - height, 1 - width
 
 	// roll
 	SVector2D<float> mRollVector;
@@ -33,8 +35,8 @@ private:
 
 	// functions
 	void InputCheck();
-	void Move(SVector2D<float> movement);	// +ver is right
-	void CollisionCheck();
+	void Move(SVector2D<float> movement);
+	bool CollisionCheck(SVector2D<float> pos);
 
 public:
 	CPlayer(EPlayers player);

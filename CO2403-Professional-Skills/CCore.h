@@ -29,9 +29,8 @@ private:
 	I3DEngine* pTLEngine;	// pointer to the tl engine
 	ICamera* pCamera;		// pointer to the game camera
 	float mFrameTime;		// time between each frame
-
 	CPlayer* pPlayer[EPlayers::NumOfEPlayers];		// holds pointers to the players - possiable 2 player
-	CLevel* mpLevel; // A pointer to the games level
+	CLevel* pLevel; // A pointer to the games level
 	// vector<enemies>		// holds a list of enemies
 	EGameState mGameState;	// the current game state
 	unsigned int mGameScore;// the current score of the game
@@ -52,7 +51,7 @@ public:
 	ICamera* GetCamera() { return pCamera; };
 	float* GetFrameTimer() { return &mFrameTime; };
 	CPlayer* GetPlayer(EPlayers player) { return pPlayer[player]; };
-	CLevel* GetLevel() { return mpLevel; };
+	CLevel* GetLevel() { return pLevel; };
 
 	// Setters
 	void AddPlayer(EPlayers player, CPlayer &givenPlayer);
