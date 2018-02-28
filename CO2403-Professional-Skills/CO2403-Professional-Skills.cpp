@@ -1,12 +1,10 @@
 // CO2403-Professional-Skills.cpp: A program using the TL-Engine
 
 #include "BUILD_ORDER.h"
-#include "CPlayer.h"	// the player class
-#include "CCore.h"		// singleton class
 using namespace tle;
 
 // global sprite layers floats
-enum ESpriteLayers { Floor, Enemy, Player, UI, NumOfESpriteLayers };
+enum ESpriteLayers { Floor, Enemy, Player, UI, NumOfESpriteLayers = 4};
 const float G_SPRITE_LAYER_Z_POS[ESpriteLayers::NumOfESpriteLayers] = {  1.0f, 0.3f, 0.2f, 0.1f };
 
 // Tempory Keys
@@ -31,28 +29,17 @@ void main()
 	I3DEngine* myEngine = c->GetTLEngine();
 
 	/**** Set up your scene here ****/
+	// Level test
+	c->GetLevel()->LoadLevelFromMapFile("testMap1.txt");
+	SVector2D<float> spawnPos = c->GetLevel()->GetSpawnPos();
+
 	// Player
-	CPlayer* pThePlayer = new CPlayer(EPlayers::Player1, 0.0f, 0.05f, 0);
+	CPlayer* pThePlayer = new CPlayer(EPlayers::Player1, spawnPos.x, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
 	// Player test values
 
 
 	// Monster
 	CTestEnemy* mMonster = new CTestEnemy(3.0f, 0, 0.0f, true);
-
-
-	// Camera
-	ICamera* myCamera = myEngine->CreateCamera(kManual, 0.0f, 0.0f, -20.0f);
-
-	// Temp sprites
-	vector<CWorldSprite*> pSprites;
-	for (int i = 0; i < 10; i++)
-	{
-		for (int j = 0; j < 10; j++)
-		{
-			pSprites.push_back(new CWorldSprite("Floor.png", { static_cast<float>(i), static_cast<float>(j), G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor] }));
-		}
-	}
-
 
 	// Monster Test
 	CWorldSprite* mWorldSprite;
@@ -106,11 +93,6 @@ void main()
   
 	// Cleanup
 	delete pThePlayer;
-	for (unsigned int i = 0; i < pSprites.size(); i++)
-	{
-		delete (pSprites.back());
-		pSprites.pop_back();
-	}
 
 	// Delete the 3D engine now we are finished with it
 	myEngine->Delete();

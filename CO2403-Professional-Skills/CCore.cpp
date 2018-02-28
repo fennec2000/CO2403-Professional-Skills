@@ -26,6 +26,9 @@ CCore::CCore()
 	// Data setup
 	for (int i = 0; i < EPlayers::NumOfEPlayers; ++i)
 		mpPlayer[i] = nullptr;
+
+	// Creates the level
+	mpLevel = new CLevel();
 }
 
 void CCore::UpdateCore()

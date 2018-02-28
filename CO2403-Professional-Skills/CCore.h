@@ -6,7 +6,11 @@ using namespace tle;
 // This holds data core to the game that needs to be passed arround
 
 class CPlayer;
+<<<<<<< HEAD
 class CEProjectile;
+=======
+class CLevel;
+>>>>>>> master
 
 enum EPlayers { Player1, Player2, NumOfEPlayers };
 
@@ -20,6 +24,7 @@ private:
 	I3DEngine* mTLEngine;	// pointer to the tl engine
 	float mFrameTime;		// time between each frame
 	CPlayer* mpPlayer[EPlayers::NumOfEPlayers];		// holds pointers to the players - possiable 2 player
+	CLevel* mpLevel; // A pointer to the games level
 	// vector<enemies>		// holds a list of enemies
 	
 
@@ -29,14 +34,20 @@ private:
 public:
 	//Static access method.
 	static CCore* GetInstance();
+<<<<<<< HEAD
 	vector<CEProjectile*> eBullets;
 	// Public functions
+=======
+
+	// Public function
+>>>>>>> master
 	void UpdateCore();
 
 	// Getters
 	I3DEngine* GetTLEngine() { return mTLEngine; };
 	float* GetFrameTimer() { return &mFrameTime; };
 	CPlayer* GetPlayer(EPlayers player) { return mpPlayer[player]; };
+	CLevel* GetLevel() { return mpLevel; };
 
 	// Setters
 	void AddPlayer(EPlayers player, CPlayer &givenPlayer);
