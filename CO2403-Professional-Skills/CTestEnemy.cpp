@@ -9,7 +9,7 @@ CTestEnemy::CTestEnemy(float x, float y, float z, bool activate)
 {
 	SetPosition(x, y, z);
 	isActive = activate;
-	mpCharSprite->SetSpriteSkin("derp.png");
+	pCharSprite->SetSpriteSkin("derp.png");
 }
 
 CTestEnemy::~CTestEnemy()
@@ -46,7 +46,7 @@ void CTestEnemy::Update()
   
 	if (shot == false)
 	{
-		mpC->AddBullet(enemyX, enemyY, 0);	
+		pC->AddBullet(enemyX, enemyY, 0);	
 
 	}
 	else if (shot == true)

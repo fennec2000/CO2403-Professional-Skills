@@ -19,6 +19,7 @@ public:
 
 	// public functions
 
+	void Death() {};
 	void Update();
 	float getLifetime();
 };

@@ -8,20 +8,20 @@ CEProjectile::CEProjectile()
 CEProjectile::CEProjectile(float x, float y, float z)
 {
 	SetPosition(x, y, z);
-	mpCharSprite->SetSpriteSkin("Cacodemon_tlxcutout.png");
+	pCharSprite->SetSpriteSkin("Cacodemon_tlxcutout.png");
 }
 
 CEProjectile::~CEProjectile()
 {
-	mpCharSprite->~CWorldSprite();
+	pCharSprite->~CWorldSprite();
 }
 
 void CEProjectile::Update()
 {
 	if (lifetime < maxLifetime)
 	{
-		mpCharSprite->MoveX(-eMoveSpeed * *mpFrameTimer);
-		lifetime = lifetime + *mpFrameTimer;
+		pCharSprite->MoveX(-eMoveSpeed * *pFrameTimer);
+		lifetime = lifetime + *pFrameTimer;
 	}
 	else
 	{
