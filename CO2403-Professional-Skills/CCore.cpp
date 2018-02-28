@@ -33,12 +33,17 @@ void CCore::UpdateCore()
 	// Draw the scene
 	mFrameTime = mTLEngine->Timer();	// update the frame timer
 	mTLEngine->DrawScene();				// draw the frame 
+
 	for (std::vector<CEProjectile*>::iterator it = eBullets.begin(); it != eBullets.end(); it++)
 	{
 		(*it)->Update();
+		if ((*it)->getLifetime() > 2.9f)
+		{
+			delete(*it);
+			eBullets.erase((it));
+			it = eBullets.begin();
+		}
 	}
-
-
 }
 
 void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)

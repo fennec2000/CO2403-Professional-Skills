@@ -8,11 +8,12 @@ CEProjectile::CEProjectile()
 CEProjectile::CEProjectile(float x, float y, float z)
 {
 	SetPosition(x, y, z);
+	mpCharSprite->SetSpriteSkin("Cacodemon_tlxcutout.png");
 }
 
 CEProjectile::~CEProjectile()
 {
-
+	mpCharSprite->~CWorldSprite();
 }
 
 void CEProjectile::Update()
@@ -24,8 +25,14 @@ void CEProjectile::Update()
 	}
 	else
 	{
-		
+		delete(this);
 	}
 
 
 }
+
+float CEProjectile::getLifetime()
+{
+	return lifetime;
+}
+

@@ -20,4 +20,5 @@ public:
 	// public functions
 
 	void Update();
+	float getLifetime();
 };

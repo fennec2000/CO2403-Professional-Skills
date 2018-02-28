@@ -21,7 +21,7 @@ private:
 	float mFrameTime;		// time between each frame
 	CPlayer* mpPlayer[EPlayers::NumOfEPlayers];		// holds pointers to the players - possiable 2 player
 	// vector<enemies>		// holds a list of enemies
-	vector<CEProjectile*> eBullets;
+	
 
 	// Private constructor to prevent instancing.
 	CCore();
@@ -29,7 +29,7 @@ private:
 public:
 	//Static access method.
 	static CCore* GetInstance();
-
+	vector<CEProjectile*> eBullets;
 	// Public functions
 	void UpdateCore();
 
