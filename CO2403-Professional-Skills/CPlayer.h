@@ -23,5 +23,7 @@ public:
 
 	// public functions
 	void Update();
+	float GetX() { return mpCharSprite->GetX(); };
+	float GetY() { return mpCharSprite->GetY(); };
 };
 

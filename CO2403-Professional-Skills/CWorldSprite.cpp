@@ -230,3 +230,9 @@ float CWorldSprite::GetZ()
 {
 	return mOrigin.z + mOffset.z;
 }
+
+// Spirte utills
+void CWorldSprite::SetSpriteSkin(const char* pSpriteName)
+{
+	mpSpriteModel->SetSkin(pSpriteName);
+}

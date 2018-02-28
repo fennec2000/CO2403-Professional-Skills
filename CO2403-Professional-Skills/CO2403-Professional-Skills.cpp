@@ -1,8 +1,6 @@
 // CO2403-Professional-Skills.cpp: A program using the TL-Engine
 
 #include "BUILD_ORDER.h"
-//#include "CPlayer.h"	// the player class
-//#include "CCore.h"		// singleton class
 using namespace tle;
 
 // global sprite layers floats
@@ -39,10 +37,16 @@ void main()
 	CPlayer* pThePlayer = new CPlayer(EPlayers::Player1, spawnPos.x, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
 	// Player test values
 
-	// Camera
-	ICamera* myCamera = myEngine->CreateCamera(kManual, spawnPos.x, spawnPos.y, -20.0f);
+
+	// Monster
+	CTestEnemy* mMonster = new CTestEnemy(3.0f, 0, 0.0f, true);
+
+	// Monster Test
+	CWorldSprite* mWorldSprite;
+	mWorldSprite = new CWorldSprite("derp.png", { 1.0f, 0, 1.0 });
 
 	float* deltaTime = c->GetFrameTimer();
+
 	// The main game loop, repeat until engine is stopped
 	while (myEngine->IsRunning())
 	{
@@ -51,6 +55,7 @@ void main()
 
 		// player update
 		pThePlayer->Update();
+		mMonster->Update();
 
 		/**** Update your scene each frame here ****/
 
@@ -88,11 +93,6 @@ void main()
   
 	// Cleanup
 	delete pThePlayer;
-	//for (int i = 0; i < pSprites.size(); i++)
-	//{
-	//	delete (pSprites.back());
-	//	pSprites.pop_back();
-	//}
 
 	// Delete the 3D engine now we are finished with it
 	myEngine->Delete();
