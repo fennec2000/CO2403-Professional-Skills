@@ -27,7 +27,9 @@ CPlayer::~CPlayer()
 void CPlayer::Update()
 {
 	// movement
+	mMovement = { 0.0f, 0.0f };
 	InputCheck();
+
 	if (mRollCurrent > 0.0f)
 	{
 		pCharSprite->MoveX(mRollVector.x * *pFrameTimer * mROLL_SPEED);
@@ -36,6 +38,10 @@ void CPlayer::Update()
 		pCursor->MoveY(mRollVector.y * *pFrameTimer * mROLL_SPEED);
 		mRollCurrent -= *pFrameTimer * mROLL_SPEED;
 	}
+	else if (mMovement.x != 0.0f || mMovement.y != 0.0f)
+		Move(mMovement);
+
+	CollisionCheck();
 
 	// update camera
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
@@ -69,25 +75,30 @@ void CPlayer::InputCheck()
 		}
 		if (pTLEngine->KeyHeld(mPlayerMoveUp))
 		{
-			pCharSprite->MoveY(mMoveSpeed * *pFrameTimer);
-			pCursor->MoveY(mMoveSpeed * *pFrameTimer);
+			mMovement.y = mMoveSpeed * *pFrameTimer;
 		}
 		if (pTLEngine->KeyHeld(mPlayerMoveLeft))
 		{
-			pCharSprite->MoveX(-mMoveSpeed * *pFrameTimer);
-			pCursor->MoveX(-mMoveSpeed * *pFrameTimer);
+			mMovement.x = -mMoveSpeed * *pFrameTimer;
 		}
 		if (pTLEngine->KeyHeld(mPlayerMoveDown))
 		{
-			pCharSprite->MoveY(-mMoveSpeed * *pFrameTimer);
-			pCursor->MoveY(-mMoveSpeed * *pFrameTimer);
+			mMovement.y = -mMoveSpeed * *pFrameTimer;
 		}
 		if (pTLEngine->KeyHeld(mPlayerMoveRight))
 		{
-			pCharSprite->MoveX(mMoveSpeed * *pFrameTimer);
-			pCursor->MoveX(mMoveSpeed * *pFrameTimer);
+			mMovement.x = mMoveSpeed * *pFrameTimer;
 		}
 	}
+}
+
+void CPlayer::Move(SVector2D<float> movement)
+{
+	mOldPos = GetPos2D();
+	pCharSprite->MoveX(movement.x);
+	pCursor->MoveX(movement.x);
+	pCharSprite->MoveY(movement.y);
+	pCursor->MoveY(movement.y);
 }
 
 void CPlayer::Death()
@@ -99,4 +110,9 @@ void CPlayer::ChangeHealth(int change)
 {
 	if (!mCheatGod || mRollCurrent <= 0.0f)
 		CCharacter::ChangeHealth(change);
+}
+
+void CPlayer::CollisionCheck()
+{
+	 
 }

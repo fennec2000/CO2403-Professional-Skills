@@ -18,6 +18,9 @@ private:
 
 	const SVector3D<float> mCAMERA_OFFSET = { 0.0f, 0.0f, -10.0f };
 	float mMoveSpeed = 1.0f;
+	SVector2D<float> mOldPos;
+	SVector2D<float> mMovement;
+	const SVector2D<float> mCharSize = { 1.0f, 1.0f };
 
 	// roll
 	SVector2D<float> mRollVector;
@@ -30,6 +33,8 @@ private:
 
 	// functions
 	void InputCheck();
+	void Move(SVector2D<float> movement);	// +ver is right
+	void CollisionCheck();
 
 public:
 	CPlayer(EPlayers player);

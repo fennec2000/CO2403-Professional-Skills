@@ -23,4 +23,5 @@ public:
 
 	void ChangeHealth(int change); // Changes the characters health, use -ve to damage, use +ve to heal
 	void SetPosition(float x, float y, float z) { pCharSprite->SetPosition({x, y, z}); };
+	SVector2D<float> GetPos2D() { return pCharSprite->GetPosition2D(); };
 };
