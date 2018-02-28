@@ -29,6 +29,12 @@
     <ClCompile Include="CTestEnemy.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
+    <ClCompile Include="CEProjectile.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -45,6 +51,9 @@
     </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{d8776632-4a05-4f7f-831b-133324e9d750}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{7bccba00-d0cc-46d3-adbb-6623162f76e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +90,14 @@
     </ClInclude>
     <ClInclude Include="CTestEnemy.h">
       <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CEProjectile.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ESpriteLayers.h" />
+    <ClInclude Include="ETileType.h" />
+    <ClInclude Include="CLevel.h">
+      <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -35,12 +35,18 @@ public:
 	// By resetting
 	void ResetPosition();
 
+	// By rotation
+	void RotateZ(float amount);
+
 	// Getters
 	SVector3D<float> GetPosition3D();
 	SVector2D<float> GetPosition2D();
 	float GetX();
 	float GetY();
 	float GetZ();
+
+	// Spirte utills
+	void SetSpriteSkin(const char* pSpriteName);
 
 private:
 	tle::IModel* mpSpriteModel;

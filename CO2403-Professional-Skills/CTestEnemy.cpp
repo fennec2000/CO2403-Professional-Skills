@@ -9,6 +9,7 @@ CTestEnemy::CTestEnemy(float x, float y, float z, bool activate)
 {
 	SetPosition(x, y, z);
 	isActive = activate;
+	pCharSprite->SetSpriteSkin("derp.png");
 }
 
 CTestEnemy::~CTestEnemy()
@@ -42,6 +43,16 @@ void CTestEnemy::Update()
 			pCharSprite->MoveY(mMoveSpeed * *pFrameTimer);
 		}
 	}
+  
+	if (shot == false)
+	{
+		pC->AddBullet(enemyX, enemyY, 0);	
+
+	}
+	else if (shot == true)
+	{
+
+  }
 }
 
 void CTestEnemy::Death()
