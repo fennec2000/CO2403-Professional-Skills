@@ -28,6 +28,16 @@ ETileType CLevel::GetTile(SVector2D<int> position)
 	return mTileMap->at(position.y)->at(position.x);
 }
 
+bool CLevel::GetTileCollision(int x, int y)
+{
+	return mCollisionMap->at(y)->at(x);
+}
+
+bool CLevel::GetTileCollision(SVector2D<int> position)
+{
+	return mCollisionMap->at(position.y)->at(position.x);
+}
+
 void CLevel::GenerateLevel()
 {
 	mWorldSprites = new vector<CWorldSprite*>;
@@ -76,6 +86,7 @@ void CLevel::ReadFileToTileMap(const char* pFilePath)
 	std::ifstream mapFile;
 
 	mTileMap = new vector<vector<ETileType>*>;
+	mCollisionMap = new vector<vector<bool>*>;
 
 	// Open the file and check if it worked
 	mapFile.open(pFilePath);
@@ -94,6 +105,7 @@ void CLevel::ReadFileToTileMap(const char* pFilePath)
 		if (lineNumber > genratedLines)
 		{
 			mTileMap->push_back(new std::vector<ETileType>);
+			mCollisionMap->push_back(new std::vector<bool>);
 			genratedLines++;
 		}
 
@@ -102,26 +114,32 @@ void CLevel::ReadFileToTileMap(const char* pFilePath)
 		{
 		case '0':
 			mTileMap->at(lineNumber - 1)->push_back(NO_TILE);
+			mCollisionMap->at(lineNumber - 1)->push_back(0);
 			break;
 
 		case '1':
 			mTileMap->at(lineNumber - 1)->push_back(WALL);
+			mCollisionMap->at(lineNumber - 1)->push_back(1);
 			break;
 
 		case '2':
 			mTileMap->at(lineNumber - 1)->push_back(FLOOR);
+			mCollisionMap->at(lineNumber - 1)->push_back(0);
 			break;
 
 		case '4':
 			mTileMap->at(lineNumber - 1)->push_back(WALL_WITH_SIDE);
+			mCollisionMap->at(lineNumber - 1)->push_back(1);
 			break;
 
 		case '5':
 			mTileMap->at(lineNumber - 1)->push_back(WALL_WITH_SIDE_FLIPPED_Y);
+			mCollisionMap->at(lineNumber - 1)->push_back(1);
 			break;
 
 		case 'S':
 			mTileMap->at(lineNumber - 1)->push_back(SPAWN);
+			mCollisionMap->at(lineNumber - 1)->push_back(0);
 			break;
 
 		case ' ':
