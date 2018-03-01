@@ -4,7 +4,7 @@
 #pragma once
 #include "BUILD_ORDER.h"
 
-class CWorldSprite : public CBaseSprite
+class CWorldSprite : protected SBaseSprite
 {
 public:
 	// Constructers
