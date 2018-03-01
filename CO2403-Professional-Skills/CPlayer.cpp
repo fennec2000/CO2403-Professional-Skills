@@ -42,7 +42,17 @@ void CPlayer::Update()
 		mRollCurrent -= *pFrameTimer * mROLL_SPEED;
 	}
 	else if (mMovement.x != 0.0f || mMovement.y != 0.0f)
+	{
 		Move(mMovement);
+
+		// rotate
+		/*SVector2D<float> playerCursorVector = pCursor->GetPosition2D() - pCharSprite->GetPosition2D();
+		float rotation = tan(playerCursorVector.y / playerCursorVector.x);
+		float newRotation = rotation * 180.0 / PI;
+		pCharSprite->RotateZ(newRotation - mRotationCurrent);
+		mRotationCurrent = newRotation;*/
+	}
+		
 
 	// update camera
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
@@ -101,26 +111,26 @@ void CPlayer::InputCheck()
 void CPlayer::Move(SVector2D<float> movement)
 {
 	mOldPos = GetPos2D();
-	SVector2D<float> test = mOldPos;
-	test.x += movement.x;
-	SVector2D<float> opposit = test;
-	opposit.x += mCharSize.x;
+	SVector2D<float> testPos[4];
+	for (int i = 0; i < 3; ++i)
+		testPos[i] = mOldPos;
 
-	if (!CollisionCheck(test) && !CollisionCheck(opposit))
+	testPos[1].x += mCharSize.x;
+	testPos[2].y += mCharSize.y;
+	testPos[3] = mOldPos + mCharSize;
+	SVector2D<float> testMove[2];
+	testMove[0] = { movement.x , 0.0f };
+	testMove[1] = { 0.0f, movement.y };
+
+	if ((movement.x < 0.0f && !CollisionCheck(testPos[0] + testMove[0]) && !CollisionCheck(testPos[2] + testMove[0])) ||
+		(movement.x > 0.0f && !CollisionCheck(testPos[1] + testMove[0]) && !CollisionCheck(testPos[3] + testMove[0])))
 	{
 		pCharSprite->MoveX(movement.x);
 		pCursor->MoveX(movement.x);
 	}
-	else
-	{
-		test.x = mOldPos.x;
-		opposit.x = mOldPos.x + mCharSize.x;
-	}
 
-
-	test.y += movement.y;
-	opposit.y = test.y + mCharSize.y;
-	if (!CollisionCheck(test) && !CollisionCheck(opposit))
+	if ((movement.y < 0.0f && !CollisionCheck(testPos[0] + testMove[1]) && !CollisionCheck(testPos[1] + testMove[1])) ||
+		(movement.y > 0.0f && !CollisionCheck(testPos[2] + testMove[1]) && !CollisionCheck(testPos[3] + testMove[1])))
 	{
 		pCharSprite->MoveY(movement.y);
 		pCursor->MoveY(movement.y);
@@ -140,6 +150,9 @@ void CPlayer::ChangeHealth(int change)
 
 bool CPlayer::CollisionCheck(SVector2D<float> pos)
 {
+	// get center
+	// sphere collision
+
 	ETileType test = pLevel->GetTile(pos);
 	if (test == ETileType::WALL || test == ETileType::WALL_WITH_SIDE || test == ETileType::WALL_WITH_SIDE_FLIPPED_Y)
 		return true;

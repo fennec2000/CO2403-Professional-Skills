@@ -23,6 +23,7 @@ private:
 	SVector2D<float> mMovement;
 	const SVector2D<float> mCharSize = { 1.0f, 1.0f }; // x, y
 	int mScreenSize[2]; // 0 - height, 1 - width
+	float mRotationCurrent = 0.0f;
 
 	// roll
 	SVector2D<float> mRollVector;

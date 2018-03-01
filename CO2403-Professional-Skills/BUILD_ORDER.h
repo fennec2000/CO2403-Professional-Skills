@@ -1,5 +1,7 @@
 #pragma once
 
+#define PI 3.14159265
+
 // TL
 #include <TL-Engine.h>
 
