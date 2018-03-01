@@ -6,6 +6,7 @@
 #include "BUILD_ORDER.h"
 
 class CUISprite : public CBaseSprite
+class CUISprite : protected SBaseSprite
 {
 public:
 	// Constructers

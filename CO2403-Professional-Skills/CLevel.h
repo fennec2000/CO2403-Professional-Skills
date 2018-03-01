@@ -16,6 +16,9 @@ public:
 	ETileType GetTile(int x, int y);
 	ETileType GetTile(SVector2D<int> position);
 
+	bool GetTileCollision(int x, int y);
+	bool GetTileCollision(SVector2D<int> position);
+
 private:
 
 	void GenerateLevel();
@@ -23,6 +26,7 @@ private:
 	void ClearLevel();
 
 	vector<vector<ETileType>*>* mTileMap;
+	vector<vector<bool>*>* mCollisionMap;
 	vector<CWorldSprite*>* mWorldSprites;
 
 	SVector2D<float> mSpawnPos;

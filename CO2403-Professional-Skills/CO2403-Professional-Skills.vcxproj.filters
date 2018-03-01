@@ -35,6 +35,12 @@
     <ClCompile Include="CLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="SBaseSprite.cpp">
+      <Filter>SpriteSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimatedWorldSprite.cpp">
+      <Filter>SpriteSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -98,6 +104,15 @@
     <ClInclude Include="ETileType.h" />
     <ClInclude Include="CLevel.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="ETileType.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="SBaseSprite.h">
+      <Filter>SpriteSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimatedWorldSprite.h">
+      <Filter>SpriteSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

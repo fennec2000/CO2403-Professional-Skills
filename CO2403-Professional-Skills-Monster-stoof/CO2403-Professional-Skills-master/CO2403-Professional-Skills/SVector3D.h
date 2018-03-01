@@ -89,6 +89,8 @@ SVector3D<T> SVector3D<T>::Normalised()
 		float invLength = 1.0f / sqrtf(magnitueSquare);
 		return SVector3D<T>(x * invLength, y * invLength, z * invLength);
 	}
+	float invLength = 1.0f / sqrtf(magnitueSquare);
+	return SVector3D<T>(x * invLength, y * invLength, z * invLength);
 }
 
 // Operator overloads

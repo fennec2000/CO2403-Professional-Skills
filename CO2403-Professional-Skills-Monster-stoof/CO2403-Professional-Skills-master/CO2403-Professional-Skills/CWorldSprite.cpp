@@ -110,8 +110,19 @@ void CWorldSprite::LookAt(float fX, float fY, float fZ)
 
 	// Rotates the sprite by 180 on its local X and Z axis so 
 	// that it is facing the corect direction
+	float mat[4][4];
+	mpSpriteModel->GetMatrix(&mat[0][0]);
+	if (mat[2][0] >= 0.0f)
+	{
+		mpSpriteModel->RotateLocalY(90.0f);
+	}
+	else
+	{
+		mpSpriteModel->RotateLocalY(270.0f);
+	}
 	mpSpriteModel->RotateLocalX(180.0f);
 	mpSpriteModel->RotateLocalZ(180.0f);
+	mpSpriteModel->RotateLocalZ(90.0f);
 }
 
 // For sprite movement
