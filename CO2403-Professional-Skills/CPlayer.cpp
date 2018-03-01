@@ -41,18 +41,14 @@ void CPlayer::Update()
 		pCursor->MoveY(mRollVector.y * *pFrameTimer * mROLL_SPEED);
 		mRollCurrent -= *pFrameTimer * mROLL_SPEED;
 	}
-	else if (mMovement.x != 0.0f || mMovement.y != 0.0f)
+	else 
 	{
-		Move(mMovement);
+		if (mMovement.x != 0.0f || mMovement.y != 0.0f)
+			Move(mMovement);
 
 		// rotate
-		/*SVector2D<float> playerCursorVector = pCursor->GetPosition2D() - pCharSprite->GetPosition2D();
-		float rotation = tan(playerCursorVector.y / playerCursorVector.x);
-		float newRotation = rotation * 180.0 / PI;
-		pCharSprite->RotateZ(newRotation - mRotationCurrent);
-		mRotationCurrent = newRotation;*/
+		pCharSprite->LookAt(pCursor);
 	}
-		
 
 	// update camera
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
