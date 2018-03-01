@@ -1,10 +1,10 @@
-// CBaseSprite.h 10-02-2018
+// SBaseSprite.h 10-02-2018
 // William John Atkin WJAtkin@UCLan.ac.uk
 
 #pragma once
 #include "BUILD_ORDER.h"
 
-class CBaseSprite
+class SBaseSprite
 {
 protected:
 	SVector3D<float> mOrigin;
@@ -16,6 +16,6 @@ protected:
 
 	// Putting the constructer as protected prevents an instance
 	// of this object ever being created
-	CBaseSprite();
+	SBaseSprite();
 
 };

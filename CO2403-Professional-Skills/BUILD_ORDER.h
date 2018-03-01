@@ -22,9 +22,10 @@
 #include "CCore.h"
 
 // Spirte system
-#include "CBaseSprite.h"
+#include "SBaseSprite.h"
 #include "CUISprite.h"
 #include "CWorldSprite.h"
+#include "CAnimatedWorldSprite.h"
 
 // World Generation
 #include "ETileType.h"

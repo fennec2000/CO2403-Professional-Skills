@@ -8,9 +8,6 @@
     <ClCompile Include="CUISprite.cpp">
       <Filter>SpriteSystem</Filter>
     </ClCompile>
-    <ClCompile Include="CBaseSprite.cpp">
-      <Filter>SpriteSystem</Filter>
-    </ClCompile>
     <ClCompile Include="CCharacter.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
@@ -34,6 +31,12 @@
     </ClCompile>
     <ClCompile Include="CLevel.cpp">
       <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="SBaseSprite.cpp">
+      <Filter>SpriteSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimatedWorldSprite.cpp">
+      <Filter>SpriteSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -70,9 +73,6 @@
       <Filter>SpriteSystem</Filter>
     </ClInclude>
     <ClInclude Include="BUILD_ORDER.h" />
-    <ClInclude Include="CBaseSprite.h">
-      <Filter>SpriteSystem</Filter>
-    </ClInclude>
     <ClInclude Include="CCharacter.h">
       <Filter>Entity</Filter>
     </ClInclude>
@@ -94,10 +94,17 @@
     <ClInclude Include="CEProjectile.h">
       <Filter>Entity</Filter>
     </ClInclude>
-    <ClInclude Include="ESpriteLayers.h" />
-    <ClInclude Include="ETileType.h" />
     <ClInclude Include="CLevel.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="ETileType.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="SBaseSprite.h">
+      <Filter>SpriteSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimatedWorldSprite.h">
+      <Filter>SpriteSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
