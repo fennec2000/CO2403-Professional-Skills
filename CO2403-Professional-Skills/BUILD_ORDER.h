@@ -34,4 +34,5 @@
 #include "CPlayer.h"
 #include "CEProjectile.h"
 #include "CTestEnemy.h"
+#include "CEnemyShotgun.h"
 

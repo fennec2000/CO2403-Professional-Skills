@@ -38,6 +38,9 @@
     <ClCompile Include="CAnimatedWorldSprite.cpp">
       <Filter>SpriteSystem</Filter>
     </ClCompile>
+    <ClCompile Include="CEnemyShotgun.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -105,6 +108,9 @@
     </ClInclude>
     <ClInclude Include="CAnimatedWorldSprite.h">
       <Filter>SpriteSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyShotgun.h">
+      <Filter>Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
