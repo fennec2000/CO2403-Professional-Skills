@@ -38,6 +38,8 @@ private:
 	EGameState mGameState;	// the current game state
 	unsigned int mGameScore;// the current score of the game
 
+	SVector2D<int> mWindowSize = { 1280, 720 };
+
 	// Private constructor to prevent instancing.
 	CCore();
 
@@ -56,6 +58,7 @@ public:
 	CPlayer* GetPlayer(EPlayers player) { return pPlayer[player]; };
 	CLevel* GetLevel() { return mpLevel; };
 	CInput* GetInput() { return mpInput; };
+	SVector2D<int> GetWindowSize() { return mWindowSize; };
 
 	// Setters
 	void AddPlayer(EPlayers player, CPlayer &givenPlayer);

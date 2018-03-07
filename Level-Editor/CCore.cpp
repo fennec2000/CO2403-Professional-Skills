@@ -22,14 +22,14 @@ CCore::CCore()
 	pTLEngine = New3DEngine(kTLX);
 
 	// Engine settings
-	pTLEngine->StartWindowed(1280, 720);
+	pTLEngine->StartWindowed(mWindowSize.x, mWindowSize.y);
 	pTLEngine->SetWindowCaption("Level Editor");
 	pTLEngine->AddMediaFolder("TestMedia");
 	pTLEngine->AddMediaFolder("Media");
 	pTLEngine->AddMediaFolder("EditorMedia");
 
 	// Camera
-	pCamera = pTLEngine->CreateCamera(kManual, 10.0f, 0.0f, -20.0f);
+	pCamera = pTLEngine->CreateCamera(kManual, 0.0f, 0.0f, -20.0f);
 
 	// Data setup
 	for (int i = 0; i < EPlayers::NumOfEPlayers; ++i)
