@@ -35,10 +35,10 @@ void CPlayer::Update()
 
 	if (mRollCurrent > 0.0f)
 	{
-		pCharSprite->MoveX(mRollVector.x * *pFrameTimer * mROLL_SPEED);
-		pCursor->MoveX(mRollVector.x * *pFrameTimer * mROLL_SPEED);
-		pCharSprite->MoveY(mRollVector.y * *pFrameTimer * mROLL_SPEED);
-		pCursor->MoveY(mRollVector.y * *pFrameTimer * mROLL_SPEED);
+		SVector2D<float> currentMove = mRollVector;
+		currentMove.x *= *pFrameTimer * mROLL_SPEED;
+		currentMove.y *= *pFrameTimer * mROLL_SPEED;
+		Move(currentMove);
 		mRollCurrent -= *pFrameTimer * mROLL_SPEED;
 	}
 	else 

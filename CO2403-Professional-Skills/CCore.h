@@ -17,7 +17,7 @@ enum EGameState { Playing, Paused };
 
 // global sprite layers floats
 enum ESpriteLayers { Floor, Enemy, Player, UI, NumOfESpriteLayers };
-const float G_SPRITE_LAYER_Z_POS[ESpriteLayers::NumOfESpriteLayers] = { 1.0f, 0.3f, 0.2f, 0.1f };
+const float G_SPRITE_LAYER_Z_POS[ESpriteLayers::NumOfESpriteLayers] = { 0.1f, 0.03f, 0.02f, 0.01f };
 
 class CCore
 {
