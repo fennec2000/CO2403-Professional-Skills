@@ -153,6 +153,7 @@ copy "D:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="CTime.h" />
     <ClInclude Include="CUISprite.h" />
     <ClInclude Include="CWorldSprite.h" />
+    <ClInclude Include="ETileType.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="SBaseSprite.h" />
     <ClInclude Include="SMatrix4x4.h" />

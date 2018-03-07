@@ -5,8 +5,8 @@
 
 CHoverUI::CHoverUI(SUIData* pUIData)
 {
-	mpMyEngine = pUIData->mpMyEngine;
-	mpInput = pUIData->mpInput;
+	mpMyEngine = CCore::GetInstance()->GetTLEngine();
+	mpInput = CCore::GetInstance()->GetInput();
 	mSpritePaths = pUIData->mSpritePaths;
 	mHoverSpritePaths = pUIData->mHoverSpritePaths;
 

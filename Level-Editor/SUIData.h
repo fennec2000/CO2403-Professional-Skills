@@ -5,8 +5,6 @@
 
 struct SUIData
 {
-	tle::I3DEngine* mpMyEngine;
-	CInput* mpInput;
 	std::vector<char*> mSpritePaths;
 	std::vector<char*> mHoverSpritePaths;
 	int mSpriteXSize;

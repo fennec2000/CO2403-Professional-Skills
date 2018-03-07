@@ -19,7 +19,7 @@ protected:
 	void ShowNormalSprites();
 	void ShowHoverSprites();
 
-	//
+	// Pointers
 	tle::I3DEngine* mpMyEngine;
 	std::vector<char*> mSpritePaths;
 	std::vector<char*> mHoverSpritePaths;

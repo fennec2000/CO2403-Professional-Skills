@@ -4,6 +4,7 @@
 
 // STL Headers
 #include <vector>
+#include <iostream>
 
 // TL-Engine
 #include <TL-Engine.h>
@@ -30,6 +31,7 @@
 #include "CTextInputBox.h"
 
 // Level System
+#include "ETileType.h"
 #include "CLevel.h"
 
 // Core

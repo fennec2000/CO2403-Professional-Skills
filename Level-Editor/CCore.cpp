@@ -7,7 +7,7 @@ CCore* CCore::GetInstance()
 {
 	if (pInstance == 0)
 	{
-		pInstance = new CCore();
+		new CCore();
 	}
 
 	return pInstance;
@@ -15,16 +15,21 @@ CCore* CCore::GetInstance()
 
 CCore::CCore()
 {
+	// Set the pointer
+	pInstance = this;
+
 	// Load engine
 	pTLEngine = New3DEngine(kTLX);
 
 	// Engine settings
-	pTLEngine->StartWindowed();
+	pTLEngine->StartWindowed(1280, 720);
+	pTLEngine->SetWindowCaption("Level Editor");
 	pTLEngine->AddMediaFolder("TestMedia");
 	pTLEngine->AddMediaFolder("Media");
+	pTLEngine->AddMediaFolder("EditorMedia");
 
 	// Camera
-	pCamera = pTLEngine->CreateCamera(kManual, 0.0f, 0.0f, -20.0f);
+	pCamera = pTLEngine->CreateCamera(kManual, 10.0f, 0.0f, -20.0f);
 
 	// Data setup
 	for (int i = 0; i < EPlayers::NumOfEPlayers; ++i)
@@ -46,7 +51,10 @@ void CCore::UpdateCore()
 	// Draw the scene
 	mFrameTime = pTLEngine->Timer();	// update the frame timer
 	mpInput->Update();					// Update key inputs
-	pTLEngine->DrawScene();				// draw the frame 
+	pTLEngine->DrawScene();				// draw the frame
+
+	// Calls update on other classes
+	mpLevel->Update();
 
 	//for (std::vector<CEProjectile*>::iterator it = eBullets.begin(); it != eBullets.end(); it++)
 	//{
