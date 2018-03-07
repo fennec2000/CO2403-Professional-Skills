@@ -10,9 +10,17 @@ protected:
 	CCore* pC;
 	CWorldSprite* pCharSprite;
 	tle::I3DEngine* pTLEngine;
+	CLevel* pLevel;
 	float* pFrameTimer;
+
+	const SVector2D<float> mCharSize = { 1.0f, 1.0f }; // x, y
 	unsigned int mHealthMax;
 	unsigned int mHealthCurrent;
+	float mMoveSpeed = 2.0f;
+	SVector2D<float> mOldPos;
+
+	SVector2D<float> Move(SVector2D<float> movement);
+	bool CollisionCheck(SVector2D<float> pos);
 
 public:
 	CCharacter();
