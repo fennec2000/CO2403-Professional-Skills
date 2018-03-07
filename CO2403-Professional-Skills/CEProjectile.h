@@ -9,12 +9,12 @@ private:
 	float eMoveSpeed = 2.5f;
 	float maxLifetime = 3.0f;
 	float lifetime = 0.0f;
-
+	SVector2D<float> mVector;
 	// functions
 
 public:
 	CEProjectile();
-	CEProjectile(float x, float y, float z);
+	CEProjectile(float x, float y, float z, SVector2D<float> bulletVector);
 	~CEProjectile();
 
 	// public functions

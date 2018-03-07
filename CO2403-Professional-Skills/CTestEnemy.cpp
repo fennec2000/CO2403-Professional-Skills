@@ -14,7 +14,7 @@ CTestEnemy::CTestEnemy(float x, float y, float z, bool activate)
 
 CTestEnemy::~CTestEnemy()
 {
-
+	
 }
 
 void CTestEnemy::Update()
@@ -24,38 +24,56 @@ void CTestEnemy::Update()
 	float enemyX = pCharSprite->GetX();
 	float enemyY = pCharSprite->GetY();
 	
-	if(isActive)
-	{
+		if (isActive)
+		{
 		if (enemyX > playerX)
-		{
+			{
 			pCharSprite->MoveX(-mMoveSpeed * *pFrameTimer);
-		}
+			}
 		if (enemyX < playerX)
-		{
+			 {
 			pCharSprite->MoveX(mMoveSpeed * *pFrameTimer);
-		}
+			}
 		if (enemyY > playerY)
-		{
+		 {
 			pCharSprite->MoveY(-mMoveSpeed * *pFrameTimer);
-		}
+			}
 		if (enemyY < playerY)
-		{
-			pCharSprite->MoveY(mMoveSpeed * *pFrameTimer);
+			{
+		pCharSprite->MoveY(mMoveSpeed * *pFrameTimer);
+			}
 		}
-	}
-  
-	if (shot == false)
-	{
-		pC->AddBullet(enemyX, enemyY, 0);	
+	
+		if (bulletTimer < MAX_BULLET_TIMER)
+		 {
+		bulletTimer = bulletTimer + *pFrameTimer;
+		}
+else
+		 {
+		Shoot();
+		bulletTimer = 0;
+		}
+	
+		
+		}
 
+void CTestEnemy::Shoot()
+ {
+	float enemyX = pCharSprite->GetX();
+	float enemyY = pCharSprite->GetY();
+	SVector2D<float> enemyPos = pCharSprite->GetPosition2D();
+	SVector2D<float> playerPos;
+	playerPos.x = pC->GetPlayer(Player1)->GetX();
+	playerPos.y = pC->GetPlayer(Player1)->GetY();
+	mFireVector.x = playerPos.x - enemyPos.x;
+	mFireVector.y = playerPos.y - enemyPos.y;
+	float lenght = sqrt(mFireVector.x * mFireVector.x + mFireVector.y * mFireVector.y);
+	mFireVector.x /= lenght;
+	mFireVector.y /= lenght;
+	pC->AddBullet(enemyX, enemyY, mFireVector);
 	}
-	else if (shot == true)
-	{
-
-  }
-}
 
 void CTestEnemy::Death()
 {
-
+	
 }
