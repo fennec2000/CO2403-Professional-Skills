@@ -15,6 +15,7 @@ public:
 
 	ETileType GetTile(int x, int y);
 	ETileType GetTile(SVector2D<int> position);
+	ETileType GetTile(SVector2D<float> position);
 
 	bool GetTileCollision(int x, int y);
 	bool GetTileCollision(SVector2D<int> position);

@@ -35,7 +35,7 @@ CCore::CCore()
 	mGameScore = 0;
 
 	// Creates the level
-	mpLevel = new CLevel();
+	pLevel = new CLevel();
 }
 
 void CCore::UpdateCore()

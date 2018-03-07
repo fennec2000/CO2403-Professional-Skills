@@ -9,9 +9,12 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 {
 	// varable setup
 	mRollCurrent = 0.0f;
+	mScreenSize[0] = pTLEngine->GetHeight();
+	mScreenSize[1] = pTLEngine->GetWidth();
 
 	// setup
 	pCamera = pC->GetCamera();
+	pLevel = pC->GetLevel();
 	pC->AddPlayer(player, *this);
 	SetPosition(x, y, z);
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
@@ -27,14 +30,24 @@ CPlayer::~CPlayer()
 void CPlayer::Update()
 {
 	// movement
+	mMovement = { 0.0f, 0.0f };
 	InputCheck();
+
 	if (mRollCurrent > 0.0f)
 	{
-		pCharSprite->MoveX(mRollVector.x * *pFrameTimer * mROLL_SPEED);
-		pCursor->MoveX(mRollVector.x * *pFrameTimer * mROLL_SPEED);
-		pCharSprite->MoveY(mRollVector.y * *pFrameTimer * mROLL_SPEED);
-		pCursor->MoveY(mRollVector.y * *pFrameTimer * mROLL_SPEED);
+		SVector2D<float> currentMove = mRollVector;
+		currentMove.x *= *pFrameTimer * mROLL_SPEED;
+		currentMove.y *= *pFrameTimer * mROLL_SPEED;
+		Move(currentMove);
 		mRollCurrent -= *pFrameTimer * mROLL_SPEED;
+	}
+	else 
+	{
+		if (mMovement.x != 0.0f || mMovement.y != 0.0f)
+			Move(mMovement);
+
+		// rotate
+		pCharSprite->LookAt(pCursor);
 	}
 
 	// update camera
@@ -46,14 +59,17 @@ void CPlayer::InputCheck()
 {
 	pCursor->MoveX(pTLEngine->GetMouseMovementX() * *pFrameTimer);
 	pCursor->MoveY(-pTLEngine->GetMouseMovementY() * *pFrameTimer);
-	
+
+	// player rotation
+
+
 	// keybindings
-	if (pTLEngine->KeyHeld(mPlayerFire))
-	{
-		
-	}
 	if (mRollCurrent <= 0.0f)
 	{
+		if (pTLEngine->KeyHeld(mPlayerFire))
+		{
+
+		}
 		if (pTLEngine->KeyHeld(mPlayerRoll))
 		{
 			// roll
@@ -62,31 +78,58 @@ void CPlayer::InputCheck()
 			mRollVector.x = cursorPos.x - charPos.x;
 			mRollVector.y = cursorPos.y - charPos.y;
 			float lenght = sqrt(mRollVector.x * mRollVector.x + mRollVector.y * mRollVector.y);
-			mRollVector.x /= lenght;
-			mRollVector.y /= lenght;
-
-			mRollCurrent = mROLL_DISTANCE_MAX;
+			if (lenght != 0.0f)
+			{
+				mRollVector.x /= lenght;
+				mRollVector.y /= lenght;
+				mRollCurrent = mROLL_DISTANCE_MAX;
+			}
 		}
 		if (pTLEngine->KeyHeld(mPlayerMoveUp))
 		{
-			pCharSprite->MoveY(mMoveSpeed * *pFrameTimer);
-			pCursor->MoveY(mMoveSpeed * *pFrameTimer);
+			mMovement.y = mMoveSpeed * *pFrameTimer;
 		}
 		if (pTLEngine->KeyHeld(mPlayerMoveLeft))
 		{
-			pCharSprite->MoveX(-mMoveSpeed * *pFrameTimer);
-			pCursor->MoveX(-mMoveSpeed * *pFrameTimer);
+			mMovement.x = -mMoveSpeed * *pFrameTimer;
 		}
 		if (pTLEngine->KeyHeld(mPlayerMoveDown))
 		{
-			pCharSprite->MoveY(-mMoveSpeed * *pFrameTimer);
-			pCursor->MoveY(-mMoveSpeed * *pFrameTimer);
+			mMovement.y = -mMoveSpeed * *pFrameTimer;
 		}
 		if (pTLEngine->KeyHeld(mPlayerMoveRight))
 		{
-			pCharSprite->MoveX(mMoveSpeed * *pFrameTimer);
-			pCursor->MoveX(mMoveSpeed * *pFrameTimer);
+			mMovement.x = mMoveSpeed * *pFrameTimer;
 		}
+	}
+}
+
+void CPlayer::Move(SVector2D<float> movement)
+{
+	mOldPos = GetPos2D();
+	SVector2D<float> testPos[4];
+	for (int i = 0; i < 3; ++i)
+		testPos[i] = mOldPos;
+
+	testPos[1].x += mCharSize.x;
+	testPos[2].y += mCharSize.y;
+	testPos[3] = mOldPos + mCharSize;
+	SVector2D<float> testMove[2];
+	testMove[0] = { movement.x , 0.0f };
+	testMove[1] = { 0.0f, movement.y };
+
+	if ((movement.x < 0.0f && !CollisionCheck(testPos[0] + testMove[0]) && !CollisionCheck(testPos[2] + testMove[0])) ||
+		(movement.x > 0.0f && !CollisionCheck(testPos[1] + testMove[0]) && !CollisionCheck(testPos[3] + testMove[0])))
+	{
+		pCharSprite->MoveX(movement.x);
+		pCursor->MoveX(movement.x);
+	}
+
+	if ((movement.y < 0.0f && !CollisionCheck(testPos[0] + testMove[1]) && !CollisionCheck(testPos[1] + testMove[1])) ||
+		(movement.y > 0.0f && !CollisionCheck(testPos[2] + testMove[1]) && !CollisionCheck(testPos[3] + testMove[1])))
+	{
+		pCharSprite->MoveY(movement.y);
+		pCursor->MoveY(movement.y);
 	}
 }
 
@@ -99,4 +142,15 @@ void CPlayer::ChangeHealth(int change)
 {
 	if (!mCheatGod || mRollCurrent <= 0.0f)
 		CCharacter::ChangeHealth(change);
+}
+
+bool CPlayer::CollisionCheck(SVector2D<float> pos)
+{
+	// get center
+	// sphere collision
+
+	ETileType test = pLevel->GetTile(pos);
+	if (test == ETileType::WALL || test == ETileType::WALL_WITH_SIDE || test == ETileType::WALL_WITH_SIDE_FLIPPED_Y)
+		return true;
+	return false;
 }

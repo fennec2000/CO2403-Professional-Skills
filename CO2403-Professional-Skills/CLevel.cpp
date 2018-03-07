@@ -28,6 +28,11 @@ ETileType CLevel::GetTile(SVector2D<int> position)
 	return mTileMap->at(position.y)->at(position.x);
 }
 
+ETileType CLevel::GetTile(SVector2D<float> position)
+{
+	return mTileMap->at(static_cast<int>(position.y))->at(static_cast<int>(position.x));
+}
+
 bool CLevel::GetTileCollision(int x, int y)
 {
 	return mCollisionMap->at(y)->at(x);
