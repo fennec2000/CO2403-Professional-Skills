@@ -13,7 +13,7 @@ public:
 
 private:
 
-	SVector2D<int> findCursorTilePos();
+	SVector2D<float> findCursorTilePos();
 
 	vector<vector<ETileType>*> tileMap;
 

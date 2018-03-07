@@ -22,7 +22,7 @@ CLevel::~CLevel()
 
 void CLevel::Update()
 {
-	SVector2D<int> mousePos = findCursorTilePos();
+	SVector2D<float> mousePos = findCursorTilePos();
 
 	std::cout << "Mouse pos: x: " << mousePos.x << " y:" << mousePos.y << "\n";
 
@@ -30,14 +30,19 @@ void CLevel::Update()
 	cursorHighlightSprite->SetPosition({ static_cast<float>(mousePos.x), static_cast<float>(mousePos.y) });
 }
 
-SVector2D<int> CLevel::findCursorTilePos()
+SVector2D<float> CLevel::findCursorTilePos()
 {
 	// Finds the mouse pixel position
 	SVector2D<int> mousePos = { mpEngine->GetMouseX(), mpEngine->GetMouseY() };
+	// Gets where the center of the screen is
+	tle::ICamera* camera = CCore::GetInstance()->GetCamera();
+	SVector2D<float> screenPos = { camera->GetX(), camera->GetY() };
+
+	SVector2D<float> worldSpace;
 
 	// Finds the position on the grid
-	mousePos.x = static_cast<int>(floorf(static_cast<float>(mousePos.x) / METERS_PER_PIXEL));
-	mousePos.y = static_cast<int>(floorf(static_cast<float>(mousePos.y) / METERS_PER_PIXEL));
+	worldSpace.x = floorf(static_cast<float>(mousePos.x) / METERS_PER_PIXEL);
+	worldSpace.y = floorf(static_cast<float>(mousePos.y) / METERS_PER_PIXEL);
 
-	return mousePos;
+	return worldSpace;
 }
