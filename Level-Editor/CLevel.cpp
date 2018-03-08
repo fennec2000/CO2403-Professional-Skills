@@ -287,6 +287,11 @@ void CLevel::LoadLevel()
 	mapFile.close();
 }
 
+void CLevel::ChangeSelectedTile(ETileType tileType)
+{
+	currentlySelectedTile = tileType;
+}
+
 SVector2D<float> CLevel::findCursorTilePos()
 {
 	// Finds the mouse pixel position

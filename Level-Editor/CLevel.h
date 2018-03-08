@@ -14,6 +14,8 @@ public:
 	void ExportLevel();
 	void LoadLevel();
 
+	void ChangeSelectedTile(ETileType tileType);
+
 private:
 
 	SVector2D<float> findCursorTilePos();

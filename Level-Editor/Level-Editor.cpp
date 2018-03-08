@@ -43,6 +43,14 @@ void main()
 	// Creates the button
 	CButton* loadButton = new CButton(&loadButtonData, "Load");
 
+	// Title fonts for the 2 side tabs
+	IFont* tileBarTitleFont = pCore->GetTLEngine()->LoadFont("Font1.bmp");
+	IFont* tileInfoBarTitleFont = pCore->GetTLEngine()->LoadFont("Font1.bmp");
+
+	// Delete button & font hint
+	CButtonSprite* deleteButton = new CButtonSprite("BinIcon.png", "BinIconHover.png", { 975.0f, 425.0f }, { 64.0f, 64.0f });
+	IFont* deleteTileFont = pCore->GetTLEngine()->LoadFont("Font1.bmp");
+
 	// The main game loop, repeat until engine is stopped
 	while (pCore->GetTLEngine()->IsRunning())
 	{
@@ -60,6 +68,15 @@ void main()
 		{
 			pCore->GetLevel()->LoadLevel();
 		}
+		if (deleteButton->CheckClick())
+		{
+			pCore->GetLevel()->ChangeSelectedTile(NO_TILE);
+		}
+
+		// Fonts
+		tileBarTitleFont->Draw("Tiles", 1090, 80);
+		tileInfoBarTitleFont->Draw("Selected Tile", 1060, 510);
+		deleteTileFont->Draw("Remove Tile", 1070, 450);
 
 		// Checks if the user wishes to exit
 		if (pCore->GetInput()->KeyHit(Key_Escape))

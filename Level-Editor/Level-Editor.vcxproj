@@ -126,6 +126,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CButton.cpp" />
+    <ClCompile Include="CButtonSprite.cpp" />
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CHoverUI.cpp" />
     <ClCompile Include="CInput.cpp" />
@@ -145,6 +146,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
   <ItemGroup>
     <ClInclude Include="BUILD_ORDER.h" />
     <ClInclude Include="CButton.h" />
+    <ClInclude Include="CButtonSprite.h" />
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CHoverUI.h" />
     <ClInclude Include="CInput.h" />
@@ -160,6 +162,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="SUIData.h" />
     <ClInclude Include="SVector2D.h" />
     <ClInclude Include="SVector3D.h" />
+    <ClInclude Include="TileNameSettings.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

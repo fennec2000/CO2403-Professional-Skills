@@ -30,6 +30,7 @@
 #include "CHoverUI.h"
 #include "CButton.h"
 #include "CTextInputBox.h"
+#include "CButtonSprite.h"
 
 // Level System
 #include "ETileType.h"
