@@ -37,6 +37,7 @@ public:
 
 	// By rotation
 	void RotateZ(float amount);
+	void ResetZRot();
 
 	// Getters
 	SVector3D<float> GetPosition3D();

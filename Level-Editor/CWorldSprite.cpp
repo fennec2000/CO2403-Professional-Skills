@@ -207,6 +207,12 @@ void CWorldSprite::RotateZ(float amount)
 	mpSpriteModel->RotateLocalZ(amount);
 }
 
+void CWorldSprite::ResetZRot()
+{
+	mpSpriteModel->ResetOrientation();
+	mpSpriteModel->RotateLocalZ(180.0f);
+}
+
 // Getters
 SVector3D<float> CWorldSprite::GetPosition3D()
 {

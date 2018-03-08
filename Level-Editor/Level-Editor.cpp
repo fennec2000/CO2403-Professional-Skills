@@ -52,8 +52,14 @@ void main()
 		/**** Update your scene each frame here ****/
 
 		// Update ui elements
-		saveButton->Update();
-		loadButton->Update();
+		if (saveButton->Update())
+		{
+			pCore->GetLevel()->ExportLevel();
+		}
+		if (loadButton->Update())
+		{
+			pCore->GetLevel()->LoadLevel();
+		}
 
 		// Checks if the user wishes to exit
 		if (pCore->GetInput()->KeyHit(Key_Escape))
