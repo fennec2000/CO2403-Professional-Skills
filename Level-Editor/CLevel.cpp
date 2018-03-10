@@ -22,7 +22,7 @@ CLevel::CLevel()
 		{
 			tileMap[i]->push_back(NO_TILE);
 
-			// Dont bother genrateing sprites for void tile as this tanks TL-Engines performace
+			// Dont bother genrateing sprites for void tile as this tanks TL-Engine performace
 			//levelSprites[i]->push_back(new CWorldSprite(VOID_TILE_SPRITE_NAME, {(float)i, (float)j, LEVEL_TILE_Z_POS}));
 			//levelSprites[i]->at(j)->SetZ(-50.0f);
 
