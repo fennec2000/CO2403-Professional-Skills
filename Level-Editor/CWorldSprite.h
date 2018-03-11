@@ -1,6 +1,5 @@
 // CWorldSprite.h 12-02-2018
 // William John Atkin WJAtkin@UCLan.ac.uk
-
 #pragma once
 #include "BUILD_ORDER.h"
 
@@ -8,6 +7,7 @@ class CWorldSprite : protected SBaseSprite
 {
 public:
 	// Constructers
+	CWorldSprite();
 	CWorldSprite(const char* pSpriteName, SVector3D<float> position);
 	CWorldSprite(const char* pSpriteName, SVector2D<float> position);
 	// Destructers
@@ -49,12 +49,12 @@ public:
 	// Spirte utills
 	void SetSpriteSkin(const char* pSpriteName);
 
-private:
+protected:
 	tle::IModel* mpSpriteModel;
 	
 	static int mInstanceCount;
 	static tle::IMesh* mpMesh;
 
-	const char* SPRITE_WORLD_MODEL = "quad.x";
+	char* mSpriteWorldModel = "quad.x";
 };
 

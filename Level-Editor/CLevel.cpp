@@ -11,7 +11,7 @@ CLevel::CLevel()
 	mpInput = CCore::GetInstance()->GetInput();
 
 	// Creates the highlight sprite
-	cursorHighlightSprite = new CWorldSprite(HIGHLIGHT_SPRITE_NAME, DEFAULT_SPRITE_POS);
+	cursorHighlightSprite = new CWorldSpriteMul(HIGHLIGHT_SPRITE_NAME, DEFAULT_SPRITE_POS);
 
 	// Fills the sprite level tiles with empty sprites
 	for (int i = 0; i < MAP_MAX_SIZE.x; i++)

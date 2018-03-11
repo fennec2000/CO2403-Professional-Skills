@@ -24,6 +24,7 @@
 #include "SBaseSprite.h"
 #include "CUISprite.h"
 #include "CWorldSprite.h"
+#include "CWorldSpriteMul.h"
 
 // UI System
 #include "SUIData.h"

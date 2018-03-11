@@ -7,6 +7,8 @@ int CWorldSprite::mInstanceCount = 0;
 tle::IMesh* CWorldSprite::mpMesh = nullptr;
 
 // Constructers
+CWorldSprite::CWorldSprite() { }
+
 CWorldSprite::CWorldSprite(const char* pSpriteName, SVector3D<float> position)
 {
 	// Sets the variables
@@ -16,7 +18,7 @@ CWorldSprite::CWorldSprite(const char* pSpriteName, SVector3D<float> position)
 	if (mInstanceCount == 0)
 	{
 		// Loads the mesh in
-		mpMesh = CCore::GetInstance()->GetTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
+		mpMesh = CCore::GetInstance()->GetTLEngine()->LoadMesh(mSpriteWorldModel);
 	}
 
 	// Creates the model
@@ -39,7 +41,7 @@ CWorldSprite::CWorldSprite(const char* pSpriteName, SVector2D<float> position)
 	if (mInstanceCount == 0)
 	{
 		// Loads the mesh in
-		mpMesh = CCore::GetInstance()->GetTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
+		mpMesh = CCore::GetInstance()->GetTLEngine()->LoadMesh(mSpriteWorldModel);
 	}
 
 	// Creates the model
