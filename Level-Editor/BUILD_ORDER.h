@@ -34,6 +34,10 @@
 
 // Level System
 #include "ETileType.h"
+#include "ESpawnerTypes.h"
+#include "SMapData.h"
+#include "TileNameSettings.h"
+#include "CMapIO.h"
 #include "CLevel.h"
 
 // Core

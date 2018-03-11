@@ -27,7 +27,7 @@
       <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="CLevel.cpp">
-      <Filter>Level</Filter>
+      <Filter>LevelSystem</Filter>
     </ClCompile>
     <ClCompile Include="CCore.cpp">
       <Filter>Core</Filter>
@@ -40,6 +40,15 @@
     </ClCompile>
     <ClCompile Include="CTextInputBox.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="SMapData.cpp">
+      <Filter>LevelSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CMapIO.cpp">
+      <Filter>LevelSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TileNameSettings.cpp">
+      <Filter>LevelSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,11 +86,8 @@
     <ClInclude Include="SUIData.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="TileNameSettings.h">
-      <Filter>Map</Filter>
-    </ClInclude>
     <ClInclude Include="CLevel.h">
-      <Filter>Level</Filter>
+      <Filter>LevelSystem</Filter>
     </ClInclude>
     <ClInclude Include="CCore.h">
       <Filter>Core</Filter>
@@ -95,17 +101,23 @@
     <ClInclude Include="CTextInputBox.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="ESpawnerTypes.h">
+      <Filter>LevelSystem</Filter>
+    </ClInclude>
     <ClInclude Include="ETileType.h">
-      <Filter>Map</Filter>
+      <Filter>LevelSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SMapData.h">
+      <Filter>LevelSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TileNameSettings.h">
+      <Filter>LevelSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CMapIO.h">
+      <Filter>LevelSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Level">
-      <UniqueIdentifier>{a5241cdc-75d4-4ddd-b357-f9cdc8dfa047}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Map">
-      <UniqueIdentifier>{ed1d4132-1730-4ba3-8d9c-0a27357276ec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{50c7f2b0-e448-48f9-96c3-fb316f5f2693}</UniqueIdentifier>
     </Filter>
@@ -117,6 +129,9 @@
     </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{0eb0a309-fc72-4151-be9a-132fce563f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LevelSystem">
+      <UniqueIdentifier>{a5241cdc-75d4-4ddd-b357-f9cdc8dfa047}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

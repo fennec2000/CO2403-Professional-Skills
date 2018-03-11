@@ -131,6 +131,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="CHoverUI.cpp" />
     <ClCompile Include="CInput.cpp" />
     <ClCompile Include="CLevel.cpp" />
+    <ClCompile Include="CMapIO.cpp" />
     <ClCompile Include="CTextInputBox.cpp" />
     <ClCompile Include="CTime.cpp" />
     <ClCompile Include="CUISprite.cpp" />
@@ -138,7 +139,9 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="Level-Editor.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="SBaseSprite.cpp" />
+    <ClCompile Include="SMapData.cpp" />
     <ClCompile Include="SMatrix4x4.cpp" />
+    <ClCompile Include="TileNameSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BUILD_ORDER.h" />
@@ -148,13 +151,16 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="CHoverUI.h" />
     <ClInclude Include="CInput.h" />
     <ClInclude Include="CLevel.h" />
+    <ClInclude Include="CMapIO.h" />
     <ClInclude Include="CTextInputBox.h" />
     <ClInclude Include="CTime.h" />
     <ClInclude Include="CUISprite.h" />
     <ClInclude Include="CWorldSprite.h" />
+    <ClInclude Include="ESpawnerTypes.h" />
     <ClInclude Include="ETileType.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="SBaseSprite.h" />
+    <ClInclude Include="SMapData.h" />
     <ClInclude Include="SMatrix4x4.h" />
     <ClInclude Include="SUIData.h" />
     <ClInclude Include="SVector2D.h" />

@@ -2,6 +2,8 @@
 // William John Atkin WJAtkin@UCLan.ac.uk
 #include "BUILD_ORDER.h"
 
+const SVector2D<int> CLevel::MAP_MAX_SIZE = { 128, 128 };
+
 CLevel::CLevel()
 {
 	// Sets the pointers
@@ -11,17 +13,12 @@ CLevel::CLevel()
 	// Creates the highlight sprite
 	cursorHighlightSprite = new CWorldSprite(HIGHLIGHT_SPRITE_NAME, DEFAULT_SPRITE_POS);
 
-	// Creates the tile map fully and fills it with NO_TILE
-	// Also fills the sprite level tiles with empty sprites
+	// Fills the sprite level tiles with empty sprites
 	for (int i = 0; i < MAP_MAX_SIZE.x; i++)
 	{
-		tileMap.push_back(new vector<ETileType>);
 		levelSprites.push_back(new vector<CWorldSprite*>);
-
 		for (int j = 0; j < MAP_MAX_SIZE.y; j++)
 		{
-			tileMap[i]->push_back(NO_TILE);
-
 			// Dont bother genrateing sprites for void tile as this tanks TL-Engine performace
 			//levelSprites[i]->push_back(new CWorldSprite(VOID_TILE_SPRITE_NAME, {(float)i, (float)j, LEVEL_TILE_Z_POS}));
 			//levelSprites[i]->at(j)->SetZ(-50.0f);
@@ -32,10 +29,7 @@ CLevel::CLevel()
 	}
 }
 
-CLevel::~CLevel()
-{
-
-}
+CLevel::~CLevel() { }
 
 void CLevel::Update()
 {
@@ -128,7 +122,7 @@ void CLevel::Update()
 		int yPos = static_cast<int>(tilePos.y);
 
 		// Changes the tile map
-		tileMap[xPos]->at(yPos) = currentlySelectedTile;
+		mMapData.mTileMap[yPos].at(xPos) = currentlySelectedTile;
 
 		// Checks if the user is deleting tiles
 		if (currentlySelectedTile == NO_TILE)
@@ -149,142 +143,87 @@ void CLevel::Update()
 		switch (currentlySelectedTile)
 		{
 		case WALL:
-			levelSprites[xPos]->at(yPos)->SetSpriteSkin("FullWall.png");
-			levelSprites[xPos]->at(yPos)->ResetZRot();
+			levelSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::FULL_WALL);
 			break;
 		case FLOOR:
-			levelSprites[xPos]->at(yPos)->SetSpriteSkin("Floor.png");
-			levelSprites[xPos]->at(yPos)->ResetZRot();
+			levelSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::FLOOR);
 			break;
 		case SPAWN:
-			levelSprites[xPos]->at(yPos)->SetSpriteSkin("FloorSpawn.png");
-			levelSprites[xPos]->at(yPos)->ResetZRot();
+			levelSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::FLOOR_SPAWN);
 			break;
 		case WALL_WITH_SIDE:
-			levelSprites[xPos]->at(yPos)->SetSpriteSkin("WallSide.png");
-			levelSprites[xPos]->at(yPos)->ResetZRot();
+			levelSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::WALL_SIDE);
 			break;
 		case WALL_WITH_SIDE_FLIPPED_Y:
-			levelSprites[xPos]->at(yPos)->SetSpriteSkin("WallSide.png");
-			levelSprites[xPos]->at(yPos)->ResetZRot();
-			levelSprites[xPos]->at(yPos)->RotateZ(180.0f);
+			levelSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::WALL_SIDE_FLIPPED_Y);
 			break;
 		}
-		
 	}
-
 }
 
 void CLevel::ExportLevel()
 {
-	ofstream myOutputFile;
-	myOutputFile.open("MapFile.txt");
-
-	for (int i = 0; i < MAP_MAX_SIZE.x; i++)
-	{
-		for (int j = 0; j < MAP_MAX_SIZE.y; j++)
-		{
-			myOutputFile << tileMap[j]->at(i) << " ";
-		}
-		myOutputFile << "\n";
-	}
-
-	myOutputFile.close();
+	CMapIO::SaveMapFile(&mMapData, "TestMap");
 }
 
 void CLevel::LoadLevel()
 {
-	std::ifstream mapFile;
+	UnloadMap();
+	mMapData = CMapIO::ReadMapFile("TestMap");
+	GenerateMap();
+}
 
-	vector<vector<ETileType>*> newTileMap;
-
-	// Open the file and check if it worked
-	mapFile.open("MapFile.txt");
-	if (!mapFile)
+void CLevel::GenerateMap()
+{
+	for (int yPos = 0; yPos < MAP_MAX_SIZE.y; yPos++)
 	{
-		return;
+		for (int xPos = 0; xPos < MAP_MAX_SIZE.x; xPos++)
+		{
+			// Check if there is a tile to display
+			if (mMapData.mTileMap[yPos].at(xPos) != NO_TILE)
+			{
+				// Create the sprite
+				switch (mMapData.mTileMap[yPos].at(xPos))
+				{
+				case WALL:
+					GenerateSprite(TileNames::FULL_WALL, { xPos, yPos });
+					break;
+				case FLOOR:
+					GenerateSprite(TileNames::FLOOR, { xPos, yPos });
+					break;
+				case SPAWN:
+					GenerateSprite(TileNames::FLOOR_SPAWN, { xPos, yPos });
+					break;
+				case WALL_WITH_SIDE:
+					GenerateSprite(TileNames::WALL_SIDE, { xPos, yPos });
+					break;
+				case WALL_WITH_SIDE_FLIPPED_Y:
+					GenerateSprite(TileNames::WALL_SIDE_FLIPPED_Y, { xPos, yPos });
+					break;
+				}
+			}
+		}
 	}
-	std::cout << "Running!\n";
-	// Creates the tile map fully and fills it with NO_TILE
+}
+
+void CLevel::UnloadMap()
+{
+	// Reset all the data
+	mMapData = SMapData();
+
+	// Reset all of the sprites to NULL
 	for (int i = 0; i < MAP_MAX_SIZE.x; i++)
 	{
-		newTileMap.push_back(new vector<ETileType>);
 		for (int j = 0; j < MAP_MAX_SIZE.y; j++)
 		{
-			newTileMap[i]->push_back(NO_TILE);
+			// Check if there is a sprite here
+			if (levelSprites[j]->at(i) != nullptr)
+			{
+				delete levelSprites[j]->at(i);
+				levelSprites[j]->at(i) = nullptr;
+			}
 		}
 	}
-
-	// Reads the file
-	char ch;
-	int xPos = 0;
-	int yPos = 0;
-	while (mapFile.get(ch))
-	{
-		// Checks if char is valid
-		switch (ch)
-		{
-		case (char)NO_TILE + 48:
-			delete levelSprites[xPos]->at(yPos);
-			levelSprites[xPos]->at(yPos) = nullptr;
-			break;
-
-		case (char)WALL + 48:
-			newTileMap[xPos]->at(yPos) = WALL;
-			GenerateSprite("FullWall.png", {xPos, yPos});
-			break;
-
-		case (char)FLOOR + 48:
-			newTileMap[xPos]->at(yPos) = FLOOR;
-			GenerateSprite("Floor.png", { xPos, yPos });
-			break;
-
-		case (char)WALL_WITH_SIDE + 48:
-			newTileMap[xPos]->at(yPos) = WALL_WITH_SIDE;
-			GenerateSprite("WallSide.png", { xPos, yPos });
-			break;
-
-		case (char)WALL_WITH_SIDE_FLIPPED_Y + 48:
-			newTileMap[xPos]->at(yPos) = WALL_WITH_SIDE_FLIPPED_Y;
-			GenerateSprite("WallSide.png", { xPos, yPos });
-			levelSprites[xPos]->at(yPos)->RotateZ(180.0f);
-			break;
-
-		case (char)SPAWN + 48:
-			newTileMap[xPos]->at(yPos) = SPAWN;
-			GenerateSprite("FloorSpawn.png", { xPos, yPos });
-			break;
-
-		case ' ':
-			// Blank, do nothing
-			break;
-
-		case '\n':
-			yPos++;
-			xPos = 0;
-			break;
-
-		default:
-			// Char is invalid
-			mapFile.close();
-			return;
-		}
-
-		if (ch != ' ' && ch != '\n')
-		{
-			xPos++;
-		}
-	}
-
-	// Delete old tile map and use this new one
-	for (int i = 0; i < MAP_MAX_SIZE.y; i++)
-	{
-		delete tileMap[i];
-	}
-	tileMap = newTileMap;
-
-	// Close file
-	mapFile.close();
 }
 
 void CLevel::ChangeSelectedTile(ETileType tileType)

@@ -9,30 +9,31 @@ public:
 	CLevel();
 	~CLevel();
 
+	// Called once per frame
 	void Update();
 
+	// IO
 	void ExportLevel();
 	void LoadLevel();
 
+	// Building Utills
 	void ChangeSelectedTile(ETileType tileType);
+	
+	// Map genration and unloading
+	void GenerateMap();
+	void UnloadMap();
+
+	static const SVector2D<int> MAP_MAX_SIZE;
 
 private:
-
 	SVector2D<float> findCursorTilePos();
-
 	void GenerateSprite(const char* pSpriteName, SVector2D<int> position);
 
-	// Level settings
-	const SVector2D<int> MAP_MAX_SIZE = { 128, 128 };
-
-	// Tile map
-	vector<vector<ETileType>*> tileMap;
+	// Map data
+	SMapData mMapData;
 	vector<vector<CWorldSprite*>*> levelSprites;
 
 	ETileType currentlySelectedTile = NO_TILE;
-
-	// Tile skin names
-	const char* VOID_TILE_SPRITE_NAME = "VoidTile.png";
 
 	// Level pan controls
 	const tle::EKeyCode PAN_UP = tle::Key_W;

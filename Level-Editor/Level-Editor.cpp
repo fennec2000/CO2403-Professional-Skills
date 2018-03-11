@@ -79,6 +79,7 @@ void main()
 		{
 			pCore->GetLevel()->ChangeSelectedTile(NO_TILE);
 		}
+
 		// Tiles
 		if (FullWallButton->CheckClick())
 		{
