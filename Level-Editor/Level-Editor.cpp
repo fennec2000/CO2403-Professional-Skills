@@ -56,6 +56,7 @@ void main()
 	CButtonSprite* FloorButton = new CButtonSprite("Floor.png", "Floor.png", { 1049.0f, 120.0f }, { 64.0f, 64.0f });
 	CButtonSprite* FloorSpawnButton = new CButtonSprite("FloorSpawn.png", "FloorSpawn.png", { 1123.0f, 120.0f }, { 64.0f, 64.0f });
 	CButtonSprite* WallSideButton = new CButtonSprite("WallSide.png", "WallSide.png", { 1197.0f, 120.0f }, { 64.0f, 64.0f });
+	CButtonSprite* WallSideFlipedButton = new CButtonSprite("WallSideFliped.png", "WallSideFliped.png", { 975.0f, 192.0f }, { 64.0f, 64.0f });
 
 	// The main game loop, repeat until engine is stopped
 	while (pCore->GetTLEngine()->IsRunning())
@@ -94,6 +95,10 @@ void main()
 		if (WallSideButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(WALL_WITH_SIDE);
+		}
+		if (WallSideFlipedButton->CheckClick())
+		{
+			pCore->GetLevel()->ChangeSelectedTile(WALL_WITH_SIDE_FLIPPED_Y);
 		}
 
 		// Fonts
