@@ -41,6 +41,9 @@
     <ClCompile Include="CEnemyShotgun.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
+    <ClCompile Include="CBullet.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -110,6 +113,9 @@
       <Filter>SpriteSystem</Filter>
     </ClInclude>
     <ClInclude Include="CEnemyShotgun.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet.h">
       <Filter>Entity</Filter>
     </ClInclude>
   </ItemGroup>

@@ -59,8 +59,7 @@ else
 
 void CTestEnemy::Shoot()
  {
-	float enemyX = pCharSprite->GetX();
-	float enemyY = pCharSprite->GetY();
+	CBullet* 
 	SVector2D<float> enemyPos = pCharSprite->GetPosition2D();
 	SVector2D<float> playerPos;
 	playerPos.x = pC->GetPlayer(Player1)->GetX();
@@ -70,7 +69,7 @@ void CTestEnemy::Shoot()
 	float lenght = sqrt(mFireVector.x * mFireVector.x + mFireVector.y * mFireVector.y);
 	mFireVector.x /= lenght;
 	mFireVector.y /= lenght;
-	pC->AddBullet(enemyX, enemyY, mFireVector);
+	pC->AddBullet(enemyPos.x, enemyPos.y, mFireVector);
 	}
 
 void CTestEnemy::Death()

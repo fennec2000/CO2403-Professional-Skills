@@ -32,6 +32,7 @@
 #include "CLevel.h"
 
 // Entity
+#include "CBullet.h"
 #include "CCharacter.h"
 #include "CPlayer.h"
 #include "CEProjectile.h"
