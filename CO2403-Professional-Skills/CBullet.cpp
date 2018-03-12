@@ -1,16 +1,27 @@
 #include "CBullet.h"
 
 
-
-CBullet::CBullet()
+CBullet::CBullet(bulletSetup givenSetup)
 {
+	pC = CCore::GetInstance();
+	pCharSprite = new CWorldSprite(givenSetup.spriteFileName.c_str(), givenSetup.spawnPos);
+	pFrameTimer = pC->GetFrameTimer();
+	mVector = givenSetup.travelVector;
+	mBulletTimerMax = givenSetup.BulletTimeMax;
+	mMoveSpeed = givenSetup.Speed;
 }
 
 
 CBullet::~CBullet()
 {
+	pCharSprite->~CWorldSprite();
 }
 
-void Update()
+void CBullet::Update()
 {
+	pCharSprite->MoveX(mVector.x * *pFrameTimer * mMoveSpeed);
+	pCharSprite->MoveY(mVector.y * *pFrameTimer * mMoveSpeed);
+	mBulletTimerCurrent += *pFrameTimer;
+	if (mBulletTimerCurrent >= mBulletTimerMax)
+		CBullet::~CBullet();
 }

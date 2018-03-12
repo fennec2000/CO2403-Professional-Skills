@@ -23,6 +23,7 @@ public:
 
 	// Operator overloads
 	SVector2D<T>& operator=(const SVector2D<T>& rhs);
+	SVector2D<T>& operator*=(const SVector2D<T>& rhs);
 	SVector2D<T> operator+(const SVector2D<T>& rhs);
 	SVector2D<T> operator-(const SVector2D<T>& rhs);
 	bool operator==(const SVector2D<T>& rhs);
@@ -93,6 +94,15 @@ SVector2D<T>& SVector2D<T>::operator=(const SVector2D<T>& rhs)
 {
 	x = rhs.x;
 	y = rhs.y;
+	return (*this);
+}
+
+// multiplication assignment
+template <class T>
+SVector2D<T>& SVector2D<T>::operator*=(const SVector2D<T>& rhs)
+{
+	x *= rhs.x;
+	y *= rhs.y;
 	return (*this);
 }
 
