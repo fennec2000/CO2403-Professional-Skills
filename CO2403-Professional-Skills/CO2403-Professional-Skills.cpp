@@ -16,7 +16,7 @@ void main()
 
 	/**** Set up your scene here ****/
 	// Level test
-	c->GetLevel()->LoadLevelFromMapFile("testMap1.txt");
+	c->GetLevel()->LoadLevel("Levels\\Test");
 	SVector2D<float> spawnPos = c->GetLevel()->GetSpawnPos();
 
 	// Player
@@ -25,16 +25,13 @@ void main()
 
 
 	// Monster
-	CTestEnemy* mMonster = new CTestEnemy(3.0f, 0, 0.0f, true);
+	//CTestEnemy* mMonster = new CTestEnemy(3.0f, 0, 0.0f, true);
 
 	// Monster Test
 	CWorldSprite* mWorldSprite;
 	mWorldSprite = new CWorldSprite("derp.png", { spawnPos.x + 1.0f, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Enemy]});
 
 	float* deltaTime = c->GetFrameTimer();
-
-	CWorldSprite* pAnSprite;
-	pAnSprite = new CWorldSprite("Arrow.png", { spawnPos.x + 5.0f, spawnPos.y - 5.0f, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Enemy] });
 
 	// The main game loop, repeat until engine is stopped
 	while (myEngine->IsRunning())
@@ -44,9 +41,6 @@ void main()
 
 		// player update
 		pThePlayer->Update();
-		mMonster->Update();
-
-		pAnSprite->LookAt(pThePlayer->GetX(), pThePlayer->GetY(), G_SPRITE_LAYER_Z_POS[ESpriteLayers::Enemy]);
 
 		/**** Update your scene each frame here ****/
 

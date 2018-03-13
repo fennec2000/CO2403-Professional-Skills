@@ -38,6 +38,15 @@
     <ClCompile Include="CAnimatedWorldSprite.cpp">
       <Filter>SpriteSystem</Filter>
     </ClCompile>
+    <ClCompile Include="SMapData.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="CMapIO.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="NameSettings.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -105,6 +114,21 @@
     </ClInclude>
     <ClInclude Include="CAnimatedWorldSprite.h">
       <Filter>SpriteSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ESpriteBlend.h">
+      <Filter>SpriteSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ESpawnerTypes.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="SMapData.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="CMapIO.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="NameSettings.h">
+      <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

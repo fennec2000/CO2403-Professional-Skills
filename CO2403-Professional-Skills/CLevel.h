@@ -4,13 +4,16 @@
 #pragma once
 #include "BUILD_ORDER.h"
 
+class CTestEnemy;
+
 class CLevel
 {
 public:
 	CLevel();
 	~CLevel();
 
-	void LoadLevelFromMapFile(const char* pFilePath);
+	void Update();
+
 	SVector2D<float> GetSpawnPos();
 
 	ETileType GetTile(int x, int y);
@@ -19,15 +22,23 @@ public:
 	bool GetTileCollision(int x, int y);
 	bool GetTileCollision(SVector2D<int> position);
 
+	// Map genration and unloading
+	void LoadLevel(const char* filePath);
+
+	static const SVector2D<int> MAP_MAX_SIZE;
+
 private:
 
 	void GenerateLevel();
-	void ReadFileToTileMap(const char* pFilePath);
-	void ClearLevel();
+	void UnloadLevel();
 
-	vector<vector<ETileType>*>* mTileMap;
+	vector<CTestEnemy*> testEnemies;
+
+	SMapData mMapData;
 	vector<vector<bool>*>* mCollisionMap;
-	vector<CWorldSprite*>* mWorldSprites;
+	vector<vector<CWorldSprite*>*> mWorldSprites;
 
 	SVector2D<float> mSpawnPos;
+
+	void GenerateSprite(const char* pSpriteName, SVector2D<int> position);
 };

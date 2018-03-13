@@ -1,74 +1,127 @@
 // CWorldSprite.cpp 12-02-2018
 // William John Atkin WJAtkin@UCLan.ac.uk
-
 #include "BUILD_ORDER.h"
 
 // Inits the static variables
-int CWorldSprite::mInstanceCount = 0;
-tle::IMesh* CWorldSprite::mpMesh = nullptr;
+// Normal model
+int CWorldSprite::mNormalInstanceCount = 0;
+tle::IMesh* CWorldSprite::mpNormalMesh = nullptr;
+// Cutout model
+int CWorldSprite::mCutoutInstanceCount = 0;
+tle::IMesh* CWorldSprite::mpCutoutMesh = nullptr;
+// Multi model
+int CWorldSprite::mMultiInstanceCount = 0;
+tle::IMesh* CWorldSprite::mpMultiMesh = nullptr;
 
 // Constructers
-CWorldSprite::CWorldSprite(const char* pSpriteName, SVector3D<float> position)
+CWorldSprite::CWorldSprite() { }
+
+CWorldSprite::CWorldSprite(const char* pSpriteName, SVector3D<float> position, ESpriteBlend blending)
 {
-	// Sets the variables
-	mOrigin = { position.x, position.y, position.z };
-
-	// Checks if this is the first instance
-	if (mInstanceCount == 0)
-	{
-		// Loads the mesh in
-		mpMesh = CCore::GetInstance()->GetTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
-	}
-
-	// Creates the model
-	mpSpriteModel = mpMesh->CreateModel(mOrigin.x, mOrigin.y, mOrigin.z);
-	mpSpriteModel->RotateLocalZ(180.0f); // Rotates the sprites the correct way up
-
-	// Sets the skin
-	mpSpriteModel->SetSkin(pSpriteName);
-
-	// Incrementation
-	mInstanceCount++;
+	this->ConstructSprite(pSpriteName, position, blending);
 }
 
-CWorldSprite::CWorldSprite(const char* pSpriteName, SVector2D<float> position)
+CWorldSprite::CWorldSprite(const char* pSpriteName, SVector2D<float> position, ESpriteBlend blending)
+{
+	this->ConstructSprite(pSpriteName, { position.x, position.y, DEFAULT_Z_POS }, blending);
+}
+
+// Utill function for construtuctor
+void CWorldSprite::ConstructSprite(const char* pSpriteName, SVector3D<float> position, ESpriteBlend blending)
 {
 	// Sets the variables
-	mOrigin = { position.x, position.y, DEFAULT_Z_POS };
+	mOrigin = position;
+	blendingUsed = blending;
 
-	// Checks if this is the first instance
-	if (mInstanceCount == 0)
+	IMesh* meshToUse = nullptr;
+	switch (blending)
 	{
-		// Loads the mesh in
-		mpMesh = CCore::GetInstance()->GetTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
+	case BLEND_NORMAL:
+		// Checks if this is the first instance
+		if (mNormalInstanceCount == 0)
+		{
+			// Loads the mesh in
+			mpNormalMesh = CCore::GetInstance()->GetTLEngine()->LoadMesh(SPRITE_WORLD_MODEL);
+		}
+		meshToUse = mpNormalMesh;
+		++mNormalInstanceCount;
+		break;
+	case BLEND_CUTOUT:
+		// Checks if this is the first instance
+		if (mCutoutInstanceCount == 0)
+		{
+			// Loads the mesh in
+			mpCutoutMesh = CCore::GetInstance()->GetTLEngine()->LoadMesh(SPRITE_WORLD_MODEL_CUTOUT);
+		}
+		meshToUse = mpCutoutMesh;
+		++mCutoutInstanceCount;
+		break;
+	case BLEND_MULTIPLICATIVE:
+		// Checks if this is the first instance
+		if (mMultiInstanceCount == 0)
+		{
+			// Loads the mesh in
+			mpMultiMesh = CCore::GetInstance()->GetTLEngine()->LoadMesh(SPRITE_WORLD_MODEL_MULTI);
+		}
+		meshToUse = mpMultiMesh;
+		++mMultiInstanceCount;
+		break;
 	}
 
 	// Creates the model
-	mpSpriteModel = mpMesh->CreateModel(mOrigin.x, mOrigin.y, mOrigin.z);
-	mpSpriteModel->RotateLocalZ(180.0f); // Rotates the sprites the correct way up
-
+	mpSpriteModel = meshToUse->CreateModel(mOrigin.x, mOrigin.y, mOrigin.z);
+	// Rotates the sprites the correct way up
+	mpSpriteModel->RotateLocalZ(180.0f);
 	// Sets the skin
 	mpSpriteModel->SetSkin(pSpriteName);
-
-	// Incrementation
-	mInstanceCount++;
 }
 
 // Destructers
 CWorldSprite::~CWorldSprite()
 {
 	// Clean up
-	mpMesh->RemoveModel(mpSpriteModel);
-
-	// Checks if this is the last instance
-	if (mInstanceCount == 1)
+	switch (blendingUsed)
 	{
-		// Removes the mesh to finish clean up
-		CCore::GetInstance()->GetTLEngine()->RemoveMesh(mpMesh);
-	}
+	case BLEND_NORMAL:
+		mpNormalMesh->RemoveModel(mpSpriteModel);
 
-	// Decrementation
-	mInstanceCount--;
+		// Checks if this is the last instance
+		if (mNormalInstanceCount == 1)
+		{
+			// Removes the mesh to finish clean up
+			CCore::GetInstance()->GetTLEngine()->RemoveMesh(mpNormalMesh);
+		}
+
+		// Decrementation
+		--mNormalInstanceCount;
+		break;
+	case BLEND_CUTOUT:
+		mpCutoutMesh->RemoveModel(mpSpriteModel);
+
+		// Checks if this is the last instance
+		if (mCutoutInstanceCount == 1)
+		{
+			// Removes the mesh to finish clean up
+			CCore::GetInstance()->GetTLEngine()->RemoveMesh(mpCutoutMesh);
+		}
+
+		// Decrementation
+		--mCutoutInstanceCount;
+		break;
+	case BLEND_MULTIPLICATIVE:
+		mpMultiMesh->RemoveModel(mpSpriteModel);
+
+		// Checks if this is the last instance
+		if (mMultiInstanceCount == 1)
+		{
+			// Removes the mesh to finish clean up
+			CCore::GetInstance()->GetTLEngine()->RemoveMesh(mpMultiMesh);
+		}
+
+		// Decrementation
+		--mMultiInstanceCount;
+		break;
+	}
 }
 
 // Lookat functions
@@ -206,6 +259,12 @@ void CWorldSprite::ResetPosition()
 void CWorldSprite::RotateZ(float amount)
 {
 	mpSpriteModel->RotateLocalZ(amount);
+}
+
+void CWorldSprite::ResetZRot()
+{
+	mpSpriteModel->ResetOrientation();
+	mpSpriteModel->RotateLocalZ(180.0f);
 }
 
 // Getters
