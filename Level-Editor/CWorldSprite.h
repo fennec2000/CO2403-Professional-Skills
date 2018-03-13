@@ -8,10 +8,13 @@ class CWorldSprite : protected SBaseSprite
 public:
 	// Constructers
 	CWorldSprite();
-	CWorldSprite(const char* pSpriteName, SVector3D<float> position);
-	CWorldSprite(const char* pSpriteName, SVector2D<float> position);
+	CWorldSprite(const char* pSpriteName, SVector3D<float> position, ESpriteBlend blending = BLEND_NORMAL);
+	CWorldSprite(const char* pSpriteName, SVector2D<float> position, ESpriteBlend blending = BLEND_NORMAL);
 	// Destructers
 	~CWorldSprite();
+
+	// Constructs the sprite
+	void ConstructSprite(const char* pSpriteName, SVector3D<float> position, ESpriteBlend blending = BLEND_NORMAL);
 
 	// Lookat functions
 	void LookAt(tle::ISceneNode* target);
@@ -52,9 +55,21 @@ public:
 protected:
 	tle::IModel* mpSpriteModel;
 	
-	static int mInstanceCount;
-	static tle::IMesh* mpMesh;
+	ESpriteBlend blendingUsed;
 
-	char* mSpriteWorldModel = "quad.x";
+	// Normal model
+	static int mNormalInstanceCount;
+	static tle::IMesh* mpNormalMesh;
+	// Cutout model
+	static int mCutoutInstanceCount;
+	static tle::IMesh* mpCutoutMesh;
+	// Multi model
+	static int mMultiInstanceCount;
+	static tle::IMesh* mpMultiMesh;
+
+	// Names of the .x models for the sprites in diffrent modes
+	const char* SPRITE_WORLD_MODEL = "quad.x";
+	const char* SPRITE_WORLD_MODEL_CUTOUT = "quad-cutout.x";
+	const char* SPRITE_WORLD_MODEL_MULTI = "quad-mul.x";
 };
 

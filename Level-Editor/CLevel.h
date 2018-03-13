@@ -58,7 +58,7 @@ private:
 	const char* HIGHLIGHT_SPRITE_NAME = "BlueTrans.png";
 	const char* HIGHLIGHT_OUT_OF_BOUNDS_SPRITE_NAME = "RedTrans.png";
 	const SVector3D<float> DEFAULT_SPRITE_POS = { 0.0f, 0.0f, 0.0f };
-	CWorldSpriteMul* cursorHighlightSprite;
+	CWorldSprite* cursorHighlightSprite;
 
 	// Level offset from camera
 	SVector2D<float> offSet;

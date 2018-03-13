@@ -136,7 +136,6 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="CTime.cpp" />
     <ClCompile Include="CUISprite.cpp" />
     <ClCompile Include="CWorldSprite.cpp" />
-    <ClCompile Include="CWorldSpriteMul.cpp" />
     <ClCompile Include="Level-Editor.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="SBaseSprite.cpp" />
@@ -157,8 +156,8 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="CTime.h" />
     <ClInclude Include="CUISprite.h" />
     <ClInclude Include="CWorldSprite.h" />
-    <ClInclude Include="CWorldSpriteMul.h" />
     <ClInclude Include="ESpawnerTypes.h" />
+    <ClInclude Include="ESpriteBlend.h" />
     <ClInclude Include="ETileType.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="SBaseSprite.h" />

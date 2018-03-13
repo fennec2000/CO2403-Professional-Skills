@@ -50,9 +50,6 @@
     <ClCompile Include="TileNameSettings.cpp">
       <Filter>LevelSystem</Filter>
     </ClCompile>
-    <ClCompile Include="CWorldSpriteMul.cpp">
-      <Filter>SpriteSystem</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BUILD_ORDER.h" />
@@ -119,7 +116,7 @@
     <ClInclude Include="CMapIO.h">
       <Filter>LevelSystem</Filter>
     </ClInclude>
-    <ClInclude Include="CWorldSpriteMul.h">
+    <ClInclude Include="ESpriteBlend.h">
       <Filter>SpriteSystem</Filter>
     </ClInclude>
   </ItemGroup>
