@@ -44,5 +44,6 @@ public:
 	void ChangeHealth(int change);
 	float GetX() { return pCharSprite->GetX(); };
 	float GetY() { return pCharSprite->GetY(); };
+	SVector2D<float> GetPos2D() { return pCharSprite->GetPosition2D(); };
 };
 

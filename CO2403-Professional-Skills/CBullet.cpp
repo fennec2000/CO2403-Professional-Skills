@@ -9,6 +9,7 @@ CBullet::CBullet(bulletSetup givenSetup)
 	mVector = givenSetup.travelVector;
 	mBulletTimerMax = givenSetup.BulletTimeMax;
 	mMoveSpeed = givenSetup.Speed;
+	pC->AddBullet(*this);
 }
 
 
@@ -23,5 +24,8 @@ void CBullet::Update()
 	pCharSprite->MoveY(mVector.y * *pFrameTimer * mMoveSpeed);
 	mBulletTimerCurrent += *pFrameTimer;
 	if (mBulletTimerCurrent >= mBulletTimerMax)
+	{
+		pC->RemoveBullet(*this);
 		CBullet::~CBullet();
+	}
 }

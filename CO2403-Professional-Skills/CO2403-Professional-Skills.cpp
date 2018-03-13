@@ -25,8 +25,8 @@ void main()
 
 
 	// Monster
-	//CTestEnemy* mMonster = new CTestEnemy(3.0f, 0, 0.0f, true);
-	CEnemyShotgun* mShotgun = new CEnemyShotgun(5.0f, 0, 0.0f, true);
+	CTestEnemy* mMonster = new CTestEnemy(spawnPos.x, spawnPos.y - 3.0f, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Enemy], true);
+	//CEnemyShotgun* mShotgun = new CEnemyShotgun(5.0f, 0, 0.0f, true);
 
 	// Monster Test
 	CWorldSprite* mWorldSprite;
@@ -45,8 +45,8 @@ void main()
 
 		// player update
 		pThePlayer->Update();
-		//mMonster->Update();
-		mShotgun->Update();
+		mMonster->Update();
+		//mShotgun->Update();
 
 		pAnSprite->LookAt(pThePlayer->GetX(), pThePlayer->GetY(), G_SPRITE_LAYER_Z_POS[ESpriteLayers::Enemy]);
 		

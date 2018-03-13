@@ -6,6 +6,7 @@ using namespace tle;
 // This holds data core to the game that needs to be passed arround
 
 // players
+class CBullet;
 class CPlayer;
 class CEProjectile;
 class CLevel;
@@ -31,6 +32,7 @@ private:
 	float mFrameTime;		// time between each frame
 	CPlayer* pPlayer[EPlayers::NumOfEPlayers];		// holds pointers to the players - possiable 2 player
 	CLevel* pLevel; // A pointer to the games level
+	vector<CBullet*> pActiveBullets;	// vector of pointers to all bullets
 	// vector<enemies>		// holds a list of enemies
 	EGameState mGameState;	// the current game state
 	unsigned int mGameScore;// the current score of the game
@@ -56,4 +58,6 @@ public:
 	// Setters
 	void AddPlayer(EPlayers player, CPlayer &givenPlayer);
 	void AddBullet(float ex, float ey, SVector2D<float> bulletVector);
+	void AddBullet(CBullet &givenBullet);
+	void RemoveBullet(CBullet &givenBullet);
 };
