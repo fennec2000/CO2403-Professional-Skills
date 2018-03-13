@@ -16,7 +16,7 @@ void main()
 
 	/**** Set up your scene here ****/
 	// Level test
-	c->GetLevel()->LoadLevel("Levels\\Test");
+	c->GetLevel()->LoadLevel("Levels\\TestLevel");
 	SVector2D<float> spawnPos = c->GetLevel()->GetSpawnPos();
 
 	// Player
