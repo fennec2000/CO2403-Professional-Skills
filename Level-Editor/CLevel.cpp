@@ -16,7 +16,8 @@ CLevel::CLevel()
 	// Fills the sprite level tiles with empty sprites
 	for (int i = 0; i < MAP_MAX_SIZE.x; i++)
 	{
-		levelSprites.push_back(new vector<CWorldSprite*>);
+		mMapSprites.push_back(new vector<CWorldSprite*>);
+		mSpawnerSprites.push_back(new vector<CWorldSprite*>);
 		for (int j = 0; j < MAP_MAX_SIZE.y; j++)
 		{
 			// Dont bother genrateing sprites for void tile as this tanks TL-Engine performace
@@ -24,7 +25,8 @@ CLevel::CLevel()
 			//levelSprites[i]->at(j)->SetZ(-50.0f);
 
 			// Insted we will init the pointer to NULL
-			levelSprites[i]->push_back(nullptr);
+			mMapSprites[i]->push_back(nullptr);
+			mSpawnerSprites[i]->push_back(nullptr);
 		}
 	}
 }
@@ -53,20 +55,6 @@ void CLevel::Update()
 	{
 		camera->MoveLocalX(-(*deltaTime) * CAMERA_PAN_SPEED);
 	}
-
-	// Checks if the user wants to change tile type
-	if (inputHandle->KeyHit(tle::Key_0))
-		currentlySelectedTile = NO_TILE;
-	if (inputHandle->KeyHit(tle::Key_1))
-		currentlySelectedTile = WALL;
-	if (inputHandle->KeyHit(tle::Key_2))
-		currentlySelectedTile = FLOOR;
-	if (inputHandle->KeyHit(tle::Key_3))
-		currentlySelectedTile = SPAWN;
-	if (inputHandle->KeyHit(tle::Key_4))
-		currentlySelectedTile = WALL_WITH_SIDE;
-	if (inputHandle->KeyHit(tle::Key_5))
-		currentlySelectedTile = WALL_WITH_SIDE_FLIPPED_Y;
 
 	// Checks if the mouse is in the level window
 	SVector2D<float> mousePos = { static_cast<float>(mpEngine->GetMouseX()), static_cast<float>(mpEngine->GetMouseY()) };
@@ -121,43 +109,75 @@ void CLevel::Update()
 		int xPos = static_cast<int>(tilePos.x);
 		int yPos = static_cast<int>(tilePos.y);
 
-		// Changes the tile map
-		mMapData.mTileMap[yPos].at(xPos) = currentlySelectedTile;
-
-		// Checks if the user is deleting tiles
-		if (currentlySelectedTile == NO_TILE)
+		// Checks the mode
+		if (mSelectedMode == 1)
 		{
-			// Delete the sprite
-			delete levelSprites[xPos]->at(yPos);
-			levelSprites[xPos]->at(yPos) = nullptr;
-			return;
-		}
+			// Changes the tile map
+			mMapData.mTileMap[yPos].at(xPos) = currentlySelectedTile;
 
-		// Creates a sprite if it is null
-		if (levelSprites[xPos]->at(yPos) == nullptr)
-		{
-			levelSprites[xPos]->at(yPos) = new CWorldSprite("", { (float)xPos, (float)yPos, LEVEL_TILE_Z_POS });
-		}
+			// Checks if the user is deleting tiles
+			if (currentlySelectedTile == NO_TILE)
+			{
+				// Delete the sprite
+				delete mMapSprites[xPos]->at(yPos);
+				mMapSprites[xPos]->at(yPos) = nullptr;
+				return;
+			}
 
-		// Changes the sprite
-		switch (currentlySelectedTile)
-		{
-		case WALL:
-			levelSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::FULL_WALL);
-			break;
-		case FLOOR:
-			levelSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::FLOOR);
-			break;
-		case SPAWN:
-			levelSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::FLOOR_SPAWN);
-			break;
-		case WALL_WITH_SIDE:
-			levelSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::WALL_SIDE);
-			break;
-		case WALL_WITH_SIDE_FLIPPED_Y:
-			levelSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::WALL_SIDE_FLIPPED_Y);
-			break;
+			// Creates a sprite if it is null
+			if (mMapSprites[xPos]->at(yPos) == nullptr)
+			{
+				mMapSprites[xPos]->at(yPos) = new CWorldSprite("", { (float)xPos, (float)yPos, LEVEL_TILE_Z_POS });
+			}
+
+			// Changes the sprite
+			switch (currentlySelectedTile)
+			{
+			case WALL:
+				mMapSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::FULL_WALL);
+				break;
+			case FLOOR:
+				mMapSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::FLOOR);
+				break;
+			case WALL_WITH_SIDE:
+				mMapSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::WALL_SIDE);
+				break;
+			case WALL_WITH_SIDE_FLIPPED_Y:
+				mMapSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::WALL_SIDE_FLIPPED_Y);
+				break;
+			}
 		}
+		else if (mSelectedMode == 2)
+		{
+			// Changes the spawner
+			mMapData.mSpawnerMap[yPos].at(xPos) = currentlySelectedSpawner;
+
+			// Checks if the user is deleting spawners
+			if (currentlySelectedSpawner == SPAWN_NOTHING)
+			{
+				// Delete the sprite
+				delete mSpawnerSprites[xPos]->at(yPos);
+				mSpawnerSprites[xPos]->at(yPos) = nullptr;
+				return;
+			}
+
+			// Creates a sprite if it is null
+			if (mSpawnerSprites[xPos]->at(yPos) == nullptr)
+			{
+				mSpawnerSprites[xPos]->at(yPos) = new CWorldSprite("", { (float)xPos, (float)yPos, LEVEL_TILE_Z_POS - 0.1f }, BLEND_CUTOUT);
+			}
+
+			// Changes the sprite
+			switch (currentlySelectedSpawner)
+			{
+			case SPAWN_PLAYER:
+				mSpawnerSprites[xPos]->at(yPos)->SetSpriteSkin(SpawnerNames::PLAYER_SPAWN);
+				break;
+			case SPAWN_ENEMY:
+				mSpawnerSprites[xPos]->at(yPos)->SetSpriteSkin(SpawnerNames::ENEMY_SPAWN);
+				break;
+			}
+		}	
 	}
 }
 
@@ -191,14 +211,26 @@ void CLevel::GenerateMap()
 				case FLOOR:
 					GenerateSprite(TileNames::FLOOR, { xPos, yPos });
 					break;
-				case SPAWN:
-					GenerateSprite(TileNames::FLOOR_SPAWN, { xPos, yPos });
-					break;
 				case WALL_WITH_SIDE:
 					GenerateSprite(TileNames::WALL_SIDE, { xPos, yPos });
 					break;
 				case WALL_WITH_SIDE_FLIPPED_Y:
 					GenerateSprite(TileNames::WALL_SIDE_FLIPPED_Y, { xPos, yPos });
+					break;
+				}
+			}
+
+			// Check if there is a spawner to display
+			if (mMapData.mSpawnerMap[yPos].at(xPos) != SPAWN_NOTHING)
+			{
+				// Create the sprite
+				switch (mMapData.mSpawnerMap[yPos].at(xPos))
+				{
+				case SPAWN_PLAYER:
+					GenerateSprite(SpawnerNames::PLAYER_SPAWN, { xPos, yPos }, 2);
+					break;
+				case SPAWN_ENEMY:
+					GenerateSprite(SpawnerNames::ENEMY_SPAWN, { xPos, yPos }, 2);
 					break;
 				}
 			}
@@ -217,10 +249,10 @@ void CLevel::UnloadMap()
 		for (int j = 0; j < MAP_MAX_SIZE.y; j++)
 		{
 			// Check if there is a sprite here
-			if (levelSprites[j]->at(i) != nullptr)
+			if (mMapSprites[j]->at(i) != nullptr)
 			{
-				delete levelSprites[j]->at(i);
-				levelSprites[j]->at(i) = nullptr;
+				delete mMapSprites[j]->at(i);
+				mMapSprites[j]->at(i) = nullptr;
 			}
 		}
 	}
@@ -229,6 +261,13 @@ void CLevel::UnloadMap()
 void CLevel::ChangeSelectedTile(ETileType tileType)
 {
 	currentlySelectedTile = tileType;
+	mSelectedMode = 1;
+}
+
+void CLevel::ChangeSpawnerType(ESpawnTypes spawnType)
+{
+	currentlySelectedSpawner = spawnType;
+	mSelectedMode = 2;
 }
 
 SVector2D<float> CLevel::findCursorTilePos()
@@ -255,17 +294,34 @@ SVector2D<float> CLevel::findCursorTilePos()
 	return worldSpace;
 }
 
-void CLevel::GenerateSprite(const char* pSpriteName, SVector2D<int> position)
+void CLevel::GenerateSprite(const char* pSpriteName, SVector2D<int> position, int selectedMode)
 {
-	if (levelSprites[position.x]->at(position.y) == nullptr)
+	if (selectedMode == 1)
 	{
-		// Generate the sprite
-		levelSprites[position.x]->at(position.y) = new CWorldSprite(pSpriteName, { (float)position.x, (float)position.y, LEVEL_TILE_Z_POS });
+		if (mMapSprites[position.x]->at(position.y) == nullptr)
+		{
+			// Generate the sprite
+			mMapSprites[position.x]->at(position.y) = new CWorldSprite(pSpriteName, { (float)position.x, (float)position.y, LEVEL_TILE_Z_POS });
+		}
+		else
+		{
+			// Change the existing skin
+			mMapSprites[position.x]->at(position.y)->SetSpriteSkin(pSpriteName);
+			mMapSprites[position.x]->at(position.y)->ResetZRot();
+		}
 	}
-	else
+	else if (selectedMode == 2)
 	{
-		// Change the existing skin
-		levelSprites[position.x]->at(position.y)->SetSpriteSkin(pSpriteName);
-		levelSprites[position.x]->at(position.y)->ResetZRot();
+		if (mSpawnerSprites[position.x]->at(position.y) == nullptr)
+		{
+			// Generate the sprite
+			mSpawnerSprites[position.x]->at(position.y) = new CWorldSprite(pSpriteName, { (float)position.x, (float)position.y, LEVEL_TILE_Z_POS - 0.1f }, BLEND_CUTOUT);
+		}
+		else
+		{
+			// Change the existing skin
+			mSpawnerSprites[position.x]->at(position.y)->SetSpriteSkin(pSpriteName);
+			mSpawnerSprites[position.x]->at(position.y)->ResetZRot();
+		}
 	}
 }

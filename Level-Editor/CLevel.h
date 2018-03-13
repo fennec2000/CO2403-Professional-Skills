@@ -18,6 +18,7 @@ public:
 
 	// Building Utills
 	void ChangeSelectedTile(ETileType tileType);
+	void ChangeSpawnerType(ESpawnTypes spawnType);
 	
 	// Map genration and unloading
 	void GenerateMap();
@@ -27,13 +28,16 @@ public:
 
 private:
 	SVector2D<float> findCursorTilePos();
-	void GenerateSprite(const char* pSpriteName, SVector2D<int> position);
+	void GenerateSprite(const char* pSpriteName, SVector2D<int> position, int selectedMode = 1);
 
 	// Map data
 	SMapData mMapData;
-	vector<vector<CWorldSprite*>*> levelSprites;
+	vector<vector<CWorldSprite*>*> mMapSprites;
+	vector<vector<CWorldSprite*>*> mSpawnerSprites;
 
-	ETileType currentlySelectedTile = NO_TILE;
+	int mSelectedMode = 1;
+	ETileType currentlySelectedTile = NO_TILE; // Mode 1
+	ESpawnTypes currentlySelectedSpawner = SPAWN_NOTHING; // Mode 2
 
 	// Level pan controls
 	const tle::EKeyCode PAN_UP = tle::Key_W;

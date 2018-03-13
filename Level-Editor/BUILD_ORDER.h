@@ -37,7 +37,7 @@
 #include "ETileType.h"
 #include "ESpawnerTypes.h"
 #include "SMapData.h"
-#include "TileNameSettings.h"
+#include "NameSettings.h"
 #include "CMapIO.h"
 #include "CLevel.h"
 

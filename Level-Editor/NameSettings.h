@@ -5,10 +5,16 @@
 
 namespace TileNames
 {
+
 	extern const char* VOID_TILE;
 	extern const char* FULL_WALL;
 	extern const char* FLOOR;
-	extern const char* FLOOR_SPAWN;
 	extern const char* WALL_SIDE;
 	extern const char* WALL_SIDE_FLIPPED_Y;
+}
+
+namespace SpawnerNames
+{
+	extern const char* PLAYER_SPAWN;
+	extern const char* ENEMY_SPAWN;
 }

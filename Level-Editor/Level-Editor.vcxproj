@@ -141,7 +141,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="SBaseSprite.cpp" />
     <ClCompile Include="SMapData.cpp" />
     <ClCompile Include="SMatrix4x4.cpp" />
-    <ClCompile Include="TileNameSettings.cpp" />
+    <ClCompile Include="NameSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BUILD_ORDER.h" />
@@ -166,7 +166,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="SUIData.h" />
     <ClInclude Include="SVector2D.h" />
     <ClInclude Include="SVector3D.h" />
-    <ClInclude Include="TileNameSettings.h" />
+    <ClInclude Include="NameSettings.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

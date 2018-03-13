@@ -47,7 +47,7 @@
     <ClCompile Include="CMapIO.cpp">
       <Filter>LevelSystem</Filter>
     </ClCompile>
-    <ClCompile Include="TileNameSettings.cpp">
+    <ClCompile Include="NameSettings.cpp">
       <Filter>LevelSystem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,14 +110,14 @@
     <ClInclude Include="SMapData.h">
       <Filter>LevelSystem</Filter>
     </ClInclude>
-    <ClInclude Include="TileNameSettings.h">
-      <Filter>LevelSystem</Filter>
-    </ClInclude>
     <ClInclude Include="CMapIO.h">
       <Filter>LevelSystem</Filter>
     </ClInclude>
     <ClInclude Include="ESpriteBlend.h">
       <Filter>SpriteSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="NameSettings.h">
+      <Filter>LevelSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

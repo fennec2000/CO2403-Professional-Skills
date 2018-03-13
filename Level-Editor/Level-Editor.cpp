@@ -65,12 +65,16 @@ void main()
 	CButtonSprite* deleteButton = new CButtonSprite("BinIcon.png", "BinIconHover.png", { 975.0f, 425.0f }, { 64.0f, 64.0f });
 	IFont* deleteTileFont = pCore->GetTLEngine()->LoadFont("Font1.bmp");
 
+	// Selectable spawner buttons
+	CButtonSprite* deleteSpawnButton = new CButtonSprite("BinSmall.png", "BinSmall.png", { 1200, 12.0f }, { 45, 45 });
+	CButtonSprite* playerSpawnButton = new CButtonSprite("PlayerSpawn.png", "PlayerSpawn.png", { 1145, 12.0f }, { 45, 45 });
+	CButtonSprite* enemySpawnButton = new CButtonSprite("EnemySpawn.png", "EnemySpawn.png", { 1090, 12.0f }, { 45, 45 });
+
 	// Selectable tile buttons
 	CButtonSprite* FullWallButton = new CButtonSprite("FullWall.png", "FullWall.png", { 975.0f, 120.0f }, { 64.0f, 64.0f });
 	CButtonSprite* FloorButton = new CButtonSprite("Floor.png", "Floor.png", { 1049.0f, 120.0f }, { 64.0f, 64.0f });
-	CButtonSprite* FloorSpawnButton = new CButtonSprite("FloorSpawn.png", "FloorSpawn.png", { 1123.0f, 120.0f }, { 64.0f, 64.0f });
-	CButtonSprite* WallSideButton = new CButtonSprite("WallSide.png", "WallSide.png", { 1197.0f, 120.0f }, { 64.0f, 64.0f });
-	CButtonSprite* WallSideFlipedButton = new CButtonSprite("WallSideFliped.png", "WallSideFliped.png", { 975.0f, 192.0f }, { 64.0f, 64.0f });
+	CButtonSprite* WallSideButton = new CButtonSprite("WallSide.png", "WallSide.png", { 1123.0f, 120.0f }, { 64.0f, 64.0f });
+	CButtonSprite* WallSideFlipedButton = new CButtonSprite("WallSideFliped.png", "WallSideFliped.png", { 1197.0f, 120.0f }, { 64.0f, 64.0f });
 
 	// The main game loop, repeat until engine is stopped
 	while (pCore->GetTLEngine()->IsRunning())
@@ -91,6 +95,20 @@ void main()
 		}
 		filePathBox->Update();
 
+		// Spawner buttons
+		if (deleteSpawnButton->CheckClick())
+		{
+			pCore->GetLevel()->ChangeSpawnerType(SPAWN_NOTHING);
+		}
+		if (playerSpawnButton->CheckClick())
+		{
+			pCore->GetLevel()->ChangeSpawnerType(SPAWN_PLAYER);
+		}
+		if (enemySpawnButton->CheckClick())
+		{
+			pCore->GetLevel()->ChangeSpawnerType(SPAWN_ENEMY);
+		}
+
 		// Tiles
 		if (deleteButton->CheckClick())
 		{
@@ -103,10 +121,6 @@ void main()
 		if (FloorButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(FLOOR);
-		}
-		if (FloorSpawnButton->CheckClick())
-		{
-			pCore->GetLevel()->ChangeSelectedTile(SPAWN);
 		}
 		if (WallSideButton->CheckClick())
 		{
