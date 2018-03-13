@@ -9,6 +9,7 @@ using namespace tle;
 class CPlayer;
 class CEProjectile;
 class CLevel;
+class CEnemy;
 enum EPlayers { Player1, Player2, NumOfEPlayers };
 
 
@@ -42,6 +43,7 @@ public:
 	//Static access method.
 	static CCore* GetInstance();
 	vector<CEProjectile*> eBullets;
+	vector<CEnemy*> enemies;
   
 	// Public functions
 	void UpdateCore();

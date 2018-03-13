@@ -54,6 +54,11 @@ void CCore::UpdateCore()
 			it = eBullets.begin();
 		}
   }
+
+	for (std::vector<CEnemy*>::iterator it = enemies.begin(); it != enemies.end(); it++)
+	{
+		(*it)->Update();
+	}
 }
 
 void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)

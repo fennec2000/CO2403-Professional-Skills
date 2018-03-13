@@ -41,6 +41,12 @@
     <ClCompile Include="CEnemyShotgun.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
+    <ClCompile Include="CEnemy.h">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyChaingun.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -110,6 +116,9 @@
       <Filter>SpriteSystem</Filter>
     </ClInclude>
     <ClInclude Include="CEnemyShotgun.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyChaingun.h">
       <Filter>Entity</Filter>
     </ClInclude>
   </ItemGroup>

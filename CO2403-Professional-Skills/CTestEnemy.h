@@ -1,7 +1,7 @@
 #pragma once
 #include "BUILD_ORDER.h"
 
-class CTestEnemy : protected CCharacter
+class CTestEnemy : protected CEnemy
 {
 private:
 

@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{09E3BFC2-BE9D-42C6-AD13-08A2F474390E}</ProjectGuid>
     <RootNamespace>CO2403-Professional-Skills</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -126,6 +126,8 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CAnimatedWorldSprite.cpp" />
+    <ClCompile Include="CEnemy.h" />
+    <ClCompile Include="CEnemyChaingun.cpp" />
     <ClCompile Include="CEnemyShotgun.cpp" />
     <ClCompile Include="SBaseSprite.cpp" />
     <ClCompile Include="CCharacter.cpp" />
@@ -146,6 +148,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
   <ItemGroup>
     <ClInclude Include="BUILD_ORDER.h" />
     <ClInclude Include="CAnimatedWorldSprite.h" />
+    <ClInclude Include="CEnemyChaingun.h" />
     <ClInclude Include="CEnemyShotgun.h" />
     <ClInclude Include="SBaseSprite.h" />
     <ClInclude Include="CCharacter.h" />
