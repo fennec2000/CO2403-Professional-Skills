@@ -161,15 +161,15 @@ void CLevel::Update()
 	}
 }
 
-void CLevel::ExportLevel()
+void CLevel::ExportLevel(const char* filePath)
 {
-	CMapIO::SaveMapFile(&mMapData, "TestMap");
+	CMapIO::SaveMapFile(&mMapData, filePath);
 }
 
-void CLevel::LoadLevel()
+void CLevel::LoadLevel(const char* filePath)
 {
 	UnloadMap();
-	mMapData = CMapIO::ReadMapFile("TestMap");
+	mMapData = CMapIO::ReadMapFile(filePath);
 	GenerateMap();
 }
 

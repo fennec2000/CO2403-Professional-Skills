@@ -43,6 +43,20 @@ void main()
 	// Creates the button
 	CButton* loadButton = new CButton(&loadButtonData, "Load");
 
+	// File path text box
+	SUIData textBoxData;
+	textBoxData.mPosition = { 176.0f, 19.0f };
+	textBoxData.mSize = { 250, 30 };
+	textBoxData.mSpriteXSize = 2;
+	textBoxData.mSpritePaths.push_back("TextBoxLeft.png");
+	textBoxData.mSpritePaths.push_back("TextBoxMid.png");
+	textBoxData.mSpritePaths.push_back("TextBoxRight.png");
+	textBoxData.mHoverSpritePaths.push_back("TextBoxLeftHover.png");
+	textBoxData.mHoverSpritePaths.push_back("TextBoxMidHover.png");
+	textBoxData.mHoverSpritePaths.push_back("TextBoxRightHover.png");
+	// Creates the text box
+	CTextInputBox* filePathBox = new CTextInputBox(&textBoxData, "Cursor.png", "Enter file path...");
+
 	// Title fonts for the 2 side tabs
 	IFont* tileBarTitleFont = pCore->GetTLEngine()->LoadFont("Font1.bmp");
 	IFont* tileInfoBarTitleFont = pCore->GetTLEngine()->LoadFont("Font1.bmp");
@@ -69,18 +83,19 @@ void main()
 		// Update ui elements
 		if (saveButton->Update())
 		{
-			pCore->GetLevel()->ExportLevel();
+			pCore->GetLevel()->ExportLevel(filePathBox->GetInputedText().c_str());
 		}
 		if (loadButton->Update())
 		{
-			pCore->GetLevel()->LoadLevel();
+			pCore->GetLevel()->LoadLevel(filePathBox->GetInputedText().c_str());
 		}
+		filePathBox->Update();
+
+		// Tiles
 		if (deleteButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(NO_TILE);
 		}
-
-		// Tiles
 		if (FullWallButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(WALL);

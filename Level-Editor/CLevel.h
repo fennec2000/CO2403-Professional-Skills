@@ -13,8 +13,8 @@ public:
 	void Update();
 
 	// IO
-	void ExportLevel();
-	void LoadLevel();
+	void ExportLevel(const char* filePath);
+	void LoadLevel(const char* filePath);
 
 	// Building Utills
 	void ChangeSelectedTile(ETileType tileType);
