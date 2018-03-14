@@ -40,7 +40,8 @@
 #include "CBullet.h"
 #include "CCharacter.h"
 #include "CPlayer.h"
+#include "CEnemy.h"
 #include "CEProjectile.h"
 #include "CTestEnemy.h"
 #include "CEnemyShotgun.h"
-
+#include "CEnemyChaingun.h"

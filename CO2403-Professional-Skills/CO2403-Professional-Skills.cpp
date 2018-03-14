@@ -23,6 +23,16 @@ void main()
 	CPlayer* pThePlayer = new CPlayer(EPlayers::Player1, spawnPos.x, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
 	// Player test values
 
+
+
+	// Monster
+	//CTestEnemy* mMonster = new CTestEnemy(3.0f, 0, 0.0f, true);
+	CEnemyShotgun* mShotgun = new CEnemyShotgun(20.0f, 5, 0.0f, true);
+	CEnemyChaingun* mChaingun = new CEnemyChaingun(18.0f, 5, 0.0f, true);
+
+	
+
+
 	// Monster Test
 	CWorldSprite* mWorldSprite;
 	mWorldSprite = new CWorldSprite("derp.png", { spawnPos.x + 1.0f, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Enemy]});
@@ -37,6 +47,7 @@ void main()
 
 		// player update
 		pThePlayer->Update();
+
 		/**** Update your scene each frame here ****/
 
 		// exit key

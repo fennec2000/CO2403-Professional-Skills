@@ -54,6 +54,11 @@ void CCore::UpdateCore()
 			eBullets.erase((it));
 			it = eBullets.begin();
 		}
+  }
+
+	for (std::vector<CEnemy*>::iterator it = enemies.begin(); it != enemies.end(); it++)
+	{
+		(*it)->Update();
 	}
 
 	for (int i = 0; i < pActiveBullets.size(); ++i)
