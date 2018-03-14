@@ -1,5 +1,7 @@
 #pragma once
 
+#define PI 3.14159265
+
 // TL
 #include <TL-Engine.h>
 
@@ -39,4 +41,5 @@
 #include "CPlayer.h"
 #include "CEProjectile.h"
 #include "CTestEnemy.h"
+#include "CEnemyShotgun.h"
 

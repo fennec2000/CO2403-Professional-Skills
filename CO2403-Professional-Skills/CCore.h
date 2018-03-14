@@ -17,7 +17,7 @@ enum EGameState { Playing, Paused };
 
 // global sprite layers floats
 enum ESpriteLayers { Floor, Enemy, Player, UI, NumOfESpriteLayers };
-const float G_SPRITE_LAYER_Z_POS[ESpriteLayers::NumOfESpriteLayers] = { 1.0f, 0.3f, 0.2f, 0.1f };
+const float G_SPRITE_LAYER_Z_POS[ESpriteLayers::NumOfESpriteLayers] = { 0.1f, 0.03f, 0.02f, 0.01f };
 
 class CCore
 {
@@ -29,9 +29,8 @@ private:
 	I3DEngine* pTLEngine;	// pointer to the tl engine
 	ICamera* pCamera;		// pointer to the game camera
 	float mFrameTime;		// time between each frame
-
 	CPlayer* pPlayer[EPlayers::NumOfEPlayers];		// holds pointers to the players - possiable 2 player
-	CLevel* mpLevel; // A pointer to the games level
+	CLevel* pLevel; // A pointer to the games level
 	// vector<enemies>		// holds a list of enemies
 	EGameState mGameState;	// the current game state
 	unsigned int mGameScore;// the current score of the game
@@ -52,10 +51,9 @@ public:
 	ICamera* GetCamera() { return pCamera; };
 	float* GetFrameTimer() { return &mFrameTime; };
 	CPlayer* GetPlayer(EPlayers player) { return pPlayer[player]; };
-	CLevel* GetLevel() { return mpLevel; };
+	CLevel* GetLevel() { return pLevel; };
 
 	// Setters
 	void AddPlayer(EPlayers player, CPlayer &givenPlayer);
-	void AddBullet(float ex, float ey, float ez);
-	void updateBullets();
+	void AddBullet(float ex, float ey, SVector2D<float> bulletVector);
 };
