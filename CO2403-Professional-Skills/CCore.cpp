@@ -42,7 +42,8 @@ void CCore::UpdateCore()
 {
 	// Draw the scene
 	mFrameTime = pTLEngine->Timer();	// update the frame timer
-	pTLEngine->DrawScene();				// draw the frame 
+	pTLEngine->DrawScene();				// draw the frame
+	mpLevel->Update();
 
 	for (std::vector<CEProjectile*>::iterator it = eBullets.begin(); it != eBullets.end(); it++)
 	{
