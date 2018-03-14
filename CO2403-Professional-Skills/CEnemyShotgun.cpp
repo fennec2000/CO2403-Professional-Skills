@@ -1,15 +1,12 @@
 #include "BUILD_ORDER.h"
-
-CEnemyShotgun::CEnemyShotgun()
-{
-	toggleActive();
-}
+#include "math.h"
 
 CEnemyShotgun::CEnemyShotgun(float x, float y, float z, bool activate)
 {
 	SetPosition(x, y, z);
 	isActive = activate;
 	pCharSprite->SetSpriteSkin("derp.png");
+	pC->enemies.push_back(this);
 }
 
 CEnemyShotgun::~CEnemyShotgun()
@@ -88,33 +85,28 @@ void CEnemyShotgun::Update()
 
 void CEnemyShotgun::Shoot()
 {
-	float enemyX = pCharSprite->GetX();
-	float enemyY = pCharSprite->GetY();
-	SVector2D<float> enemyPos = pCharSprite->GetPosition2D();
 	SVector2D<float> playerPos;
+	SVector2D<float> bulletOne;
 	SVector2D<float> bulletTwo;
 	SVector2D<float> bulletThree;
+	SVector2D<float> myPos;
+	float firingAngle = bulletSpreadAngle * 3.14 / 180;
+	myPos.x = pCharSprite->GetX();
+	myPos.y = pCharSprite->GetY();
 	playerPos.x = pC->GetPlayer(Player1)->GetX();
 	playerPos.y = pC->GetPlayer(Player1)->GetY();
-	mFireVector.x = playerPos.x - enemyPos.x;
-	mFireVector.y = playerPos.y - enemyPos.y;
-	bulletTwo.x = playerPos.x - enemyPos.x;
-	bulletTwo.y = playerPos.y + 2.0f - enemyPos.y;
-	bulletThree.x = playerPos.x - enemyPos.x;
-	bulletThree.y = playerPos.y - 2.0 - enemyPos.y;
-	float lenght = sqrt(mFireVector.x * mFireVector.x + mFireVector.y * mFireVector.y);
-	mFireVector.x /= lenght;
-	mFireVector.y /= lenght;
-	cout << "x " << mFireVector.x << " y " << mFireVector.y << endl;
-	lenght = sqrt(bulletTwo.x * bulletTwo.x + bulletTwo.y * bulletTwo.y);
-	bulletTwo.x /= lenght;
-	bulletTwo.y /= lenght;
-	pC->AddBullet(enemyX, enemyY, bulletTwo);
-	lenght = sqrt(bulletThree.x * bulletThree.x + bulletThree.y * bulletThree.y);
-	bulletThree.x /= lenght;
-	bulletThree.y /= lenght;
-	pC->AddBullet(enemyX, enemyY, bulletThree);
-	pC->AddBullet(enemyX, enemyY, mFireVector);
+	bulletOne.x = playerPos.x - myPos.x;
+	bulletOne.y = playerPos.y - myPos.y;
+	float length = sqrt(bulletOne.x * bulletOne.x + bulletOne.y * bulletOne.y);
+	bulletOne.x = bulletOne.x / length;
+	bulletOne.y = bulletOne.y / length;
+	bulletTwo.x = bulletOne.x * cos(firingAngle) - bulletOne.y * sin(firingAngle);
+	bulletTwo.y = bulletOne.x * sin(firingAngle) + bulletOne.y * cos(firingAngle);
+	bulletThree.x = bulletOne.x * cos(-firingAngle) - bulletOne.y * sin(-firingAngle);
+	bulletThree.y = bulletOne.x * sin(-firingAngle) + bulletOne.y * cos(-firingAngle);
+	pC->AddBullet(myPos.x, myPos.y, bulletOne);
+	pC->AddBullet(myPos.x, myPos.y, bulletTwo);
+	pC->AddBullet(myPos.x, myPos.y, bulletThree);
 }
 
 void CEnemyShotgun::Death()
