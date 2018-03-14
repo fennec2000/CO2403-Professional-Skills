@@ -16,7 +16,7 @@ void main()
 
 	/**** Set up your scene here ****/
 	// Level test
-	c->GetLevel()->LoadLevel("Levels\\TestLevel");
+	c->GetLevel()->LoadLevel("Levels\\Level1");
 	SVector2D<float> spawnPos = c->GetLevel()->GetSpawnPos();
 
 	// Player
@@ -27,8 +27,8 @@ void main()
 
 	// Monster
 	//CTestEnemy* mMonster = new CTestEnemy(3.0f, 0, 0.0f, true);
-	CEnemyShotgun* mShotgun = new CEnemyShotgun(20.0f, 5, 0.0f, true);
-	CEnemyChaingun* mChaingun = new CEnemyChaingun(18.0f, 5, 0.0f, true);
+	//CEnemyShotgun* mShotgun = new CEnemyShotgun(20.0f, 5, 0.0f, true);
+	//CEnemyChaingun* mChaingun = new CEnemyChaingun(18.0f, 5, 0.0f, true);
 
 	
 
