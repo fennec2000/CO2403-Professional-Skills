@@ -50,6 +50,10 @@ void CPlayer::Update()
 		pCharSprite->LookAt(pCursor);
 	}
 
+	// cooldowns
+	if (mFireTimeCurrent > 0.0f)
+		mFireTimeCurrent -= *pFrameTimer;
+
 	// update camera
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
 	pCamera->SetPosition(playerPos.x + mCAMERA_OFFSET.x, playerPos.y + mCAMERA_OFFSET.y, mCAMERA_OFFSET.z);
@@ -66,9 +70,9 @@ void CPlayer::InputCheck()
 	// keybindings
 	if (mRollCurrent <= 0.0f)
 	{
-		if (pTLEngine->KeyHeld(mPlayerFire))
+		if (pTLEngine->KeyHeld(mPlayerFire) && mFireTimeCurrent <= 0.0f)
 		{
-
+			Shoot();
 		}
 		if (pTLEngine->KeyHeld(mPlayerRoll))
 		{
@@ -104,35 +108,6 @@ void CPlayer::InputCheck()
 	}
 }
 
-void CPlayer::Move(SVector2D<float> movement)
-{
-	mOldPos = GetPos2D();
-	SVector2D<float> testPos[4];
-	for (int i = 0; i < 3; ++i)
-		testPos[i] = mOldPos;
-
-	testPos[1].x += mCharSize.x;
-	testPos[2].y += mCharSize.y;
-	testPos[3] = mOldPos + mCharSize;
-	SVector2D<float> testMove[2];
-	testMove[0] = { movement.x , 0.0f };
-	testMove[1] = { 0.0f, movement.y };
-
-	if ((movement.x < 0.0f && !CollisionCheck(testPos[0] + testMove[0]) && !CollisionCheck(testPos[2] + testMove[0])) ||
-		(movement.x > 0.0f && !CollisionCheck(testPos[1] + testMove[0]) && !CollisionCheck(testPos[3] + testMove[0])))
-	{
-		pCharSprite->MoveX(movement.x);
-		pCursor->MoveX(movement.x);
-	}
-
-	if ((movement.y < 0.0f && !CollisionCheck(testPos[0] + testMove[1]) && !CollisionCheck(testPos[1] + testMove[1])) ||
-		(movement.y > 0.0f && !CollisionCheck(testPos[2] + testMove[1]) && !CollisionCheck(testPos[3] + testMove[1])))
-	{
-		pCharSprite->MoveY(movement.y);
-		pCursor->MoveY(movement.y);
-	}
-}
-
 void CPlayer::Death()
 {
 
@@ -144,13 +119,26 @@ void CPlayer::ChangeHealth(int change)
 		CCharacter::ChangeHealth(change);
 }
 
-bool CPlayer::CollisionCheck(SVector2D<float> pos)
+void CPlayer::Move(SVector2D<float> movement)
 {
-	// get center
-	// sphere collision
+	SVector2D<float> moveCursor = CCharacter::Move(movement);
+	pCursor->MoveX(moveCursor.x);
+	pCursor->MoveY(moveCursor.y);
+}
 
-	ETileType test = pLevel->GetTile(pos);
-	if (test == ETileType::WALL || test == ETileType::WALL_WITH_SIDE || test == ETileType::WALL_WITH_SIDE_FLIPPED_Y)
-		return true;
-	return false;
+void CPlayer::Shoot()
+{
+	// Setup bullet
+	bulletSetup newBullet;
+	newBullet.spawnPos = GetPos3D();
+	newBullet.BulletTimeMax = 3.0f;
+	newBullet.Speed = 1.5f;
+	SVector2D<float> vec = pCursor->GetPosition2D() - pCharSprite->GetPosition2D();
+	newBullet.travelVector = vec.Normalised();
+
+	// create bullet
+	new CBullet(newBullet);
+
+	// fire timer
+	mFireTimeCurrent = mFireTimeMax;
 }

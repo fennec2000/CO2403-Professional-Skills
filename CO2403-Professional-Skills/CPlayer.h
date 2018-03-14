@@ -7,7 +7,6 @@ private:
 	// data
 	CWorldSprite* pCursor;
 	ICamera* pCamera;
-	CLevel* pLevel;
 
 	// keybindings
 	EKeyCode mPlayerMoveUp = EKeyCode::Key_W;
@@ -18,12 +17,8 @@ private:
 	EKeyCode mPlayerFire = EKeyCode::Mouse_LButton;
 
 	const SVector3D<float> mCAMERA_OFFSET = { 0.0f, 0.0f, -10.0f };
-	float mMoveSpeed = 2.0f;
-	SVector2D<float> mOldPos;
-	SVector2D<float> mMovement;
-	const SVector2D<float> mCharSize = { 1.0f, 1.0f }; // x, y
 	int mScreenSize[2]; // 0 - height, 1 - width
-	float mRotationCurrent = 0.0f;
+	SVector2D<float> mMovement;
 
 	// roll
 	SVector2D<float> mRollVector;
@@ -31,13 +26,18 @@ private:
 	const float mROLL_SPEED = 5.0f;
 	float mRollCurrent;
 
+	// firing
+	float mFireTimeMax = 0.5f;
+	float mFireTimeCurrent = 0.0f;
+
 	// cheats
 	bool mCheatGod = false;
 
 	// functions
 	void InputCheck();
 	void Move(SVector2D<float> movement);
-	bool CollisionCheck(SVector2D<float> pos);
+	void Death();
+	void Shoot();
 
 public:
 	CPlayer(EPlayers player);
@@ -46,9 +46,9 @@ public:
 
 	// public functions
 	void Update();
-	void Death();
 	void ChangeHealth(int change);
 	float GetX() { return pCharSprite->GetX(); };
 	float GetY() { return pCharSprite->GetY(); };
+	SVector2D<float> GetPos2D() { return pCharSprite->GetPosition2D(); };
 };
 

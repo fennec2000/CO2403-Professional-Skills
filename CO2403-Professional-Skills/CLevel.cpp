@@ -3,14 +3,29 @@
 
 #include "BUILD_ORDER.h"
 
-CLevel::CLevel() { }
+const SVector2D<int> CLevel::MAP_MAX_SIZE = { 128, 128 };
+
+CLevel::CLevel() 
+{ 
+	// Fills the sprite level tiles with empty sprites
+	for (int i = 0; i < MAP_MAX_SIZE.x; i++)
+	{
+		mWorldSprites.push_back(new vector<CWorldSprite*>);
+		for (int j = 0; j < MAP_MAX_SIZE.y; j++)
+		{
+			mWorldSprites[i]->push_back(nullptr);
+		}
+	}
+}
 
 CLevel::~CLevel() { }
 
-void CLevel::LoadLevelFromMapFile(const char* pFilePath)
+void CLevel::Update()
 {
-	ReadFileToTileMap(pFilePath);
-	GenerateLevel();
+	for (int i = 0; i < testEnemies.size(); i++)
+	{
+		testEnemies[i]->Update();
+	}
 }
 
 SVector2D<float> CLevel::GetSpawnPos()
@@ -20,12 +35,12 @@ SVector2D<float> CLevel::GetSpawnPos()
 
 ETileType CLevel::GetTile(int x, int y)
 {
-	return mTileMap->at(y)->at(x);
+	return mMapData.mTileMap[y].at(x);
 }
 
 ETileType CLevel::GetTile(SVector2D<int> position)
 {
-	return mTileMap->at(position.y)->at(position.x);
+	return mMapData.mTileMap[position.y].at(position.x);
 }
 
 ETileType CLevel::GetTile(SVector2D<float> position)
@@ -43,140 +58,91 @@ bool CLevel::GetTileCollision(SVector2D<int> position)
 	return mCollisionMap->at(position.y)->at(position.x);
 }
 
+void CLevel::LoadLevel(const char* filePath)
+{
+	UnloadLevel();
+	mMapData = CMapIO::ReadMapFile(filePath);
+	GenerateLevel();
+
+	// Checks through the spawners and does appropirate things
+	for (int yPos = 0; yPos < CLevel::MAP_MAX_SIZE.y; yPos++)
+	{
+		for (int xPos = 0; xPos < CLevel::MAP_MAX_SIZE.x; xPos++)
+		{
+			switch (mMapData.mSpawnerMap[yPos].at(xPos))
+			{
+			case SPAWN_PLAYER:
+				mSpawnPos = { static_cast<float>(xPos), static_cast<float>(yPos) };
+				break;
+			case SPAWN_ENEMY:
+				testEnemies.push_back(new CTestEnemy(static_cast<float>(xPos), static_cast<float>(yPos), 0.0f, true));
+				break;
+			}
+		}
+	}
+}
+
 void CLevel::GenerateLevel()
 {
-	mWorldSprites = new vector<CWorldSprite*>;
-
-	for (unsigned int i = 0; i < mTileMap->size(); i++)
+	for (int yPos = 0; yPos < MAP_MAX_SIZE.y; yPos++)
 	{
-		for (unsigned int j = 0; j < mTileMap->at(i)->size(); j++)
+		for (int xPos = 0; xPos < MAP_MAX_SIZE.x; xPos++)
 		{
-			float xAxis = static_cast<float>(j);
-			float yAxis = static_cast<float>(i);
-
-			if (mTileMap->at(i)->at(j) == NO_TILE)
+			// Check if there is a tile to display
+			if (mMapData.mTileMap[yPos].at(xPos) != NO_TILE)
 			{
-				// 0 is blank for now
-				//mWorldSprites.push_back(new CWorldSprite("Floor.png", { i, j }));
-			}
-			else if (mTileMap->at(i)->at(j) == FLOOR)
-			{
-				mWorldSprites->push_back(new CWorldSprite("Floor.png", SVector3D<float>(xAxis, yAxis, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor])));
-			}
-			else if (mTileMap->at(i)->at(j) == WALL)
-			{
-				mWorldSprites->push_back(new CWorldSprite("FullWall.png", SVector3D<float>(xAxis, yAxis, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor])));
-			}
-			else if (mTileMap->at(i)->at(j) == WALL_WITH_SIDE)
-			{
-				mWorldSprites->push_back(new CWorldSprite("WallSide.png", SVector3D<float>(xAxis, yAxis, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor])));
-			}
-			else if (mTileMap->at(i)->at(j) == WALL_WITH_SIDE_FLIPPED_Y)
-			{
-				mWorldSprites->push_back(new CWorldSprite("WallSide.png", SVector3D<float>(xAxis, yAxis, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor])));
-				mWorldSprites->back()->RotateZ(180.0f);
-			}
-			else if (mTileMap->at(i)->at(j) == SPAWN)
-			{
-				// This is a floor but will also serve as a spawn point
-				mWorldSprites->push_back(new CWorldSprite("Floor.png", SVector3D<float>(xAxis, yAxis, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor])));
-				mSpawnPos = { xAxis, yAxis };
+				// Create the sprite
+				switch (mMapData.mTileMap[yPos].at(xPos))
+				{
+				case WALL:
+					GenerateSprite(TileNames::FULL_WALL, { xPos, yPos });
+					break;
+				case FLOOR:
+					GenerateSprite(TileNames::FLOOR, { xPos, yPos });
+					break;
+				case WALL_WITH_SIDE:
+					GenerateSprite(TileNames::WALL_SIDE, { xPos, yPos });
+					break;
+				case WALL_WITH_SIDE_FLIPPED_Y:
+					GenerateSprite(TileNames::WALL_SIDE_FLIPPED_Y, { xPos, yPos });
+					break;
+				}
 			}
 		}
 	}
 }
 
-void CLevel::ReadFileToTileMap(const char* pFilePath)
+void CLevel::UnloadLevel()
 {
-	std::ifstream mapFile;
+	// Reset all the data
+	mMapData = SMapData();
 
-	mTileMap = new vector<vector<ETileType>*>;
-	mCollisionMap = new vector<vector<bool>*>;
-
-	// Open the file and check if it worked
-	mapFile.open(pFilePath);
-	if (!mapFile)
+	// Reset all of the sprites to NULL
+	for (int i = 0; i < MAP_MAX_SIZE.x; i++)
 	{
-		return;
-	}
-
-	// Reads the file
-	char ch;
-	int lineNumber = 1;
-	int genratedLines = 0;
-	while (mapFile.get(ch))
-	{
-		// Checks if a vector for a line needs created
-		if (lineNumber > genratedLines)
+		for (int j = 0; j < MAP_MAX_SIZE.y; j++)
 		{
-			mTileMap->push_back(new std::vector<ETileType>);
-			mCollisionMap->push_back(new std::vector<bool>);
-			genratedLines++;
-		}
-
-		// Checks if char is valid
-		switch (ch)
-		{
-		case '0':
-			mTileMap->at(lineNumber - 1)->push_back(NO_TILE);
-			mCollisionMap->at(lineNumber - 1)->push_back(0);
-			break;
-
-		case '1':
-			mTileMap->at(lineNumber - 1)->push_back(WALL);
-			mCollisionMap->at(lineNumber - 1)->push_back(1);
-			break;
-
-		case '2':
-			mTileMap->at(lineNumber - 1)->push_back(FLOOR);
-			mCollisionMap->at(lineNumber - 1)->push_back(0);
-			break;
-
-		case '4':
-			mTileMap->at(lineNumber - 1)->push_back(WALL_WITH_SIDE);
-			mCollisionMap->at(lineNumber - 1)->push_back(1);
-			break;
-
-		case '5':
-			mTileMap->at(lineNumber - 1)->push_back(WALL_WITH_SIDE_FLIPPED_Y);
-			mCollisionMap->at(lineNumber - 1)->push_back(1);
-			break;
-
-		case 'S':
-			mTileMap->at(lineNumber - 1)->push_back(SPAWN);
-			mCollisionMap->at(lineNumber - 1)->push_back(0);
-			break;
-
-		case ' ':
-			// Blank, do nothing
-			break;
-
-		case '\n':
-			lineNumber++;
-			break;
-
-		default:
-			// Char is invalid
-			mapFile.close();
-			return;
+			// Check if there is a sprite here
+			if (mWorldSprites[j]->at(i) != nullptr)
+			{
+				delete mWorldSprites[j]->at(i);
+				mWorldSprites[j]->at(i) = nullptr;
+			}
 		}
 	}
-
-	// Temparly create a new vector;
-	vector<vector<ETileType>*>* newTiles = new vector<vector<ETileType>*>;
-	for (int i = mTileMap->size() - 1; i >= 0; i--)
-	{
-		newTiles->push_back(mTileMap->at(i));
-	}
-
-	mTileMap = newTiles;
-
-	// Close file
-	mapFile.close();
 }
 
-// Cleans up the level
-void CLevel::ClearLevel()
+void CLevel::GenerateSprite(const char* pSpriteName, SVector2D<int> position)
 {
-
+	if (mWorldSprites[position.x]->at(position.y) == nullptr)
+	{
+		// Generate the sprite
+		mWorldSprites[position.x]->at(position.y) = new CWorldSprite(pSpriteName, { (float)position.x, (float)position.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor] });
+	}
+	else
+	{
+		// Change the existing skin
+		mWorldSprites[position.x]->at(position.y)->SetSpriteSkin(pSpriteName);
+		mWorldSprites[position.x]->at(position.y)->ResetZRot();
+	}
 }

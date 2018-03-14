@@ -129,6 +129,8 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="CEnemy.h" />
     <ClCompile Include="CEnemyChaingun.cpp" />
     <ClCompile Include="CEnemyShotgun.cpp" />
+    <ClCompile Include="CMapIO.cpp" />
+    <ClCompile Include="NameSettings.cpp" />
     <ClCompile Include="SBaseSprite.cpp" />
     <ClCompile Include="CCharacter.cpp" />
     <ClCompile Include="CCore.cpp" />
@@ -140,6 +142,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="CLevel.cpp" />
     <ClCompile Include="CWorldSprite.cpp" />
     <ClCompile Include="Maths.cpp" />
+    <ClCompile Include="SMapData.cpp" />
     <ClCompile Include="SMatrix4x4.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +153,10 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="CAnimatedWorldSprite.h" />
     <ClInclude Include="CEnemyChaingun.h" />
     <ClInclude Include="CEnemyShotgun.h" />
+    <ClInclude Include="CMapIO.h" />
+    <ClInclude Include="ESpawnerTypes.h" />
+    <ClInclude Include="ESpriteBlend.h" />
+    <ClInclude Include="NameSettings.h" />
     <ClInclude Include="SBaseSprite.h" />
     <ClInclude Include="CCharacter.h" />
     <ClInclude Include="CCore.h" />
@@ -161,6 +168,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="CWorldSprite.h" />
     <ClInclude Include="ETileType.h" />
     <ClInclude Include="Maths.h" />
+    <ClInclude Include="SMapData.h" />
     <ClInclude Include="SMatrix4x4.h" />
     <ClInclude Include="SVector2D.h" />
     <ClInclude Include="SVector3D.h" />
