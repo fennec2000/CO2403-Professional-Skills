@@ -47,9 +47,8 @@
     <ClCompile Include="NameSettings.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="CBullet.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
+    <ClCompile Include="CBullet.cpp" />
+    <ClCompile Include="CEnemyShotgun.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -133,8 +132,7 @@
     <ClInclude Include="NameSettings.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="CBullet.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
+    <ClInclude Include="CBullet.h" />
+    <ClInclude Include="CEnemyShotgun.h" />
   </ItemGroup>
 </Project>
