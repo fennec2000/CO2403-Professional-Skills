@@ -50,6 +50,10 @@ void CPlayer::Update()
 		pCharSprite->LookAt(pCursor);
 	}
 
+	// cooldowns
+	if (mFireTimeCurrent > 0.0f)
+		mFireTimeCurrent -= *pFrameTimer;
+
 	// update camera
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
 	pCamera->SetPosition(playerPos.x + mCAMERA_OFFSET.x, playerPos.y + mCAMERA_OFFSET.y, mCAMERA_OFFSET.z);
@@ -66,9 +70,9 @@ void CPlayer::InputCheck()
 	// keybindings
 	if (mRollCurrent <= 0.0f)
 	{
-		if (pTLEngine->KeyHeld(mPlayerFire))
+		if (pTLEngine->KeyHeld(mPlayerFire) && mFireTimeCurrent <= 0.0f)
 		{
-
+			Shoot();
 		}
 		if (pTLEngine->KeyHeld(mPlayerRoll))
 		{
@@ -120,4 +124,21 @@ void CPlayer::Move(SVector2D<float> movement)
 	SVector2D<float> moveCursor = CCharacter::Move(movement);
 	pCursor->MoveX(moveCursor.x);
 	pCursor->MoveY(moveCursor.y);
+}
+
+void CPlayer::Shoot()
+{
+	// Setup bullet
+	bulletSetup newBullet;
+	newBullet.spawnPos = GetPos3D();
+	newBullet.BulletTimeMax = 3.0f;
+	newBullet.Speed = 1.5f;
+	SVector2D<float> vec = pCursor->GetPosition2D() - pCharSprite->GetPosition2D();
+	newBullet.travelVector = vec.Normalised();
+
+	// create bullet
+	new CBullet(newBullet);
+
+	// fire timer
+	mFireTimeCurrent = mFireTimeMax;
 }

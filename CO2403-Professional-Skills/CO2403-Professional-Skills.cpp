@@ -37,7 +37,6 @@ void main()
 
 		// player update
 		pThePlayer->Update();
-
 		/**** Update your scene each frame here ****/
 
 		// exit key

@@ -26,12 +26,18 @@ private:
 	const float mROLL_SPEED = 5.0f;
 	float mRollCurrent;
 
+	// firing
+	float mFireTimeMax = 0.5f;
+	float mFireTimeCurrent = 0.0f;
+
 	// cheats
 	bool mCheatGod = false;
 
 	// functions
 	void InputCheck();
 	void Move(SVector2D<float> movement);
+	void Death();
+	void Shoot();
 
 public:
 	CPlayer(EPlayers player);
@@ -40,9 +46,9 @@ public:
 
 	// public functions
 	void Update();
-	void Death();
 	void ChangeHealth(int change);
 	float GetX() { return pCharSprite->GetX(); };
 	float GetY() { return pCharSprite->GetY(); };
+	SVector2D<float> GetPos2D() { return pCharSprite->GetPosition2D(); };
 };
 

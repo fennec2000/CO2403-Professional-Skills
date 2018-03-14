@@ -54,7 +54,17 @@ void CCore::UpdateCore()
 			eBullets.erase((it));
 			it = eBullets.begin();
 		}
-  }
+	}
+
+	for (int i = 0; i < pActiveBullets.size(); ++i)
+	{
+		if (pActiveBullets[i] != NULL)
+		{
+			pActiveBullets[i]->Update();
+		}
+		else
+			cout << "invalid BULLET" << endl;
+	}
 }
 
 void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)
@@ -65,6 +75,22 @@ void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)
 
 void CCore::AddBullet(float ex, float ey, SVector2D<float> bulletVector)
 {
-		eBullets.push_back(new CEProjectile(ex, ey, 0, bulletVector));
+	eBullets.push_back(new CEProjectile(ex, ey, 0, bulletVector));
 }
 
+void CCore::AddBullet(CBullet &givenBullet)
+{
+	pActiveBullets.push_back(&givenBullet);
+}
+
+void CCore::RemoveBullet(CBullet & givenBullet)
+{
+	for(int i = 0; i < pActiveBullets.size(); ++i)
+	{
+		if (pActiveBullets[i] == &givenBullet)
+		{
+			pActiveBullets.erase(pActiveBullets.begin() + i);
+			return;
+		}
+	}
+}
