@@ -8,7 +8,7 @@ CEProjectile::CEProjectile()
 CEProjectile::CEProjectile(float x, float y, float z, SVector2D<float> bulletVector)
 {
 	SetPosition(x, y, z);
-	pCharSprite->SetSpriteSkin("Cacodemon_tlxcutout.png");
+	pCharSprite->SetSpriteSkin("QuickBullet.png");
 	mVector = bulletVector;
 }
 
