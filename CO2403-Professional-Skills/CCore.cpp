@@ -62,7 +62,7 @@ void CCore::UpdateCore()
 			pActiveBullets[i]->Update();
 		}
 		else
-			cout << "invalid" << endl;
+			cout << "invalid BULLET" << endl;
 	}
 }
 
