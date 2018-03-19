@@ -8,22 +8,23 @@ struct bulletSetup
 	SVector2D<float> travelVector = { 1.0f, 1.0f };
 	float BulletTimeMax = 0.5f;
 	float Speed = 1.5f;
+	EPlayers team = EPlayers::Enemy1;
 };
 
 class CBullet
 {
 private:
-	CCore * pC;
+	CCore* pC;
 	CWorldSprite* pCharSprite;
 	float* pFrameTimer;
 	SVector2D<float> mVector = { 0, 0 };
 	float mBulletTimerMax = 0.5f;
 	float mBulletTimerCurrent = 0.0f;
 	float mMoveSpeed = 1.5f;
-
+	EPlayers mTeam = EPlayers::Enemy1;
 
 public:
-	CBullet(bulletSetup givenSetup);
+	CBullet(bulletSetup &givenSetup);
 	~CBullet();
 	void Update();
 };

@@ -10,7 +10,7 @@ class CBullet;
 class CPlayer;
 class CEProjectile;
 class CLevel;
-enum EPlayers { Player1, Player2, NumOfEPlayers };
+enum EPlayers { Player1, Player2, Enemy1, Enemy2, NumOfEPlayers };
 
 
 // game states

@@ -15,6 +15,7 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 	// setup
 	pCamera = pC->GetCamera();
 	pLevel = pC->GetLevel();
+	pCharSprite->SetSpriteSkin("Player.png");
 	pC->AddPlayer(player, *this);
 	SetPosition(x, y, z);
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();

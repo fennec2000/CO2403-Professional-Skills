@@ -1,7 +1,7 @@
 #include "CBullet.h"
 
 
-CBullet::CBullet(bulletSetup givenSetup)
+CBullet::CBullet(bulletSetup &givenSetup)
 {
 	pC = CCore::GetInstance();
 	pCharSprite = new CWorldSprite(givenSetup.spriteFileName.c_str(), givenSetup.spawnPos);
@@ -9,6 +9,7 @@ CBullet::CBullet(bulletSetup givenSetup)
 	mVector = givenSetup.travelVector;
 	mBulletTimerMax = givenSetup.BulletTimeMax;
 	mMoveSpeed = givenSetup.Speed;
+	mTeam = givenSetup.team;
 	pC->AddBullet(*this);
 }
 
@@ -28,4 +29,7 @@ void CBullet::Update()
 		pC->RemoveBullet(*this);
 		CBullet::~CBullet();
 	}
+
+	// collisions
+
 }
