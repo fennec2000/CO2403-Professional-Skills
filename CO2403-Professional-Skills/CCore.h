@@ -10,7 +10,7 @@ class CBullet;
 class CPlayer;
 class CEProjectile;
 class CLevel;
-enum EPlayers { Player1, Player2, Enemy1, Enemy2, NumOfEPlayers };
+enum EPlayers { Player, Enemy, NumOfEPlayers };
 
 
 // game states
@@ -31,9 +31,9 @@ private:
 	ICamera* pCamera;		// pointer to the game camera
 	float mFrameTime;		// time between each frame
 	CPlayer* pPlayer[EPlayers::NumOfEPlayers];		// holds pointers to the players - possiable 2 player
-	CLevel* pLevel; // A pointer to the games level
+	CLevel* pLevel;			// A pointer to the games level
 	vector<CBullet*> pActiveBullets;	// vector of pointers to all bullets
-	// vector<enemies>		// holds a list of enemies
+	vector<CTestEnemy> mEnemyList;		// holds a list of enemies
 	EGameState mGameState;	// the current game state
 	unsigned int mGameScore;// the current score of the game
 
@@ -54,6 +54,7 @@ public:
 	float* GetFrameTimer() { return &mFrameTime; };
 	CPlayer* GetPlayer(EPlayers player) { return pPlayer[player]; };
 	CLevel* GetLevel() { return pLevel; };
+	const vector<CTestEnemy> GetEnemyList() { return mEnemyList; };
 
 	// Setters
 	void AddPlayer(EPlayers player, CPlayer &givenPlayer);

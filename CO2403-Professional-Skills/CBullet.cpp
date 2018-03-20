@@ -31,5 +31,19 @@ void CBullet::Update()
 	}
 
 	// collisions
+	switch (mTeam)
+	{
+	case EPlayers::Enemy:
+		CPlayer * thePlayer = pC->GetPlayer(EPlayers::Player);
+		//if (SVector2D<float>)
+		break;
+	case EPlayers::Player:
+		for (int i = 0; i < pC->GetEnemyList; ++i)
+		{
 
+		}
+		break;
+	default:
+		break;
+	}
 }
