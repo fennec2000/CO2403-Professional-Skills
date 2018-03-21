@@ -7,15 +7,18 @@ CBullet::CBullet(bulletSetup &givenSetup)
 	pCharSprite = new CWorldSprite(givenSetup.spriteFileName.c_str(), givenSetup.spawnPos);
 	pFrameTimer = pC->GetFrameTimer();
 	mVector = givenSetup.travelVector;
-	mBulletTimerMax = givenSetup.BulletTimeMax;
+	mBulletTimerMax = givenSetup.bulletTimeMax;
 	mMoveSpeed = givenSetup.Speed;
 	mTeam = givenSetup.team;
+	mRadius = givenSetup.spriteRadius;
+	mBulletDamage = givenSetup.bulletDamage;
 	pC->AddBullet(*this);
 }
 
 
 CBullet::~CBullet()
 {
+	pC->RemoveBullet(*this);
 	pCharSprite->~CWorldSprite();
 }
 
@@ -26,22 +29,26 @@ void CBullet::Update()
 	mBulletTimerCurrent += *pFrameTimer;
 	if (mBulletTimerCurrent >= mBulletTimerMax)
 	{
-		pC->RemoveBullet(*this);
 		CBullet::~CBullet();
 	}
 
+	CPlayer* thePlayer;
 	// collisions
 	switch (mTeam)
 	{
-	case EPlayers::Enemy:
-		CPlayer * thePlayer = pC->GetPlayer(EPlayers::Player);
-		//if (SVector2D<float>)
+	case EPlayers::EnemyTeam:
+		thePlayer = pC->GetPlayer(EPlayers::PlayerTeam);
+		if (Distance(&pCharSprite->GetPosition2D(), &thePlayer->GetPos2D()) <= mRadius)
+		{
+			thePlayer->ChangeHealth(mBulletDamage);
+			CBullet::~CBullet();
+		}
 		break;
-	case EPlayers::Player:
-		for (int i = 0; i < pC->GetEnemyList; ++i)
+	case EPlayers::PlayerTeam:
+		/*for (int i = 0; i < pC->GetEnemyList().size; ++i)
 		{
 
-		}
+		}*/
 		break;
 	default:
 		break;

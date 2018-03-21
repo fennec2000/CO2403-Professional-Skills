@@ -19,8 +19,8 @@ CEnemyShotgun::~CEnemyShotgun()
 
 void CEnemyShotgun::Update()
 {
-	float playerX = pC->GetPlayer(Player1)->GetX();
-	float playerY = pC->GetPlayer(Player1)->GetY();
+	float playerX = pC->GetPlayer(PlayerTeam)->GetX();
+	float playerY = pC->GetPlayer(PlayerTeam)->GetY();
 	float enemyX = pCharSprite->GetX();
 	float enemyY = pCharSprite->GetY();
 	float distance = sqrt(((playerX - enemyX) * (playerX - enemyX)) + ((playerY - enemyY) * (playerY - enemyY)));
@@ -94,8 +94,8 @@ void CEnemyShotgun::Shoot()
 	SVector2D<float> playerPos;
 	SVector2D<float> bulletTwo;
 	SVector2D<float> bulletThree;
-	playerPos.x = pC->GetPlayer(Player1)->GetX();
-	playerPos.y = pC->GetPlayer(Player1)->GetY();
+	playerPos.x = pC->GetPlayer(PlayerTeam)->GetX();
+	playerPos.y = pC->GetPlayer(PlayerTeam)->GetY();
 	mFireVector.x = playerPos.x - enemyPos.x;
 	mFireVector.y = playerPos.y - enemyPos.y;
 	bulletTwo.x = playerPos.x - enemyPos.x;

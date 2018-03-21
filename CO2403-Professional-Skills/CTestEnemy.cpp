@@ -19,8 +19,8 @@ CTestEnemy::~CTestEnemy()
 
 void CTestEnemy::Update()
 {
-	float playerX = pC->GetPlayer(Player1)->GetX();
-	float playerY = pC->GetPlayer(Player1)->GetY();
+	float playerX = pC->GetPlayer(PlayerTeam)->GetX();
+	float playerY = pC->GetPlayer(PlayerTeam)->GetY();
 	float enemyX = pCharSprite->GetX();
 	float enemyY = pCharSprite->GetY();
 
@@ -58,9 +58,9 @@ void CTestEnemy::Shoot()
 	// Setup bullet
 	bulletSetup newBullet;
 	newBullet.spawnPos = GetPos3D();
-	newBullet.BulletTimeMax = 3.0f;
+	newBullet.bulletTimeMax = 3.0f;
 	newBullet.Speed = 1.5f;
-	CPlayer* target = pC->GetPlayer(Player1);
+	CPlayer* target = pC->GetPlayer(PlayerTeam);
 	SVector2D<float> vec = target->GetPos2D() - pCharSprite->GetPosition2D();
 	newBullet.travelVector = vec.Normalised();
 

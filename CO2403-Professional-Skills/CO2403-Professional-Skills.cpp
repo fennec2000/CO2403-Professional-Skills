@@ -20,7 +20,7 @@ void main()
 	SVector2D<float> spawnPos = c->GetLevel()->GetSpawnPos();
 
 	// Player
-	CPlayer* pThePlayer = new CPlayer(EPlayers::Player1, spawnPos.x, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
+	CPlayer* pThePlayer = new CPlayer(EPlayers::PlayerTeam, spawnPos.x, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
 	// Player test values
 
 	// Monster Test

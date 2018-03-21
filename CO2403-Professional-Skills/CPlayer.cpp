@@ -132,7 +132,7 @@ void CPlayer::Shoot()
 	// Setup bullet
 	bulletSetup newBullet;
 	newBullet.spawnPos = GetPos3D();
-	newBullet.BulletTimeMax = 3.0f;
+	newBullet.bulletTimeMax = 3.0f;
 	newBullet.Speed = 1.5f;
 	SVector2D<float> vec = pCursor->GetPosition2D() - pCharSprite->GetPosition2D();
 	newBullet.travelVector = vec.Normalised();
