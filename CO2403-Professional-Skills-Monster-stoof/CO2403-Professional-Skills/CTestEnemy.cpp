@@ -10,7 +10,6 @@ CTestEnemy::CTestEnemy(float x, float y, float z, bool activate)
 	SetPosition(x, y, z);
 	isActive = activate;
 	pCharSprite->SetSpriteSkin("derp.png");
-	pC->enemies.push_back(this);
 }
 
 CTestEnemy::~CTestEnemy()

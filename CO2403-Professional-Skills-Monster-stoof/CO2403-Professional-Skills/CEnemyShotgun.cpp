@@ -6,7 +6,6 @@ CEnemyShotgun::CEnemyShotgun(float x, float y, float z, bool activate)
 	SetPosition(x, y, z);
 	isActive = activate;
 	pCharSprite->SetSpriteSkin("derp.png");
-	pC->enemies.push_back(this);
 }
 
 CEnemyShotgun::~CEnemyShotgun()
@@ -85,28 +84,27 @@ void CEnemyShotgun::Update()
 
 void CEnemyShotgun::Shoot()
 {
-	SVector2D<float> playerPos;
-	SVector2D<float> bulletOne;
-	SVector2D<float> bulletTwo;
-	SVector2D<float> bulletThree;
-	SVector2D<float> myPos;
+	// Setup bullet
 	float firingAngle = bulletSpreadAngle * 3.14 / 180;
-	myPos.x = pCharSprite->GetX();
-	myPos.y = pCharSprite->GetY();
-	playerPos.x = pC->GetPlayer(Player1)->GetX();
-	playerPos.y = pC->GetPlayer(Player1)->GetY();
-	bulletOne.x = playerPos.x - myPos.x;
-	bulletOne.y = playerPos.y - myPos.y;
-	float length = sqrt(bulletOne.x * bulletOne.x + bulletOne.y * bulletOne.y);
-	bulletOne.x = bulletOne.x / length;
-	bulletOne.y = bulletOne.y / length;
-	bulletTwo.x = bulletOne.x * cos(firingAngle) - bulletOne.y * sin(firingAngle);
-	bulletTwo.y = bulletOne.x * sin(firingAngle) + bulletOne.y * cos(firingAngle);
-	bulletThree.x = bulletOne.x * cos(-firingAngle) - bulletOne.y * sin(-firingAngle);
-	bulletThree.y = bulletOne.x * sin(-firingAngle) + bulletOne.y * cos(-firingAngle);
-	pC->AddBullet(myPos.x, myPos.y, bulletOne);
-	pC->AddBullet(myPos.x, myPos.y, bulletTwo);
-	pC->AddBullet(myPos.x, myPos.y, bulletThree);
+	SVector2D<float> vec2;
+	SVector2D<float> vec3;
+	bulletSetup newBullet;
+	newBullet.spawnPos = GetPos3D();
+	newBullet.BulletTimeMax = 3.0f;
+	newBullet.Speed = 1.5f;
+	CPlayer* target = pC->GetPlayer(Player1);
+	SVector2D<float> vec = target->GetPos2D() - pCharSprite->GetPosition2D();
+	newBullet.travelVector = vec.Normalised();
+	vec2.x = newBullet.travelVector.x * cos(firingAngle) - newBullet.travelVector.y * sin(firingAngle);
+	vec2.y = newBullet.travelVector.x * sin(firingAngle) + newBullet.travelVector.y * cos(firingAngle);
+	vec3.x = newBullet.travelVector.x * cos(-firingAngle) - newBullet.travelVector.y * sin(-firingAngle);
+	vec3.y = newBullet.travelVector.x * sin(-firingAngle) + newBullet.travelVector.y * cos(-firingAngle);
+	// create bullet
+	new CBullet(newBullet);
+	newBullet.travelVector = vec2;
+	new CBullet(newBullet);
+	newBullet.travelVector = vec3;
+	new CBullet(newBullet);
 }
 
 void CEnemyShotgun::Death()

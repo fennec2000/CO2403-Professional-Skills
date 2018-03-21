@@ -45,7 +45,6 @@ public:
 	//Static access method.
 	static CCore* GetInstance();
 	vector<CEProjectile*> eBullets;
-	vector<CEnemy*> enemies;
   
 	// Public functions
 	void UpdateCore();

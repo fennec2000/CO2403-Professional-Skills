@@ -45,7 +45,7 @@ ETileType CLevel::GetTile(SVector2D<int> position)
 
 ETileType CLevel::GetTile(SVector2D<float> position)
 {
-	return mMapData.mTileMap.at(static_cast<int>(position.y)).at(static_cast<int>(position.x));
+	return mTileMap->at(static_cast<int>(position.y))->at(static_cast<int>(position.x));
 }
 
 bool CLevel::GetTileCollision(int x, int y)
@@ -75,7 +75,7 @@ void CLevel::LoadLevel(const char* filePath)
 				mSpawnPos = { static_cast<float>(xPos), static_cast<float>(yPos) };
 				break;
 			case SPAWN_ENEMY:
-				testEnemies.push_back(new CEnemyShotgun(static_cast<float>(xPos), static_cast<float>(yPos), 0.0f, true));
+				testEnemies.push_back(new CTestEnemy(static_cast<float>(xPos), static_cast<float>(yPos), 0.0f, true));
 				break;
 			}
 		}

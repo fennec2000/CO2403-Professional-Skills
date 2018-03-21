@@ -33,7 +33,7 @@ private:
 	void GenerateLevel();
 	void UnloadLevel();
 
-	vector<CTestEnemy*> testEnemies;
+	vector<CEnemy*> testEnemies;
 
 	SMapData mMapData;
 	vector<vector<bool>*>* mCollisionMap;
