@@ -1,6 +1,8 @@
 #pragma once
 #include "BUILD_ORDER.h"
 
+class CPlayer;
+
 struct bulletSetup
 {
 	string spriteFileName = "UglyTile.png";

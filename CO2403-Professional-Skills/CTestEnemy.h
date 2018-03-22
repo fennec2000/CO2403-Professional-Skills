@@ -20,4 +20,8 @@ public:
 		void Death();
 		void toggleActive() { isActive = !isActive; };
 		void Shoot();
+
+		void ChangeHealth(int change) { CCharacter::ChangeHealth(change); };
+
+		SVector2D<float> GetPos2D() { return pCharSprite->GetPosition2D(); };
 };

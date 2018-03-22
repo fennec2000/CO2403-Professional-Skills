@@ -62,4 +62,6 @@ public:
 	void AddBullet(float ex, float ey, SVector2D<float> bulletVector);
 	void AddBullet(CBullet &givenBullet);
 	void RemoveBullet(CBullet &givenBullet);
+	void AddEnemy(CTestEnemy &givenEnemy);
+	void RemoveEnemy(CTestEnemy &givenEnemy);
 };

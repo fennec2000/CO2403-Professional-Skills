@@ -32,7 +32,10 @@ void CBullet::Update()
 		CBullet::~CBullet();
 	}
 
+	// declare varaibles before switch, vs doesnt like it in the statement
+	// then populcate in the case that it is needed
 	CPlayer* thePlayer;
+	vector <CTestEnemy*> enemyList;
 	// collisions
 	switch (mTeam)
 	{
@@ -45,10 +48,15 @@ void CBullet::Update()
 		}
 		break;
 	case EPlayers::PlayerTeam:
-		/*for (int i = 0; i < pC->GetEnemyList().size; ++i)
+		enemyList = pC->GetEnemyList();
+		for (int i = 0; i < enemyList.size(); ++i)
 		{
-
-		}*/
+			if (Distance(&pCharSprite->GetPosition2D(), &enemyList[i]->GetPos2D()) <= mRadius)
+			{
+				enemyList[i]->ChangeHealth(mBulletDamage);
+				CBullet::~CBullet();
+			}
+		}
 		break;
 	default:
 		break;

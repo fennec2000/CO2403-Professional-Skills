@@ -94,3 +94,17 @@ void CCore::RemoveBullet(CBullet & givenBullet)
 		}
 	}
 }
+
+void CCore::AddEnemy(CTestEnemy &givenEnemy)
+{
+	mEnemyList.push_back(&givenEnemy);
+}
+
+void CCore::RemoveEnemy(CTestEnemy & givenEnemy)
+{
+	for (int i = 0; i < mEnemyList.size(); ++i)
+	{
+		if (mEnemyList[i] == &givenEnemy)
+			mEnemyList.erase(mEnemyList.begin() + i);
+	}
+}

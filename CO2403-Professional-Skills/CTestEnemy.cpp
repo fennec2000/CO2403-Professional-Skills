@@ -10,11 +10,12 @@ CTestEnemy::CTestEnemy(float x, float y, float z, bool activate)
 	SetPosition(x, y, z);
 	isActive = activate;
 	pCharSprite->SetSpriteSkin("derp.png");
+	pC->AddEnemy(*this);
 }
 
 CTestEnemy::~CTestEnemy()
 {
-
+	pC->RemoveEnemy(*this);
 }
 
 void CTestEnemy::Update()

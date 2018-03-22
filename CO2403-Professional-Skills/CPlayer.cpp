@@ -21,6 +21,12 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
 	pCursor = new CWorldSprite("UglyTile.png", { playerPos.x, playerPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::UI] });
 	pTLEngine->StartMouseCapture();
+
+	// bullet setup
+	newBullet = new bulletSetup;
+	newBullet->bulletTimeMax = 3.0f;
+	newBullet->Speed = 1.5f;
+	newBullet->team = EPlayers::PlayerTeam;
 }
 
 CPlayer::~CPlayer()
@@ -130,15 +136,12 @@ void CPlayer::Move(SVector2D<float> movement)
 void CPlayer::Shoot()
 {
 	// Setup bullet
-	bulletSetup newBullet;
-	newBullet.spawnPos = GetPos3D();
-	newBullet.bulletTimeMax = 3.0f;
-	newBullet.Speed = 1.5f;
+	newBullet->spawnPos = GetPos3D();
 	SVector2D<float> vec = pCursor->GetPosition2D() - pCharSprite->GetPosition2D();
-	newBullet.travelVector = vec.Normalised();
+	newBullet->travelVector = vec.Normalised();
 
 	// create bullet
-	new CBullet(newBullet);
+	new CBullet(*(newBullet));
 
 	// fire timer
 	mFireTimeCurrent = mFireTimeMax;
