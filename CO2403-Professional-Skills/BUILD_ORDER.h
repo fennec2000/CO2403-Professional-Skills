@@ -18,6 +18,7 @@
 #include "SMatrix4x4.h"
 #include "Maths.h"
 
+
 // Core
 #include "CCore.h"
 
@@ -28,6 +29,9 @@
 #include "CUISprite.h"
 #include "CWorldSprite.h"
 #include "CAnimatedWorldSprite.h"
+
+// GUI
+#include "CGUI.h"
 
 // Level System
 #include "ETileType.h"

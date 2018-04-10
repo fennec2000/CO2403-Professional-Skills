@@ -128,6 +128,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="CAnimatedWorldSprite.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CEnemyShotgun.cpp" />
+    <ClCompile Include="CGUI.cpp" />
     <ClCompile Include="CMapIO.cpp" />
     <ClCompile Include="NameSettings.cpp" />
     <ClCompile Include="SBaseSprite.cpp" />
@@ -152,6 +153,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="CAnimatedWorldSprite.h" />
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CEnemyShotgun.h" />
+    <ClInclude Include="CGUI.h" />
     <ClInclude Include="CMapIO.h" />
     <ClInclude Include="ESpawnerTypes.h" />
     <ClInclude Include="ESpriteBlend.h" />

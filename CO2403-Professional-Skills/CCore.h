@@ -6,6 +6,7 @@ using namespace tle;
 // This holds data core to the game that needs to be passed arround
 
 // players
+class CGUI;
 class CBullet;
 class CPlayer;
 class CEProjectile;
@@ -37,6 +38,7 @@ private:
 	vector<CTestEnemy*> mEnemyList;		// holds a list of enemies
 	EGameState mGameState;	// the current game state
 	unsigned int mGameScore;// the current score of the game
+	CGUI* pGUI;				// pointer to the GUI
 
 	// Private constructor to prevent instancing.
 	CCore();

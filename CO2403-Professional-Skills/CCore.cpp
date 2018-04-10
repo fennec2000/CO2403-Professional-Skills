@@ -26,6 +26,9 @@ CCore::CCore()
 	// Camera
 	pCamera = pTLEngine->CreateCamera(kManual, 0.0f, 0.0f, -20.0f);
 
+	// GUI
+	pGUI = new CGUI();
+
 	// Data setup
 	for (int i = 0; i < EPlayers::NumOfEPlayers; ++i)
 		pPlayer[i] = nullptr;
@@ -36,6 +39,7 @@ CCore::CCore()
 
 	// Creates the level
 	pLevel = new CLevel();
+
 }
 
 void CCore::UpdateCore()
