@@ -59,6 +59,7 @@ void CTestEnemy::Shoot()
 	// Setup bullet
 	bulletSetup newBullet;
 	newBullet.spawnPos = GetPos3D();
+	//newBullet.spawnPos.z -= 0.2f;
 	newBullet.BulletTimeMax = 3.0f;
 	newBullet.Speed = 1.5f;
 	CPlayer* target = pC->GetPlayer(PlayerTeam);

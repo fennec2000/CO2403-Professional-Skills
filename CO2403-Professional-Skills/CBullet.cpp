@@ -8,6 +8,7 @@ CBullet::CBullet(bulletSetup givenSetup)
 	mVector = givenSetup.travelVector;
 	mBulletTimerMax = givenSetup.BulletTimeMax;
 	mMoveSpeed = givenSetup.Speed;
+	pCharSprite->ResizeSprite(0.25f);
 	pC->AddBullet(*this);
 	bulletTeam = givenSetup.team;
 }

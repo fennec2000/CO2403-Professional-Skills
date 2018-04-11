@@ -30,8 +30,15 @@ void main()
 	//CEnemyShotgun* mShotgun = new CEnemyShotgun(20.0f, 5, 0.0f, true);
 	//CEnemyChaingun* mChaingun = new CEnemyChaingun(18.0f, 5, 0.0f, true);
 
-	
-
+	// Create an animation for testing
+	vector<const char*> animatedSprites;
+	animatedSprites.push_back("wallServer1.png");
+	animatedSprites.push_back("wallServer2.png");
+	animatedSprites.push_back("wallServer3.png");
+	animatedSprites.push_back("wallServer4.png");
+	animatedSprites.push_back("wallServer5.png");
+	animatedSprites.push_back("wallServer6.png");
+	//CAnimatedWorldSprite* animatedSprite = new CAnimatedWorldSprite(animatedSprites, { spawnPos.x - 7.0f, spawnPos.y,  G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor] });
 
 	// Monster Test
 	CWorldSprite* mWorldSprite;
@@ -49,6 +56,7 @@ void main()
 		pThePlayer->Update();
 
 		/**** Update your scene each frame here ****/
+		//animatedSprite->Update();
 
 		// exit key
 		if (myEngine->KeyHit(G_EXIT))

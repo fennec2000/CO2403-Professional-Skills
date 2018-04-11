@@ -145,6 +145,9 @@ void CLevel::Update()
 			case WALL_WITH_SIDE_FLIPPED_Y:
 				mMapSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::WALL_SIDE_FLIPPED_Y);
 				break;
+			case WALL_SERVER_ANIMATED:
+				mMapSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::WALL_SERVER_ANIMATED);
+				break;
 			}
 		}
 		else if (mSelectedMode == 2)
@@ -217,6 +220,8 @@ void CLevel::GenerateMap()
 				case WALL_WITH_SIDE_FLIPPED_Y:
 					GenerateSprite(TileNames::WALL_SIDE_FLIPPED_Y, { xPos, yPos });
 					break;
+				case WALL_SERVER_ANIMATED:
+					GenerateSprite(TileNames::WALL_SERVER_ANIMATED, { xPos, yPos });
 				}
 			}
 

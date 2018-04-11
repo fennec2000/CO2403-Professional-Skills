@@ -9,6 +9,7 @@ namespace TileNames
 	const char* FLOOR = "Floor.png";
 	const char* WALL_SIDE = "WallSide.png";
 	const char* WALL_SIDE_FLIPPED_Y = "WallSideFliped.png";
+	const char* WALL_SERVER_ANIMATED = "wallServer1.png";
 }
 
 namespace SpawnerNames
