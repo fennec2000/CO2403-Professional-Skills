@@ -154,3 +154,9 @@ SVector2D<T> SVector2D<T>::Subtract(const SVector2D<T>* lhs, const SVector2D<T>*
 	sum.y = lhs->y - rhs->y;
 	return sum;
 }
+
+template <class T>
+float Distance(const SVector2D<T>* lhs, const SVector2D<T>* rhs)
+{
+	return sqrt((lhs->x - rhs->x) * (lhs->x - rhs->x) + (lhs->y - rhs->y) * (lhs->y - rhs->y));
+}

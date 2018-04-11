@@ -4,7 +4,7 @@
 #pragma once
 #include "BUILD_ORDER.h"
 
-class CTestEnemy;
+class CEnemy;
 
 class CLevel
 {
@@ -33,7 +33,7 @@ private:
 	void GenerateLevel();
 	void UnloadLevel();
 
-	vector<CTestEnemy*> testEnemies;
+	vector<CEnemy*> levelEnemies;
 
 	SMapData mMapData;
 	vector<vector<bool>*>* mCollisionMap;
@@ -42,4 +42,5 @@ private:
 	SVector2D<float> mSpawnPos;
 
 	void GenerateSprite(const char* pSpriteName, SVector2D<int> position);
+
 };

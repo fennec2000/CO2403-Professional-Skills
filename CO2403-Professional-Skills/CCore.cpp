@@ -15,6 +15,8 @@ CCore* CCore::GetInstance()
 
 CCore::CCore()
 {
+	pInstance = this;
+
 	// Load engine
 	pTLEngine = New3DEngine(kTLX);
 
@@ -26,6 +28,9 @@ CCore::CCore()
 
 	// Camera
 	pCamera = pTLEngine->CreateCamera(kManual, 0.0f, 0.0f, -20.0f);
+
+	// GUI
+	pGUI = new CGUI();
 
 	// Data setup
 	for (int i = 0; i < EPlayers::NumOfEPlayers; ++i)
@@ -45,28 +50,27 @@ void CCore::UpdateCore()
 	mFrameTime = pTLEngine->Timer();	// update the frame timer
 	pTLEngine->DrawScene();				// draw the frame
 	pLevel->Update();
-
-	for (std::vector<CEProjectile*>::iterator it = eBullets.begin(); it != eBullets.end(); it++)
-	{
-		(*it)->Update();
-		if ((*it)->getLifetime() > 2.9f)
-		{
-			delete(*it);
-			eBullets.erase((it));
-			it = eBullets.begin();
-		}
-  }
-
-	for (std::vector<CEnemy*>::iterator it = enemies.begin(); it != enemies.end(); it++)
-	{
-		(*it)->Update();
-	}
-
-	for (unsigned int i = 0; i < pActiveBullets.size(); ++i)
+	
+	for (int i = 0; i < pActiveBullets.size(); ++i)
 	{
 		if (pActiveBullets[i] != NULL)
 		{
 			pActiveBullets[i]->Update();
+			if (pActiveBullets[i]->returnTeam() == EnemyTeam)
+			{
+				SVector2D<float> bulletPos = pActiveBullets[i]->GetPos2D();
+				SVector2D<float> playerPos = GetPlayer(PlayerTeam)->GetPos2D();
+				float distance = sqrt(((playerPos.x - bulletPos.x) * (playerPos.x - bulletPos.x)) + ((playerPos.y - bulletPos.y) * (playerPos.y - bulletPos.y)));
+				if (distance < pActiveBullets[i]->getSize())
+				{
+					pActiveBullets[i]->Remove();
+				}
+			}
+			else if (pActiveBullets[i]->returnTeam() == PlayerTeam)
+			{
+				// do stuff
+			}
+
 		}
 		else
 			cout << "invalid BULLET" << endl;
@@ -77,11 +81,6 @@ void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)
 {
 	if (pPlayer[player] == nullptr)
 		pPlayer[player] = &givenPlayer;
-}
-
-void CCore::AddBullet(float ex, float ey, SVector2D<float> bulletVector)
-{
-	eBullets.push_back(new CEProjectile(ex, ey, 0, bulletVector));
 }
 
 void CCore::AddBullet(CBullet &givenBullet)
@@ -98,5 +97,19 @@ void CCore::RemoveBullet(CBullet & givenBullet)
 			pActiveBullets.erase(pActiveBullets.begin() + i);
 			return;
 		}
+	}
+}
+
+void CCore::AddEnemy(CTestEnemy &givenEnemy)
+{
+	mEnemyList.push_back(&givenEnemy);
+}
+
+void CCore::RemoveEnemy(CTestEnemy & givenEnemy)
+{
+	for (int i = 0; i < mEnemyList.size(); ++i)
+	{
+		if (mEnemyList[i] == &givenEnemy)
+			mEnemyList.erase(mEnemyList.begin() + i);
 	}
 }

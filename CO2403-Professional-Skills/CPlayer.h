@@ -1,6 +1,8 @@
 #pragma once
 #include "BUILD_ORDER.h"
 
+struct bulletSetup;
+
 class CPlayer : protected CCharacter
 {
 private:
@@ -29,6 +31,7 @@ private:
 	// firing
 	float mFireTimeMax = 0.5f;
 	float mFireTimeCurrent = 0.0f;
+	bulletSetup* newBullet;
 
 	// cheats
 	bool mCheatGod = false;

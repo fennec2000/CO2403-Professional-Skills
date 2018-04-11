@@ -14,6 +14,7 @@ protected:
 	float* pFrameTimer;
 
 	const SVector2D<float> mCharSize = { 1.0f, 1.0f }; // x, y
+	const float mCharLeway = 0.01f;
 	unsigned int mHealthMax;
 	unsigned int mHealthCurrent;
 	float mMoveSpeed = 2.0f;

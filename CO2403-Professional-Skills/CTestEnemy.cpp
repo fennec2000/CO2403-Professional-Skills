@@ -10,18 +10,18 @@ CTestEnemy::CTestEnemy(float x, float y, float z, bool activate)
 	SetPosition(x, y, z);
 	isActive = activate;
 	pCharSprite->SetSpriteSkin("derp.png");
-	pC->enemies.push_back(this);
+	pC->AddEnemy(*this);
 }
 
 CTestEnemy::~CTestEnemy()
 {
-
+	pC->RemoveEnemy(*this);
 }
 
 void CTestEnemy::Update()
 {
-	float playerX = pC->GetPlayer(Player1)->GetX();
-	float playerY = pC->GetPlayer(Player1)->GetY();
+	float playerX = pC->GetPlayer(PlayerTeam)->GetX();
+	float playerY = pC->GetPlayer(PlayerTeam)->GetY();
 	float enemyX = pCharSprite->GetX();
 	float enemyY = pCharSprite->GetY();
 
@@ -61,13 +61,13 @@ void CTestEnemy::Shoot()
 	newBullet.spawnPos = GetPos3D();
 	//newBullet.spawnPos.z -= 0.2f;
 	newBullet.BulletTimeMax = 3.0f;
-	newBullet.Speed = 5.0f;
-	CPlayer* target = pC->GetPlayer(Player1);
+	newBullet.Speed = 1.5f;
+	CPlayer* target = pC->GetPlayer(PlayerTeam);
 	SVector2D<float> vec = target->GetPos2D() - pCharSprite->GetPosition2D();
 	newBullet.travelVector = vec.Normalised();
 
 	// create bullet
-	new CBullet(newBullet);
+	//new CBullet(newBullet, EnemyTeam);
 }
 
 void CTestEnemy::Death()
