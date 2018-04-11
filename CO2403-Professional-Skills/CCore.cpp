@@ -15,6 +15,8 @@ CCore* CCore::GetInstance()
 
 CCore::CCore()
 {
+	pInstance = this;
+
 	// Load engine
 	pTLEngine = New3DEngine(kTLX);
 

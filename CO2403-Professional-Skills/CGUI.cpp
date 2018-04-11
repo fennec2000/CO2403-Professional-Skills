@@ -6,8 +6,8 @@ CGUI::CGUI()
 {
 	health = MAX_HEARTS;
 
-	for(int i = 0; i < MAX_HEARTS; i++)
-		pHeartSprites[i] = new CWorldSprite("Heart.png", HEALTH_OFFSET);
+	for (int i = 0; i < MAX_HEARTS; i++)
+		pHeartSprites[i] = new CUISprite("Heart.png", HEALTH_OFFSET);
 }
 
 
