@@ -4,7 +4,7 @@
 CBullet::CBullet(bulletSetup &givenSetup)
 {
 	pC = CCore::GetInstance();
-	pCharSprite = new CWorldSprite(givenSetup.spriteFileName.c_str(), givenSetup.spawnPos);
+	pCharSprite = new CWorldSprite(givenSetup.spriteFileName.c_str(), givenSetup.spawnPos, BLEND_CUTOUT);
 	pFrameTimer = pC->GetFrameTimer();
 	mVector = givenSetup.travelVector;
 	mBulletTimerMax = givenSetup.bulletTimeMax;
