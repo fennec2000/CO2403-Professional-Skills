@@ -59,8 +59,9 @@ void CTestEnemy::Shoot()
 	// Setup bullet
 	bulletSetup newBullet;
 	newBullet.spawnPos = GetPos3D();
+	//newBullet.spawnPos.z -= 0.2f;
 	newBullet.BulletTimeMax = 3.0f;
-	newBullet.Speed = 1.5f;
+	newBullet.Speed = 5.0f;
 	CPlayer* target = pC->GetPlayer(Player1);
 	SVector2D<float> vec = target->GetPos2D() - pCharSprite->GetPosition2D();
 	newBullet.travelVector = vec.Normalised();

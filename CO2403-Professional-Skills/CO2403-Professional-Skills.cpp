@@ -56,18 +56,6 @@ void main()
 		pThePlayer->Update();
 
 		/**** Update your scene each frame here ****/
-		//if (myEngine->KeyHit(Key_1))
-		//{
-		//	animatedSprite->StartAnimation();
-		//}
-		//if (myEngine->KeyHit(Key_2))
-		//{
-		//	animatedSprite->StopAnimation();
-		//}
-		//if (myEngine->KeyHit(Key_3))
-		//{
-		//	animatedSprite->RestartAnimation();
-		//}
 		//animatedSprite->Update();
 
 		// exit key
