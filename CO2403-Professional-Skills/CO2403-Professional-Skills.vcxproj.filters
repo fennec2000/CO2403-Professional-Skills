@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="CO2403-Professional-Skills.cpp" />
+    <ClCompile Include="CWorldSprite.cpp">
+      <Filter>SpriteSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CUISprite.cpp">
+      <Filter>SpriteSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CCharacter.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Maths.cpp">
+      <Filter>Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="SMatrix4x4.cpp">
+      <Filter>Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="CTestEnemy.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="SBaseSprite.cpp">
+      <Filter>SpriteSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimatedWorldSprite.cpp">
+      <Filter>SpriteSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SMapData.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="CMapIO.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="NameSettings.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy.h">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyChaingun.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyShotgun.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUI.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Maths">
+      <UniqueIdentifier>{6836e862-7900-4c73-aca4-56d534d0c8b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpriteSystem">
+      <UniqueIdentifier>{8406cb94-c179-497e-a54c-775165d5094a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{363f18b2-9d62-4c12-9dca-f6063c0b67ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{d8776632-4a05-4f7f-831b-133324e9d750}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{7bccba00-d0cc-46d3-adbb-6623162f76e3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SVector2D.h">
+      <Filter>Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="SVector3D.h">
+      <Filter>Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="CUISprite.h">
+      <Filter>SpriteSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CWorldSprite.h">
+      <Filter>SpriteSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="BUILD_ORDER.h" />
+    <ClInclude Include="CCharacter.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Maths.h">
+      <Filter>Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="SMatrix4x4.h">
+      <Filter>Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="CTestEnemy.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="ETileType.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="SBaseSprite.h">
+      <Filter>SpriteSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimatedWorldSprite.h">
+      <Filter>SpriteSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ESpriteBlend.h">
+      <Filter>SpriteSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ESpawnerTypes.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="SMapData.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="CMapIO.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="NameSettings.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyChaingun.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyShotgun.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUI.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

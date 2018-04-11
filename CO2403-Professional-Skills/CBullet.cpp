@@ -1,24 +1,20 @@
 #include "CBullet.h"
 
-
-CBullet::CBullet(bulletSetup &givenSetup)
+CBullet::CBullet(bulletSetup givenSetup)
 {
 	pC = CCore::GetInstance();
-	pCharSprite = new CWorldSprite(givenSetup.spriteFileName.c_str(), givenSetup.spawnPos, BLEND_CUTOUT);
+	pCharSprite = new CWorldSprite(givenSetup.spriteFileName.c_str(), givenSetup.spawnPos);
 	pFrameTimer = pC->GetFrameTimer();
 	mVector = givenSetup.travelVector;
-	mBulletTimerMax = givenSetup.bulletTimeMax;
+	mBulletTimerMax = givenSetup.BulletTimeMax;
 	mMoveSpeed = givenSetup.Speed;
-	mTeam = givenSetup.team;
-	mRadius = givenSetup.spriteRadius;
-	mBulletDamage = givenSetup.bulletDamage;
 	pC->AddBullet(*this);
+	bulletTeam = givenSetup.team;
 }
 
 
 CBullet::~CBullet()
 {
-	pC->RemoveBullet(*this);
 	pCharSprite->~CWorldSprite();
 }
 
@@ -29,36 +25,13 @@ void CBullet::Update()
 	mBulletTimerCurrent += *pFrameTimer;
 	if (mBulletTimerCurrent >= mBulletTimerMax)
 	{
+		pC->RemoveBullet(*this);
 		CBullet::~CBullet();
 	}
+}
 
-	// declare varaibles before switch, vs doesnt like it in the statement
-	// then populcate in the case that it is needed
-	CPlayer* thePlayer;
-	vector <CTestEnemy*> enemyList;
-	// collisions
-	switch (mTeam)
-	{
-	case EPlayers::EnemyTeam:
-		thePlayer = pC->GetPlayer(EPlayers::PlayerTeam);
-		if (Distance(&pCharSprite->GetPosition2D(), &thePlayer->GetPos2D()) <= mRadius)
-		{
-			thePlayer->ChangeHealth(mBulletDamage);
-			CBullet::~CBullet();
-		}
-		break;
-	case EPlayers::PlayerTeam:
-		enemyList = pC->GetEnemyList();
-		for (int i = 0; i < enemyList.size(); ++i)
-		{
-			if (Distance(&pCharSprite->GetPosition2D(), &enemyList[i]->GetPos2D()) <= mRadius)
-			{
-				enemyList[i]->ChangeHealth(mBulletDamage);
-				CBullet::~CBullet();
-			}
-		}
-		break;
-	default:
-		break;
-	}
+void CBullet::Remove()
+{
+	pC->RemoveBullet(*this);
+	CBullet::~CBullet();
 }

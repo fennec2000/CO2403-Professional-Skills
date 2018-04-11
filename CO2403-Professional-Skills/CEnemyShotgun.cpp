@@ -1,15 +1,12 @@
 #include "BUILD_ORDER.h"
-
-CEnemyShotgun::CEnemyShotgun()
-{
-	toggleActive();
-}
+#include "math.h"
 
 CEnemyShotgun::CEnemyShotgun(float x, float y, float z, bool activate)
 {
 	SetPosition(x, y, z);
 	isActive = activate;
 	pCharSprite->SetSpriteSkin("derp.png");
+	pLevel = pC->GetLevel();
 }
 
 CEnemyShotgun::~CEnemyShotgun()
@@ -19,62 +16,36 @@ CEnemyShotgun::~CEnemyShotgun()
 
 void CEnemyShotgun::Update()
 {
-	float playerX = pC->GetPlayer(PlayerTeam)->GetX();
-	float playerY = pC->GetPlayer(PlayerTeam)->GetY();
-	float enemyX = pCharSprite->GetX();
-	float enemyY = pCharSprite->GetY();
-	float distance = sqrt(((playerX - enemyX) * (playerX - enemyX)) + ((playerY - enemyY) * (playerY - enemyY)));
-	if (isActive)
+	SVector2D<float> eMovement;
+	SVector2D<float> testPos;
+	SVector2D<float> playerPos = { pC->GetPlayer(PlayerTeam)->GetX(), pC->GetPlayer(PlayerTeam)->GetY() };
+	SVector2D<float> vec = pC->GetPlayer(PlayerTeam)->GetPos2D() - pCharSprite->GetPosition2D();
+	SVector2D<float> ePos = pCharSprite->GetPosition2D();
+	float distance = sqrt(((playerPos.x - ePos.x) * (playerPos.x - ePos.x)) + ((playerPos.y - ePos.y) * (playerPos.y - ePos.y)));
+	if (distance < DISTANCE_TO_KEEP)
 	{
-		if (enemyX > playerX)
+		eMovement.x = (-vec.x * *pFrameTimer * mMoveSpeed);
+		eMovement.y = (-vec.y * *pFrameTimer * mMoveSpeed);
+		testPos = { ePos.x + eMovement.x, ePos.y + eMovement.y };
+		if (!CollisionCheck(testPos))
 		{
-			if (distance > DISTANCE_TO_KEEP)
-			{
-				pCharSprite->MoveX(-mMoveSpeed * *pFrameTimer);
-			}
-			else
-			{
-				pCharSprite->MoveX(mMoveSpeed * *pFrameTimer);
-			}
-			
-		}
-		if (enemyX < playerX)
-		{
-			if (distance > DISTANCE_TO_KEEP)
-			{
-				pCharSprite->MoveX(mMoveSpeed * *pFrameTimer);
-			}
-			else
-			{
-				pCharSprite->MoveX(-mMoveSpeed * *pFrameTimer);
-			}
-			
-		}
-		if (enemyY > playerY)
-		{
-			if (distance > DISTANCE_TO_KEEP)
-			{
-				pCharSprite->MoveY(-mMoveSpeed * *pFrameTimer);
-			}
-			else
-			{
-				pCharSprite->MoveY(mMoveSpeed * *pFrameTimer);
-			}
-			
-		}
-		if (enemyY < playerY)
-		{
-			if (distance > DISTANCE_TO_KEEP)
-			{
-				pCharSprite->MoveY(mMoveSpeed * *pFrameTimer);
-			}
-			else
-			{
-				pCharSprite->MoveY(-mMoveSpeed * *pFrameTimer);
-			}
-			
+			pCharSprite->MoveX(eMovement.x);
+			pCharSprite->MoveY(eMovement.y);
 		}
 	}
+	else
+	{
+		eMovement.x = (vec.x * *pFrameTimer * mMoveSpeed);
+		eMovement.y = (vec.y * *pFrameTimer * mMoveSpeed);
+		testPos = { ePos.x + eMovement.x, ePos.y + eMovement.y };
+		if (!CollisionCheck(testPos))
+		{
+			pCharSprite->MoveX(eMovement.x);
+			pCharSprite->MoveY(eMovement.y);
+		}
+	}
+
+
 	if (bulletTimer < MAX_BULLET_TIMER)
 	{
 		bulletTimer = bulletTimer + *pFrameTimer;
@@ -88,33 +59,27 @@ void CEnemyShotgun::Update()
 
 void CEnemyShotgun::Shoot()
 {
-	float enemyX = pCharSprite->GetX();
-	float enemyY = pCharSprite->GetY();
-	SVector2D<float> enemyPos = pCharSprite->GetPosition2D();
-	SVector2D<float> playerPos;
-	SVector2D<float> bulletTwo;
-	SVector2D<float> bulletThree;
-	playerPos.x = pC->GetPlayer(PlayerTeam)->GetX();
-	playerPos.y = pC->GetPlayer(PlayerTeam)->GetY();
-	mFireVector.x = playerPos.x - enemyPos.x;
-	mFireVector.y = playerPos.y - enemyPos.y;
-	bulletTwo.x = playerPos.x - enemyPos.x;
-	bulletTwo.y = playerPos.y + 2.0f - enemyPos.y;
-	bulletThree.x = playerPos.x - enemyPos.x;
-	bulletThree.y = playerPos.y - 2.0 - enemyPos.y;
-	float lenght = sqrt(mFireVector.x * mFireVector.x + mFireVector.y * mFireVector.y);
-	mFireVector.x /= lenght;
-	mFireVector.y /= lenght;
-	cout << "x " << mFireVector.x << " y " << mFireVector.y << endl;
-	lenght = sqrt(bulletTwo.x * bulletTwo.x + bulletTwo.y * bulletTwo.y);
-	bulletTwo.x /= lenght;
-	bulletTwo.y /= lenght;
-	pC->AddBullet(enemyX, enemyY, bulletTwo);
-	lenght = sqrt(bulletThree.x * bulletThree.x + bulletThree.y * bulletThree.y);
-	bulletThree.x /= lenght;
-	bulletThree.y /= lenght;
-	pC->AddBullet(enemyX, enemyY, bulletThree);
-	pC->AddBullet(enemyX, enemyY, mFireVector);
+	// Setup bullet
+	float firingAngle = bulletSpreadAngle * 3.14 / 180;
+	SVector2D<float> vec2;
+	SVector2D<float> vec3;
+	bulletSetup newBullet;
+	newBullet.spawnPos = GetPos3D();
+	newBullet.BulletTimeMax = 3.0f;
+	newBullet.Speed = 1.5f;
+	CPlayer* target = pC->GetPlayer(PlayerTeam);
+	SVector2D<float> vec = target->GetPos2D() - pCharSprite->GetPosition2D();
+	newBullet.travelVector = vec.Normalised();
+	vec2.x = newBullet.travelVector.x * cos(firingAngle) - newBullet.travelVector.y * sin(firingAngle);
+	vec2.y = newBullet.travelVector.x * sin(firingAngle) + newBullet.travelVector.y * cos(firingAngle);
+	vec3.x = newBullet.travelVector.x * cos(-firingAngle) - newBullet.travelVector.y * sin(-firingAngle);
+	vec3.y = newBullet.travelVector.x * sin(-firingAngle) + newBullet.travelVector.y * cos(-firingAngle);
+	// create bullet
+	new CBullet(newBullet);
+	newBullet.travelVector = vec2;
+	new CBullet(newBullet);
+	newBullet.travelVector = vec3;
+	new CBullet(newBullet);
 }
 
 void CEnemyShotgun::Death()
