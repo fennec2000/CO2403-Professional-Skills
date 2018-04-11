@@ -27,6 +27,7 @@ CCore::CCore()
 	pTLEngine->AddMediaFolder("TestMedia");
 	pTLEngine->AddMediaFolder("Media");
 	pTLEngine->AddMediaFolder("EditorMedia");
+	pTLEngine->AddMediaFolder("Media\\WallServerAnimated");
 
 	// Camera
 	pCamera = pTLEngine->CreateCamera(kManual, 0.0f, 0.0f, -20.0f);
