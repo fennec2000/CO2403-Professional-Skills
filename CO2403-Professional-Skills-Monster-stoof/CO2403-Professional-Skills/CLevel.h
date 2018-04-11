@@ -42,4 +42,5 @@ private:
 	SVector2D<float> mSpawnPos;
 
 	void GenerateSprite(const char* pSpriteName, SVector2D<int> position);
+
 };

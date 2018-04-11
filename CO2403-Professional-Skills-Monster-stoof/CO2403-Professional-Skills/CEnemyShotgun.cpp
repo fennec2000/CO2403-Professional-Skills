@@ -6,6 +6,7 @@ CEnemyShotgun::CEnemyShotgun(float x, float y, float z, bool activate)
 	SetPosition(x, y, z);
 	isActive = activate;
 	pCharSprite->SetSpriteSkin("derp.png");
+	pLevel = pC->GetLevel();
 }
 
 CEnemyShotgun::~CEnemyShotgun()
@@ -15,62 +16,36 @@ CEnemyShotgun::~CEnemyShotgun()
 
 void CEnemyShotgun::Update()
 {
-	float playerX = pC->GetPlayer(Player1)->GetX();
-	float playerY = pC->GetPlayer(Player1)->GetY();
-	float enemyX = pCharSprite->GetX();
-	float enemyY = pCharSprite->GetY();
-	float distance = sqrt(((playerX - enemyX) * (playerX - enemyX)) + ((playerY - enemyY) * (playerY - enemyY)));
-	if (isActive)
-	{
-		if (enemyX > playerX)
+	SVector2D<float> eMovement;
+	SVector2D<float> testPos;
+	SVector2D<float> playerPos = { pC->GetPlayer(Player1)->GetX(), pC->GetPlayer(Player1)->GetY() };
+	SVector2D<float> vec = pC->GetPlayer(Player1)->GetPos2D() - pCharSprite->GetPosition2D();
+	SVector2D<float> ePos = pCharSprite->GetPosition2D();
+	float distance = sqrt(((playerPos.x - ePos.x) * (playerPos.x - ePos.x)) + ((playerPos.y - ePos.y) * (playerPos.y - ePos.y)));
+		if (distance < DISTANCE_TO_KEEP)
 		{
-			if (distance > DISTANCE_TO_KEEP)
+			eMovement.x = (-vec.x * *pFrameTimer * mMoveSpeed);
+			eMovement.y = (-vec.y * *pFrameTimer * mMoveSpeed);
+			testPos = { ePos.x + eMovement.x, ePos.y + eMovement.y };
+			if (!CollisionCheck(testPos)) 
 			{
-				pCharSprite->MoveX(-mMoveSpeed * *pFrameTimer);
+				pCharSprite->MoveX(eMovement.x);
+				pCharSprite->MoveY(eMovement.y);
 			}
-			else
-			{
-				pCharSprite->MoveX(mMoveSpeed * *pFrameTimer);
-			}
-			
 		}
-		if (enemyX < playerX)
+		else
 		{
-			if (distance > DISTANCE_TO_KEEP)
+			eMovement.x = (vec.x * *pFrameTimer * mMoveSpeed);
+			eMovement.y = (vec.y * *pFrameTimer * mMoveSpeed);
+			testPos = { ePos.x + eMovement.x, ePos.y + eMovement.y };
+			if (!CollisionCheck(testPos))
 			{
-				pCharSprite->MoveX(mMoveSpeed * *pFrameTimer);
+				pCharSprite->MoveX(eMovement.x);
+				pCharSprite->MoveY(eMovement.y);
 			}
-			else
-			{
-				pCharSprite->MoveX(-mMoveSpeed * *pFrameTimer);
-			}
-			
 		}
-		if (enemyY > playerY)
-		{
-			if (distance > DISTANCE_TO_KEEP)
-			{
-				pCharSprite->MoveY(-mMoveSpeed * *pFrameTimer);
-			}
-			else
-			{
-				pCharSprite->MoveY(mMoveSpeed * *pFrameTimer);
-			}
-			
-		}
-		if (enemyY < playerY)
-		{
-			if (distance > DISTANCE_TO_KEEP)
-			{
-				pCharSprite->MoveY(mMoveSpeed * *pFrameTimer);
-			}
-			else
-			{
-				pCharSprite->MoveY(-mMoveSpeed * *pFrameTimer);
-			}
-			
-		}
-	}
+	
+
 	if (bulletTimer < MAX_BULLET_TIMER)
 	{
 		bulletTimer = bulletTimer + *pFrameTimer;
@@ -100,14 +75,17 @@ void CEnemyShotgun::Shoot()
 	vec3.x = newBullet.travelVector.x * cos(-firingAngle) - newBullet.travelVector.y * sin(-firingAngle);
 	vec3.y = newBullet.travelVector.x * sin(-firingAngle) + newBullet.travelVector.y * cos(-firingAngle);
 	// create bullet
-	new CBullet(newBullet);
+	new CBullet(newBullet, EnemyTeam);
 	newBullet.travelVector = vec2;
-	new CBullet(newBullet);
+	new CBullet(newBullet, EnemyTeam);
 	newBullet.travelVector = vec3;
-	new CBullet(newBullet);
+	new CBullet(newBullet, EnemyTeam);
 }
 
 void CEnemyShotgun::Death()
 {
 
 }
+
+
+

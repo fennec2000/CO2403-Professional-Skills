@@ -26,9 +26,6 @@
     <ClCompile Include="CTestEnemy.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
-    <ClCompile Include="CEProjectile.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
     <ClCompile Include="CLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
@@ -110,9 +107,6 @@
       <Filter>Maths</Filter>
     </ClInclude>
     <ClInclude Include="CTestEnemy.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="CEProjectile.h">
       <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="CLevel.h">

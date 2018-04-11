@@ -12,6 +12,7 @@ class CEProjectile;
 class CLevel;
 class CEnemy;
 enum EPlayers { Player1, Player2, NumOfEPlayers };
+enum ETeam { PlayerTeam, EnemyTeam };
 
 
 // game states

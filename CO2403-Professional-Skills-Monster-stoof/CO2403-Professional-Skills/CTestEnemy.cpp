@@ -65,7 +65,7 @@ void CTestEnemy::Shoot()
 	newBullet.travelVector = vec.Normalised();
 
 	// create bullet
-	new CBullet(newBullet);
+	new CBullet(newBullet, EnemyTeam);
 }
 
 void CTestEnemy::Death()

@@ -45,22 +45,26 @@ void CCore::UpdateCore()
 	pTLEngine->DrawScene();				// draw the frame
 	pLevel->Update();
 
-	for (std::vector<CEProjectile*>::iterator it = eBullets.begin(); it != eBullets.end(); it++)
-	{
-		(*it)->Update();
-		if ((*it)->getLifetime() > 2.9f)
-		{
-			delete(*it);
-			eBullets.erase((it));
-			it = eBullets.begin();
-		}
-  }
-
 	for (int i = 0; i < pActiveBullets.size(); ++i)
 	{
 		if (pActiveBullets[i] != NULL)
 		{
 			pActiveBullets[i]->Update();
+			if (pActiveBullets[i]->returnTeam() == EnemyTeam)
+			{
+				SVector2D<float> bulletPos = pActiveBullets[i]->GetPos2D();
+				SVector2D<float> playerPos = GetPlayer(Player1)->GetPos2D();
+				float distance = sqrt(((playerPos.x - bulletPos.x) * (playerPos.x - bulletPos.x)) + ((playerPos.y - bulletPos.y) * (playerPos.y - bulletPos.y)));
+				if (distance < pActiveBullets[i]->getSize())
+				{
+					pActiveBullets[i]->Remove();
+				}
+			}
+			else if (pActiveBullets[i]->returnTeam() == PlayerTeam)
+			{
+				// do stuff
+			}
+
 		}
 		else
 			cout << "invalid BULLET" << endl;
@@ -71,11 +75,6 @@ void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)
 {
 	if (pPlayer[player] == nullptr)
 		pPlayer[player] = &givenPlayer;
-}
-
-void CCore::AddBullet(float ex, float ey, SVector2D<float> bulletVector)
-{
-	eBullets.push_back(new CEProjectile(ex, ey, 0, bulletVector));
 }
 
 void CCore::AddBullet(CBullet &givenBullet)

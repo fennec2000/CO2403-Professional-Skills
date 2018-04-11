@@ -102,7 +102,7 @@ void CEnemyChaingun::Shoot()
 	adjustedBullet.y = newBullet.travelVector.x * sin(firingAngle) + newBullet.travelVector.y * cos(firingAngle);
 	newBullet.travelVector = adjustedBullet;
 	// create bullet
-	new CBullet(newBullet);
+	new CBullet(newBullet, EnemyTeam);
 }
 
 void CEnemyChaingun::Death()

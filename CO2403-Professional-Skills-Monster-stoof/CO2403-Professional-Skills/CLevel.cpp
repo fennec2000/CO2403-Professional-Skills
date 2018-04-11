@@ -63,7 +63,6 @@ void CLevel::LoadLevel(const char* filePath)
 	UnloadLevel();
 	mMapData = CMapIO::ReadMapFile(filePath);
 	GenerateLevel();
-
 	// Checks through the spawners and does appropirate things
 	for (int yPos = 0; yPos < CLevel::MAP_MAX_SIZE.y; yPos++)
 	{
@@ -71,12 +70,14 @@ void CLevel::LoadLevel(const char* filePath)
 		{
 			switch (mMapData.mSpawnerMap[yPos].at(xPos))
 			{
+				
 			case SPAWN_PLAYER:
 				mSpawnPos = { static_cast<float>(xPos), static_cast<float>(yPos) };
 				break;
 			case SPAWN_ENEMY:
-				testEnemies.push_back(new CEnemyShotgun(static_cast<float>(xPos), static_cast<float>(yPos), 0.0f, true));
+					testEnemies.push_back(new CEnemyShotgun(static_cast<float>(xPos), static_cast<float>(yPos), 0.0f, true));
 				break;
+				
 			}
 		}
 	}
