@@ -22,7 +22,7 @@ CLevel::~CLevel() { }
 
 void CLevel::Update()
 {
-	for (int i = 0; i < testEnemies.size(); i++)
+	for (unsigned int i = 0; i < testEnemies.size(); i++)
 	{
 		testEnemies[i]->Update();
 	}

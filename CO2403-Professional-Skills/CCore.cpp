@@ -22,6 +22,7 @@ CCore::CCore()
 	pTLEngine->StartWindowed();
 	pTLEngine->AddMediaFolder("TestMedia");
 	pTLEngine->AddMediaFolder("Media");
+	pTLEngine->AddMediaFolder("Media\\Animation");
 
 	// Camera
 	pCamera = pTLEngine->CreateCamera(kManual, 0.0f, 0.0f, -20.0f);
@@ -61,7 +62,7 @@ void CCore::UpdateCore()
 		(*it)->Update();
 	}
 
-	for (int i = 0; i < pActiveBullets.size(); ++i)
+	for (unsigned int i = 0; i < pActiveBullets.size(); ++i)
 	{
 		if (pActiveBullets[i] != NULL)
 		{
@@ -90,7 +91,7 @@ void CCore::AddBullet(CBullet &givenBullet)
 
 void CCore::RemoveBullet(CBullet & givenBullet)
 {
-	for(int i = 0; i < pActiveBullets.size(); ++i)
+	for(unsigned int i = 0; i < pActiveBullets.size(); ++i)
 	{
 		if (pActiveBullets[i] == &givenBullet)
 		{
