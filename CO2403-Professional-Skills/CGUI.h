@@ -2,9 +2,9 @@
 #include "BUILD_ORDER.h"
 
 const int MAX_HEARTS = 3;
-const float HEALTH_SPACING = 20.0f;
-const float OFFSCREEN = 100.0f;
-const SVector2D<float> HEALTH_OFFSET = { 0, 0 };
+const float HEALTH_SPACING = 75.0f;
+const float OFFSCREEN = -1000.0f;
+const SVector2D<float> HEALTH_OFFSET = { 10, 10 };
 
 class CGUI
 {

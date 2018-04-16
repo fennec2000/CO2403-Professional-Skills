@@ -21,7 +21,7 @@ CCore::CCore()
 	pTLEngine = New3DEngine(kTLX);
 
 	// Engine settings
-	pTLEngine->StartWindowed();
+	pTLEngine->StartFullscreen();
 	pTLEngine->AddMediaFolder("TestMedia");
 	pTLEngine->AddMediaFolder("Media");
 	pTLEngine->AddMediaFolder("Media\\Animation");

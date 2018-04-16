@@ -19,7 +19,7 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 	pC->AddPlayer(player, *this);
 	SetPosition(x, y, z);
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
-	pCursor = new CWorldSprite("UglyTile.png", { playerPos.x, playerPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::UI] });
+	pCursor = new CWorldSprite("Crosshair.png", { playerPos.x, playerPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::UI] }, BLEND_CUTOUT);
 	pTLEngine->StartMouseCapture();
 
 	// bullet setup
@@ -68,8 +68,12 @@ void CPlayer::Update()
 
 void CPlayer::InputCheck()
 {
-	pCursor->MoveX(pTLEngine->GetMouseMovementX() * *pFrameTimer);
-	pCursor->MoveY(-pTLEngine->GetMouseMovementY() * *pFrameTimer);
+	if (*pFrameTimer < 1.0f)
+	{
+		pCursor->MoveX(pTLEngine->GetMouseMovementX() * *pFrameTimer);
+		pCursor->MoveY(-pTLEngine->GetMouseMovementY() * *pFrameTimer);
+		cout << pTLEngine->GetMouseMovementX() << ", " << pTLEngine->GetMouseMovementY() << endl;
+	}
 
 	// player rotation
 
