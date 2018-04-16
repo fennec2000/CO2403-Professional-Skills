@@ -7,7 +7,11 @@ CGUI::CGUI()
 	health = MAX_HEARTS;
 
 	for (int i = 0; i < MAX_HEARTS; i++)
-		pHeartSprites[i] = new CUISprite("Heart.png", HEALTH_OFFSET);
+	{
+		SVector2D<float> hpPos = HEALTH_OFFSET;
+		hpPos.x += HEALTH_SPACING * i;
+		pHeartSprites[i] = new CUISprite("Heart.png", hpPos);
+	}
 }
 
 
