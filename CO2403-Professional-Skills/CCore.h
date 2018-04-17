@@ -45,6 +45,9 @@ private:
 	const int mTEXT_SIZE[EFontTypes::NumOfFontTypes] = { 150, 50 };
 	const int mTEXT_SPACING[EFontTypes::NumOfFontTypes] = { 150, 50 };
 
+	// keybinding
+	EKeyCode G_EXIT = Key_Escape;
+
 	// Private constructor to prevent instancing.
 	CCore();
 

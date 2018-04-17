@@ -79,12 +79,10 @@ void CCore::UpdateCore()
 		// player update
 		pPlayer[EPlayers::PlayerTeam]->Update();
 
+		//update each bullet
 		for (int i = 0; i < pActiveBullets.size(); ++i)
-		{
 			pActiveBullets[i]->Update();
-			else
-				cout << "invalid BULLET" << endl;
-		}
+
 		break;
 	case Paused:
 		break;
@@ -104,6 +102,13 @@ void CCore::UpdateCore()
 		break;
 	default:
 		break;
+	}
+
+
+	// exit key
+	if (pTLEngine->KeyHit(G_EXIT))
+	{
+		pTLEngine->Stop();
 	}
 }
 
