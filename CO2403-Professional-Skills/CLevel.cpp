@@ -130,6 +130,14 @@ void CLevel::UnloadLevel()
 			}
 		}
 	}
+
+	// remove enemies
+	while (levelEnemies.size() > 0)
+	{
+		delete levelEnemies[levelEnemies.size() - 1];
+		levelEnemies.pop_back();
+	}
+		
 }
 
 void CLevel::GenerateSprite(const char* pSpriteName, SVector2D<int> position)

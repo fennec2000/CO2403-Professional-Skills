@@ -72,5 +72,5 @@ void CTestEnemy::Shoot()
 
 void CTestEnemy::Death()
 {
-
+	
 }

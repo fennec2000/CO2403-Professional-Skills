@@ -107,5 +107,5 @@ void CEnemyChaingun::Shoot()
 
 void CEnemyChaingun::Death()
 {
-
+	
 }
