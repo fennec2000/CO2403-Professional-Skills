@@ -9,6 +9,10 @@ private:
 	// data
 	CWorldSprite* pCursor;
 	ICamera* pCamera;
+	CGUI* pGUI;
+	vector<CBullet*>* pBullets;
+	const float mIFRAMES_MAX = 2.0f;
+	float mIFrames = 0;
 
 	// keybindings
 	EKeyCode mPlayerMoveUp = EKeyCode::Key_W;
@@ -41,11 +45,12 @@ private:
 	void Move(SVector2D<float> movement);
 	void Death();
 	void Shoot();
+	void TakeDamage();
 
 public:
 	CPlayer(EPlayers player);
 	CPlayer(EPlayers player, float x, float y, float z);
-	~CPlayer();
+	virtual ~CPlayer();
 
 	// public functions
 	void Update();

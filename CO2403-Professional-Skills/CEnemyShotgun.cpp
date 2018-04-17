@@ -11,7 +11,7 @@ CEnemyShotgun::CEnemyShotgun(float x, float y, float z, bool activate)
 
 CEnemyShotgun::~CEnemyShotgun()
 {
-
+	
 }
 
 void CEnemyShotgun::Update()

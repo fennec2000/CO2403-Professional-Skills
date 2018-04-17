@@ -3,7 +3,7 @@
 CBullet::CBullet(bulletSetup givenSetup)
 {
 	pC = CCore::GetInstance();
-	pCharSprite = new CWorldSprite(givenSetup.spriteFileName.c_str(), givenSetup.spawnPos);
+	pCharSprite = new CWorldSprite(givenSetup.spriteFileName, givenSetup.spawnPos, BLEND_CUTOUT);
 	pFrameTimer = pC->GetFrameTimer();
 	mVector = givenSetup.travelVector;
 	mBulletTimerMax = givenSetup.BulletTimeMax;
@@ -25,8 +25,7 @@ void CBullet::Update()
 	mBulletTimerCurrent += *pFrameTimer;
 	if (mBulletTimerCurrent >= mBulletTimerMax)
 	{
-		pC->RemoveBullet(*this);
-		CBullet::~CBullet();
+		Remove();
 	}
 }
 

@@ -15,6 +15,9 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 	// setup
 	pCamera = pC->GetCamera();
 	pLevel = pC->GetLevel();
+	pBullets = pC->GetBullets();
+	pGUI = pC->GetGUI();
+	pGUI->UpdateHealth(3); // resetss health
 	pCharSprite->SetSpriteSkin("Player.png");
 	pC->AddPlayer(player, *this);
 	SetPosition(x, y, z);
@@ -24,6 +27,7 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 
 	// bullet setup
 	newBullet = new bulletSetup;
+	newBullet->spriteFileName = "QuickBullet.png";
 	newBullet->BulletTimeMax = 3.0f;
 	newBullet->Speed = 1.5f;
 	newBullet->team = EPlayers::PlayerTeam;
@@ -31,11 +35,15 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 
 CPlayer::~CPlayer()
 {
-
+	delete pCursor;
 }
 
 void CPlayer::Update()
 {
+	// iframes
+	if (mIFrames > 0.0f)
+		mIFrames -= *pFrameTimer;
+
 	// movement
 	mMovement = { 0.0f, 0.0f };
 	InputCheck();
@@ -52,6 +60,21 @@ void CPlayer::Update()
 	{
 		if (mMovement.x != 0.0f || mMovement.y != 0.0f)
 			Move(mMovement);
+		
+		// damage
+		if (mIFrames <= 0.0f)
+		{
+			for (int i = 0; i < pBullets->size(); i++)
+			{
+				CBullet* check = pBullets->at(i);
+				// if valid,		if enemy,							if touching
+				if (check != NULL && check->returnTeam() == EnemyTeam && (check->GetPos2D() - pCharSprite->GetPosition2D()).Magnitude() <= check->getSize())
+				{
+					check->Remove();
+					ChangeHealth(-1);
+				}
+			}
+		}
 
 		// rotate
 		pCharSprite->LookAt(pCursor);
@@ -72,11 +95,7 @@ void CPlayer::InputCheck()
 	{
 		pCursor->MoveX(pTLEngine->GetMouseMovementX() * *pFrameTimer);
 		pCursor->MoveY(-pTLEngine->GetMouseMovementY() * *pFrameTimer);
-		cout << pTLEngine->GetMouseMovementX() << ", " << pTLEngine->GetMouseMovementY() << endl;
 	}
-
-	// player rotation
-
 
 	// keybindings
 	if (mRollCurrent <= 0.0f)
@@ -121,13 +140,17 @@ void CPlayer::InputCheck()
 
 void CPlayer::Death()
 {
-
+	pC->SetGameState(EGameState::GameOver);
 }
 
 void CPlayer::ChangeHealth(int change)
 {
-	if (!mCheatGod || mRollCurrent <= 0.0f)
+	if (!mCheatGod || mRollCurrent <= 0.0f && mIFrames <= 0.0f)
+	{
+		pGUI->TakeDamage(-change);
 		CCharacter::ChangeHealth(change);
+		mIFrames = mIFRAMES_MAX;
+	}
 }
 
 void CPlayer::Move(SVector2D<float> movement)
