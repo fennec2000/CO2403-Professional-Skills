@@ -1,7 +1,7 @@
 #pragma once
 #include "BUILD_ORDER.h"
 
-class CEnemyChaingun : protected CEnemy
+class CEnemyChaingun : public CEnemy
 {
 private:
 

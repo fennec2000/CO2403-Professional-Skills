@@ -1,14 +1,14 @@
 #pragma once
 #include "BUILD_ORDER.h"
 
-class CEnemyShotgun : protected CEnemy
+class CEnemyShotgun : public CEnemy
 {
 private:
 
 	bool isActive = false;
 	bool shot = false;
 	CEProjectile * bullet;
-	float mMoveSpeed = 0.5f;
+	float mMoveSpeed = 0.25f;
 	float bulletTimer = 0.0f;
 	float bulletSpreadAngle = 15;
 	const float MAX_BULLET_TIMER = 2.5f;
@@ -22,4 +22,5 @@ public:
 	void Death();
 	void toggleActive() { isActive = !isActive; };
 	void Shoot();
+	SVector2D<float> blorp() { return pCharSprite->GetPosition2D(); };
 };

@@ -11,7 +11,6 @@ CEnemyChaingun::CEnemyChaingun(float x, float y, float z, bool activate)
 	SetPosition(x, y, z);
 	isActive = activate;
 	pCharSprite->SetSpriteSkin("derp.png");
-	pC->enemies.push_back(this);
 }
 
 CEnemyChaingun::~CEnemyChaingun()
@@ -21,8 +20,8 @@ CEnemyChaingun::~CEnemyChaingun()
 
 void CEnemyChaingun::Update()
 {
-	float playerX = pC->GetPlayer(Player1)->GetX();
-	float playerY = pC->GetPlayer(Player1)->GetY();
+	float playerX = pC->GetPlayer(PlayerTeam)->GetX();
+	float playerY = pC->GetPlayer(PlayerTeam)->GetY();
 	float enemyX = pCharSprite->GetX();
 	float enemyY = pCharSprite->GetY();
 
@@ -87,29 +86,26 @@ void CEnemyChaingun::Update()
 
 void CEnemyChaingun::Shoot()
 {
+	// Setup bullet
+	SVector2D<float> adjustedBullet;
 	float bulletSpreadAngle = rand() % 90;
 	bulletSpreadAngle = bulletSpreadAngle - 45;
 	float firingAngle = bulletSpreadAngle * 3.14 / 180;
-
-
-	float enemyX = pCharSprite->GetX();
-	float enemyY = pCharSprite->GetY();
-	SVector2D<float> enemyPos = pCharSprite->GetPosition2D();
-	SVector2D<float> playerPos;
-	SVector2D<float> adjustedBullet;
-	playerPos.x = pC->GetPlayer(Player1)->GetX();
-	playerPos.y = pC->GetPlayer(Player1)->GetY();
-	mFireVector.x = playerPos.x - enemyPos.x;
-	mFireVector.y = playerPos.y - enemyPos.y;
-	float lenght = sqrt(mFireVector.x * mFireVector.x + mFireVector.y * mFireVector.y);
-	mFireVector.x /= lenght;
-	mFireVector.y /= lenght;
-	adjustedBullet.x = mFireVector.x * cos(firingAngle) - mFireVector.y * sin(firingAngle);
-	adjustedBullet.y = mFireVector.x * sin(firingAngle) + mFireVector.y * cos(firingAngle);
-	pC->AddBullet(enemyX, enemyY, adjustedBullet);
+	bulletSetup newBullet;
+	newBullet.spawnPos = GetPos3D();
+	newBullet.BulletTimeMax = 3.0f;
+	newBullet.Speed = 1.5f;
+	CPlayer* target = pC->GetPlayer(PlayerTeam);
+	SVector2D<float> vec = target->GetPos2D() - pCharSprite->GetPosition2D();
+	newBullet.travelVector = vec.Normalised();
+	adjustedBullet.x = newBullet.travelVector.x * cos(firingAngle) - newBullet.travelVector.y * sin(firingAngle);
+	adjustedBullet.y = newBullet.travelVector.x * sin(firingAngle) + newBullet.travelVector.y * cos(firingAngle);
+	newBullet.travelVector = adjustedBullet;
+	// create bullet
+	new CBullet(newBullet);
 }
 
 void CEnemyChaingun::Death()
 {
-
+	
 }

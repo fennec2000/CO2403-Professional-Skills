@@ -4,7 +4,7 @@
 #pragma once
 #include "BUILD_ORDER.h"
 
-class CAnimatedWorldSprite : protected CWorldSprite
+class CAnimatedWorldSprite : public CWorldSprite
 {
 public:
 	CAnimatedWorldSprite(vector<const char*> spriteList, SVector3D<float> position);
@@ -14,12 +14,16 @@ public:
 	void StartAnimation();
 	void StopAnimation();
 	void RestartAnimation();
+	void Update();
 
 private:
 	vector<const char*> mSpriteList;
 
 	// Animation variables
-	int mAnimationSpeed = 2;
-	int mSpriteAnimationPosition = 0;
+	const float DEFAULT_ANIMATION_SPEEED = 0.5f;
+	float mAnimationSpeed;
+	float mAnimationTimer;
+	int mSpriteAnimationPosition;
+	bool mAnimationPlaying;
 };
 

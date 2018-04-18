@@ -42,6 +42,9 @@ public:
 	void RotateZ(float amount);
 	void ResetZRot();
 
+	// Resizing
+	void ResizeSprite(float scalar);
+
 	// Getters
 	SVector3D<float> GetPosition3D();
 	SVector2D<float> GetPosition2D();

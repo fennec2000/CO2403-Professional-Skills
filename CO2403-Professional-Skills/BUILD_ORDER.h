@@ -18,6 +18,7 @@
 #include "SMatrix4x4.h"
 #include "Maths.h"
 
+
 // Core
 #include "CCore.h"
 
@@ -29,6 +30,9 @@
 #include "CWorldSprite.h"
 #include "CAnimatedWorldSprite.h"
 
+// GUI
+#include "CGUI.h"
+
 // Level System
 #include "ETileType.h"
 #include "ESpawnerTypes.h"
@@ -39,9 +43,10 @@
 // Entity
 #include "CBullet.h"
 #include "CCharacter.h"
-#include "CPlayer.h"
 #include "CEnemy.h"
+#include "CPlayer.h"
 #include "CEProjectile.h"
 #include "CTestEnemy.h"
 #include "CEnemyShotgun.h"
 #include "CEnemyChaingun.h"
+

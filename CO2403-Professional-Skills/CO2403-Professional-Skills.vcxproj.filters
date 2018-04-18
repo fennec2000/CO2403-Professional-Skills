@@ -26,9 +26,6 @@
     <ClCompile Include="CTestEnemy.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
-    <ClCompile Include="CEProjectile.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
     <ClCompile Include="CLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
@@ -59,9 +56,13 @@
     <ClCompile Include="CEnemyShotgun.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
+    <ClCompile Include="CGUI.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Maths">
@@ -112,9 +113,6 @@
     <ClInclude Include="CTestEnemy.h">
       <Filter>Entity</Filter>
     </ClInclude>
-    <ClInclude Include="CEProjectile.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
     <ClInclude Include="CLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
@@ -149,6 +147,9 @@
       <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="CEnemyShotgun.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUI.h">
       <Filter>Entity</Filter>
     </ClInclude>
   </ItemGroup>

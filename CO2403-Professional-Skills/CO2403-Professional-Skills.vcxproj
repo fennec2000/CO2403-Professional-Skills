@@ -130,12 +130,12 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="CEnemy.h" />
     <ClCompile Include="CEnemyChaingun.cpp" />
     <ClCompile Include="CEnemyShotgun.cpp" />
+    <ClCompile Include="CGUI.cpp" />
     <ClCompile Include="CMapIO.cpp" />
     <ClCompile Include="NameSettings.cpp" />
     <ClCompile Include="SBaseSprite.cpp" />
     <ClCompile Include="CCharacter.cpp" />
     <ClCompile Include="CCore.cpp" />
-    <ClCompile Include="CEProjectile.cpp" />
     <ClCompile Include="CO2403-Professional-Skills.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CTestEnemy.cpp" />
@@ -147,6 +147,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="SMatrix4x4.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +156,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CEnemyChaingun.h" />
     <ClInclude Include="CEnemyShotgun.h" />
+    <ClInclude Include="CGUI.h" />
     <ClInclude Include="CMapIO.h" />
     <ClInclude Include="ESpawnerTypes.h" />
     <ClInclude Include="ESpriteBlend.h" />
@@ -162,7 +164,6 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="SBaseSprite.h" />
     <ClInclude Include="CCharacter.h" />
     <ClInclude Include="CCore.h" />
-    <ClInclude Include="CEProjectile.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CTestEnemy.h" />
     <ClInclude Include="CUISprite.h" />

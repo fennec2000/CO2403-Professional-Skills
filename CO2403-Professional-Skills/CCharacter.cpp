@@ -7,13 +7,12 @@ CCharacter::CCharacter()
 	pTLEngine = pC->GetTLEngine();
 	pFrameTimer = pC->GetFrameTimer();
 	pCharSprite = new CWorldSprite("UglyTile.png", { 5.0f, 0.1f, 5.0f }, BLEND_CUTOUT);
-	mHealthMax = 1;
 	mHealthCurrent = mHealthMax;
 }
 
 CCharacter::~CCharacter()
 {
-
+	delete pCharSprite;
 }
 
 void CCharacter::ChangeHealth(int change)
@@ -38,12 +37,25 @@ SVector2D<float> CCharacter::Move(SVector2D<float> movement)
 	SVector2D<float> totalMovement = { 0.0f, 0.0f };
 	mOldPos = GetPos2D();
 	SVector2D<float> testPos[4];
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i <= 3; ++i)
+	{
 		testPos[i] = mOldPos;
+
+		if (i < 2)
+			testPos[i].y += mCharLeway;
+		else
+			testPos[i].y -= mCharLeway;
+
+		if (i % 2 == 0)
+			testPos[i].x += mCharLeway;
+		else
+			testPos[i].x -= mCharLeway;
+	}
+		
 
 	testPos[1].x += mCharSize.x;
 	testPos[2].y += mCharSize.y;
-	testPos[3] = mOldPos + mCharSize;
+	testPos[3] = testPos[3] + mCharSize;
 	SVector2D<float> testMove[2];
 	testMove[0] = { movement.x , 0.0f };
 	testMove[1] = { 0.0f, movement.y };
