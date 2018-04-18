@@ -62,8 +62,12 @@
     <ClCompile Include="CInput.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="CHoverUI.cpp" />
-    <ClCompile Include="CButton.cpp" />
+    <ClCompile Include="CButton.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CHoverUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -84,6 +88,9 @@
     </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{7bccba00-d0cc-46d3-adbb-6623162f76e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{3f3be5b1-e76d-4eb9-bc08-a486ec80f61f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -160,8 +167,14 @@
     <ClInclude Include="CInput.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="CHoverUI.h" />
-    <ClInclude Include="CButton.h" />
-    <ClInclude Include="SUIData.h" />
+    <ClInclude Include="CButton.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CHoverUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="SUIData.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
