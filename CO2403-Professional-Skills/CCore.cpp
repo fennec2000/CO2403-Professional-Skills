@@ -27,12 +27,15 @@ CCore::CCore()
 	pTLEngine->AddMediaFolder("Media");
 	pTLEngine->AddMediaFolder("Media\\Animation");
 
+	// Input
+	pInput = new CInput(pTLEngine);
+
 	// Font
 	for(int i = 0; i < EFontTypes::NumOfFontTypes; i++)
 		pText[i] = pTLEngine->LoadFont("Lucida Sans", mTEXT_SIZE[i]);
 
 	// Camera
-	pCamera = pTLEngine->CreateCamera(kManual, 0.0f, 0.0f, -20.0f);
+	pCamera = pTLEngine->CreateCamera(kManual, 0.0f, 0.0f, -10.0f);
 
 	// GUI
 	pGUI = new CGUI();
@@ -47,6 +50,10 @@ CCore::CCore()
 
 	// Creates the level
 	pLevel = new CLevel();
+
+	// Loads the main menu
+	FlashLoadScreen();
+	SetupMenu();
 }
 
 CCore::~CCore()
@@ -58,6 +65,12 @@ CCore::~CCore()
 	}
 
 	delete pGUI;
+	delete pInput;
+	//delete pText;
+	delete pLevel;
+
+	// Delete the 3D engine now we are finished with it
+	pTLEngine->Delete();
 }
 
 void CCore::UpdateCore()
@@ -70,7 +83,11 @@ void CCore::UpdateCore()
 	{
 	case MainMenu:
 		// temp
-		LoadLevel();
+		if (pPlayButton->Update())
+		{
+			UnloadMenu();
+			LoadLevel();
+		}
 		break;
 	case Playing:
 		// level update
@@ -125,17 +142,20 @@ void CCore::UpdateCore()
 		if (pTLEngine->AnyKeyHit())
 		{
 			UnloadGame();
-			mGameState = EGameState::MainMenu;
+			SetupMenu();
 		}
 		break;
 	default:
 		break;
 	}
 
+	// Update the input class
+	pInput->Update();
 
 	// exit key
-	if (pTLEngine->KeyHit(G_EXIT))
+	if (pInput->KeyHit(Key_Escape))
 	{
+		FlashLoadScreen();
 		pTLEngine->Stop();
 	}
 }
@@ -179,6 +199,8 @@ void CCore::RemoveEnemy(CTestEnemy & givenEnemy)
 
 void CCore::LoadLevel(const char* levelName)
 {
+	FlashLoadScreen();
+
 	// Level
 	pLevel->LoadLevel(levelName); // test: "Levels\\TestLevel"
 
@@ -190,6 +212,8 @@ void CCore::LoadLevel(const char* levelName)
 
 void CCore::UnloadGame()
 {
+	FlashLoadScreen();
+
 	// unload bullets
 	while (pActiveBullets.size() > 0)
 		if (pActiveBullets[0] != NULL)
@@ -209,4 +233,66 @@ void CCore::UnloadGame()
 	pLevel->UnloadLevel();
 }
 
+void CCore::SetupMenu()
+{
+	FlashLoadScreen();
 
+	// Setup the menu elemetns
+	pBackgroundSprite = new CWorldSprite("TemporyBG.png", { 1000.0f, 1000.0f }, BLEND_NORMAL);
+	pBackgroundSprite->ResizeSprite(12.5f);
+	pBackgroundSprite->ResizeX(1.777f);
+
+	// Play button setup
+	SUIData playButtonData;
+	playButtonData.mSpritePaths.push_back("ButtonLeft.png");
+	playButtonData.mSpritePaths.push_back("ButtonMiddle.png");
+	playButtonData.mSpritePaths.push_back("ButtonRight.png");
+	playButtonData.mHoverSpritePaths.push_back("ButtonLeft.png");
+	playButtonData.mHoverSpritePaths.push_back("ButtonMiddleHover.png");
+	playButtonData.mHoverSpritePaths.push_back("ButtonRight.png");
+	playButtonData.mSpriteXSize = 3;
+	playButtonData.mSize = { 125, 45 };
+	playButtonData.mPosition = { 1000.0f, 300.0f };
+	pPlayButton = new CButton(&playButtonData, "Play Game");
+
+	// Put the camera in the correct place
+	pCamera->SetX(1000.0f);
+	pCamera->SetY(1000.0f);
+
+	// Unlock the mouse
+	pTLEngine->StopMouseCapture();
+
+	mGameState = EGameState::MainMenu;
+}
+
+void CCore::UnloadMenu()
+{
+	FlashLoadScreen();
+
+	delete pBackgroundSprite;
+	delete pPlayButton;
+}
+
+void CCore::FlashLoadScreen()
+{
+	// Create the load screen model
+	CWorldSprite* pLoadScreen = new CWorldSprite("Black.png", { -1000.0f, -1000.0f }, BLEND_NORMAL);
+	pLoadScreen->ResizeSprite(256.0f);
+
+	// Store the camera coords
+	SVector3D<float> cameraPos = { pCamera->GetX(),  pCamera->GetY(),  pCamera->GetZ() };
+	// Set a tempory position for this camera
+	pCamera->SetPosition(-1000.0f, -1000.0f, cameraPos.z);
+
+	// Force a draw call so we can display this
+	// We'll do 2 so that any text on screen will not display
+	pTLEngine->DrawScene();
+	pText[0]->Draw("Loading", pTLEngine->GetWidth() / 2, pTLEngine->GetHeight() / 2, kBlack, kCentre, kVCentre);
+	pTLEngine->DrawScene();
+
+	// Set the camera back to where it was
+	pCamera->SetPosition(cameraPos.x, cameraPos.y, cameraPos.z);
+
+	// Clean up the load screen
+	delete pLoadScreen;
+}

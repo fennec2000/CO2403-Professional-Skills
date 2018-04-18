@@ -18,7 +18,31 @@ CLevel::CLevel()
 	}
 }
 
-CLevel::~CLevel() { }
+CLevel::~CLevel() 
+{ 
+	// Clean the levels enemies
+	for (int i = 0; i < levelEnemies.size(); i++)
+	{
+		delete levelEnemies[i]; 
+		levelEnemies[i] = nullptr;
+	}
+
+	// Cleans the sprites
+	for (int yPos = 0; yPos < CLevel::MAP_MAX_SIZE.y; yPos++)
+	{
+		for (int xPos = 0; xPos < CLevel::MAP_MAX_SIZE.x; xPos++)
+		{
+			if (mWorldSprites.at(yPos)->at(xPos) != nullptr)
+			{
+				delete mWorldSprites.at(yPos)->at(xPos);
+				mWorldSprites.at(yPos)->at(xPos) = nullptr;
+			}
+		}
+
+		delete mWorldSprites.at(yPos);
+		mWorldSprites.at(yPos) = nullptr;
+	}
+}
 
 void CLevel::Update()
 {

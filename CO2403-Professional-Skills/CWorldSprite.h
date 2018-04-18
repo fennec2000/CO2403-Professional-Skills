@@ -44,6 +44,8 @@ public:
 
 	// Resizing
 	void ResizeSprite(float scalar);
+	void ResizeX(float scalar);
+	void ResizeY(float scalar);
 
 	// Getters
 	SVector3D<float> GetPosition3D();
