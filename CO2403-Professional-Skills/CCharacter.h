@@ -15,7 +15,7 @@ protected:
 
 	const SVector2D<float> mCharSize = { 1.0f, 1.0f }; // x, y
 	const float mCharLeway = 0.01f;
-	unsigned int mHealthMax;
+	unsigned int mHealthMax = 3;
 	unsigned int mHealthCurrent;
 	float mMoveSpeed = 2.0f;
 	SVector2D<float> mOldPos;
@@ -25,7 +25,7 @@ protected:
 
 public:
 	CCharacter();
-	~CCharacter();
+	virtual ~CCharacter();
 
 	virtual void Update() = 0;
 	virtual void Death() = 0;

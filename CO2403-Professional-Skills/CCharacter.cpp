@@ -7,13 +7,12 @@ CCharacter::CCharacter()
 	pTLEngine = pC->GetTLEngine();
 	pFrameTimer = pC->GetFrameTimer();
 	pCharSprite = new CWorldSprite("UglyTile.png", { 5.0f, 0.1f, 5.0f }, BLEND_CUTOUT);
-	mHealthMax = 1;
 	mHealthCurrent = mHealthMax;
 }
 
 CCharacter::~CCharacter()
 {
-
+	delete pCharSprite;
 }
 
 void CCharacter::ChangeHealth(int change)

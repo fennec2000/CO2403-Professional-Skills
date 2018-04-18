@@ -22,9 +22,14 @@ CCore::CCore()
 
 	// Engine settings
 	pTLEngine->StartWindowed();
+	//pTLEngine->StartFullscreen();
 	pTLEngine->AddMediaFolder("TestMedia");
 	pTLEngine->AddMediaFolder("Media");
 	pTLEngine->AddMediaFolder("Media\\Animation");
+
+	// Font
+	for(int i = 0; i < EFontTypes::NumOfFontTypes; i++)
+		pText[i] = pTLEngine->LoadFont("Lucida Sans", mTEXT_SIZE[i]);
 
 	// Camera
 	pCamera = pTLEngine->CreateCamera(kManual, 0.0f, 0.0f, -20.0f);
@@ -36,12 +41,23 @@ CCore::CCore()
 	for (int i = 0; i < EPlayers::NumOfEPlayers; ++i)
 		pPlayer[i] = nullptr;
 
-	// set playing
-	mGameState = EGameState::Playing;
+	// set game state
+	mGameState = EGameState::MainMenu;
 	mGameScore = 0;
 
 	// Creates the level
 	pLevel = new CLevel();
+}
+
+CCore::~CCore()
+{
+	if (pPlayer[EPlayers::PlayerTeam] != NULL)
+	{
+		delete pPlayer[EPlayers::PlayerTeam];
+		pPlayer[EPlayers::PlayerTeam] = NULL;
+	}
+
+	delete pGUI;
 }
 
 void CCore::UpdateCore()
@@ -49,13 +65,24 @@ void CCore::UpdateCore()
 	// Draw the scene
 	mFrameTime = pTLEngine->Timer();	// update the frame timer
 	pTLEngine->DrawScene();				// draw the frame
-	pLevel->Update();
-	
-	for (int i = 0; i < pActiveBullets.size(); ++i)
+
+	switch (mGameState)
 	{
-		if (pActiveBullets[i] != NULL)
-		{
+	case MainMenu:
+		// temp
+		LoadLevel();
+		break;
+	case Playing:
+		// level update
+		pLevel->Update();
+
+		// player update
+		pPlayer[EPlayers::PlayerTeam]->Update();
+
+		//update each bullet
+		for (int i = 0; i < pActiveBullets.size(); ++i)
 			pActiveBullets[i]->Update();
+
 			if (pActiveBullets[i]->returnTeam() == EnemyTeam)
 			{
 				SVector2D<float> bulletPos = pActiveBullets[i]->GetPos2D();
@@ -84,9 +111,32 @@ void CCore::UpdateCore()
 				}
 			}
 
+		break;
+	case Paused:
+		break;
+	case GameOver:
+		// show score
+		pText[EFontTypes::Large]->Draw("Game over", pTLEngine->GetWidth() / 2, pTLEngine->GetHeight() / 2 - mTEXT_SPACING[EFontTypes::Large] * 3 / 2, tle::kRed, tle::kCentre, tle::kVCentre);
+		pText[EFontTypes::Large]->Draw("Score:", pTLEngine->GetWidth() / 2, pTLEngine->GetHeight() / 2 - mTEXT_SPACING[EFontTypes::Large] / 2, tle::kRed, tle::kCentre, tle::kVCentre);
+		pText[EFontTypes::Large]->Draw(to_string(mGameScore), pTLEngine->GetWidth() / 2, pTLEngine->GetHeight() / 2 + mTEXT_SPACING[EFontTypes::Large] / 2, tle::kRed, tle::kCentre, tle::kVCentre);
+		pText[EFontTypes::Medium]->Draw("Press any key to return to the main menu", pTLEngine->GetWidth() / 2, pTLEngine->GetHeight() / 2 + mTEXT_SPACING[EFontTypes::Large] * 3 / 2 - mTEXT_SPACING[EFontTypes::Medium], tle::kRed, tle::kCentre, tle::kVCentre);
+
+		// return key
+		if (pTLEngine->AnyKeyHit())
+		{
+			UnloadGame();
+			mGameState = EGameState::MainMenu;
 		}
-		else
-			cout << "invalid BULLET" << endl;
+		break;
+	default:
+		break;
+	}
+
+
+	// exit key
+	if (pTLEngine->KeyHit(G_EXIT))
+	{
+		pTLEngine->Stop();
 	}
 }
 
@@ -126,3 +176,37 @@ void CCore::RemoveEnemy(CTestEnemy & givenEnemy)
 			mEnemyList.erase(mEnemyList.begin() + i);
 	}
 }
+
+void CCore::LoadLevel(const char* levelName)
+{
+	// Level
+	pLevel->LoadLevel(levelName); // test: "Levels\\TestLevel"
+
+	// Player
+	SVector2D<float> spawnPos = pLevel->GetSpawnPos();
+	pPlayer[EPlayers::PlayerTeam] = new CPlayer(EPlayers::PlayerTeam, spawnPos.x, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
+	mGameState = EGameState::Playing;
+}
+
+void CCore::UnloadGame()
+{
+	// unload bullets
+	while (pActiveBullets.size() > 0)
+		if (pActiveBullets[0] != NULL)
+			pActiveBullets[0]->Remove();
+		else
+			cout << "NULL bullet found, bullet was removed incorrectly." << endl;
+
+
+	// unload player
+	if (pPlayer[EPlayers::PlayerTeam] != NULL)
+	{
+		delete pPlayer[EPlayers::PlayerTeam];
+		pPlayer[EPlayers::PlayerTeam] = NULL;
+	}
+
+	// unload level
+	pLevel->UnloadLevel();
+}
+
+
