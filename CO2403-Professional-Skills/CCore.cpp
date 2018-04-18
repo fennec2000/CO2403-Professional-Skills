@@ -66,7 +66,6 @@ CCore::~CCore()
 
 	delete pGUI;
 	delete pInput;
-	//delete pText;
 	delete pLevel;
 
 	// Delete the 3D engine now we are finished with it
@@ -98,8 +97,7 @@ void CCore::UpdateCore()
 
 		//update each bullet
 		for (int i = 0; i < pActiveBullets.size(); ++i)
-			pActiveBullets[i]->Update();
-
+		{
 			if (pActiveBullets[i]->returnTeam() == EnemyTeam)
 			{
 				SVector2D<float> bulletPos = pActiveBullets[i]->GetPos2D();
@@ -128,6 +126,17 @@ void CCore::UpdateCore()
 				}
 			}
 
+			pActiveBullets[i]->Update();
+		}
+
+		// exit key
+		if (pInput->KeyHit(Key_Escape))
+		{
+			FlashLoadScreen();
+			UnloadGame();
+			pTLEngine->Stop();
+		}
+
 		break;
 	case Paused:
 		break;
@@ -151,13 +160,6 @@ void CCore::UpdateCore()
 
 	// Update the input class
 	pInput->Update();
-
-	// exit key
-	if (pInput->KeyHit(Key_Escape))
-	{
-		FlashLoadScreen();
-		pTLEngine->Stop();
-	}
 }
 
 void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)
@@ -230,7 +232,8 @@ void CCore::UnloadGame()
 	}
 
 	// unload level
-	pLevel->UnloadLevel();
+	//pLevel->UnloadLevel();
+
 }
 
 void CCore::SetupMenu()
@@ -276,8 +279,8 @@ void CCore::UnloadMenu()
 void CCore::FlashLoadScreen()
 {
 	// Create the load screen model
-	CWorldSprite* pLoadScreen = new CWorldSprite("Black.png", { -1000.0f, -1000.0f }, BLEND_NORMAL);
-	pLoadScreen->ResizeSprite(256.0f);
+	//CWorldSprite* pLoadScreen = new CWorldSprite("Black.png", { -1000.0f, -1000.0f }, BLEND_NORMAL);
+	//pLoadScreen->ResizeSprite(256.0f);
 
 	// Store the camera coords
 	SVector3D<float> cameraPos = { pCamera->GetX(),  pCamera->GetY(),  pCamera->GetZ() };
@@ -294,5 +297,5 @@ void CCore::FlashLoadScreen()
 	pCamera->SetPosition(cameraPos.x, cameraPos.y, cameraPos.z);
 
 	// Clean up the load screen
-	delete pLoadScreen;
+	//delete pLoadScreen;
 }
