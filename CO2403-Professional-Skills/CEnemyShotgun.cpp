@@ -11,11 +11,22 @@ CEnemyShotgun::CEnemyShotgun(float x, float y, float z, bool activate)
 
 CEnemyShotgun::~CEnemyShotgun()
 {
-	
+	cout << "Hep, am ded";
+	pCharSprite->~CWorldSprite();
 }
-
 void CEnemyShotgun::Update()
 {
+	cout << "meggle";
+}
+
+bool CEnemyShotgun::EUpdate()
+{
+	if (currentHealth <= 0)
+	{
+		Death();
+		return true;
+	}
+
 	SVector2D<float> eMovement;
 	SVector2D<float> testPos;
 	SVector2D<float> playerPos = { pC->GetPlayer(PlayerTeam)->GetX(), pC->GetPlayer(PlayerTeam)->GetY() };
@@ -55,6 +66,7 @@ void CEnemyShotgun::Update()
 		Shoot();
 		bulletTimer = 0;
 	}
+	return false;
 }
 
 void CEnemyShotgun::Shoot()
@@ -82,7 +94,12 @@ void CEnemyShotgun::Shoot()
 	new CBullet(newBullet);
 }
 
+void CEnemyShotgun::Hit()
+{
+	currentHealth = currentHealth - 1;
+}
+
 void CEnemyShotgun::Death()
 {
-
+	CEnemyShotgun::~CEnemyShotgun();
 }

@@ -11,6 +11,15 @@ void main()
 	// Create a 3D engine (using TLX engine here) and open a window for it
 	I3DEngine* myEngine = c->GetTLEngine();
 
+	/**** Set up your scene here ****/
+	// Level test
+	c->GetLevel()->LoadLevel("Levels\\TestLevel");
+	SVector2D<float> spawnPos = c->GetLevel()->GetSpawnPos();
+
+	// Player
+	CPlayer* pThePlayer = new CPlayer(EPlayers::PlayerTeam, spawnPos.x, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
+	// Player test values
+
 	// Create an animation for testing
 	vector<const char*> animatedSprites;
 	animatedSprites.push_back("wallServer1.png");

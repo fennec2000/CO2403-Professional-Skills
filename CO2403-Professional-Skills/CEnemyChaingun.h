@@ -20,6 +20,8 @@ private:
 	const float MIN_CHAINGUN_BULLET_TIME = 0.05f;
 	const float CHAINGUN_REV_DECREMENT = 0.05f;
 	const float MAXC_HAINGUN_DISPLACEMENT = 3.0f;
+	const int MaxHealth = 1;
+	int currentHealth = 1;
 
 
 public:
@@ -27,8 +29,11 @@ public:
 	CEnemyChaingun(float x, float y, float z, bool activate);
 	~CEnemyChaingun();
 
+	bool EUpdate();
 	void Update();
 	void Death();
 	void toggleActive() { isActive = !isActive; };
 	void Shoot();
+	void Hit();
+	SVector2D<float> blorp() { return pCharSprite->GetPosition2D(); };
 };

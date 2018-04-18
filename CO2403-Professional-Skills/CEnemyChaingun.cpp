@@ -11,37 +11,42 @@ CEnemyChaingun::CEnemyChaingun(float x, float y, float z, bool activate)
 	SetPosition(x, y, z);
 	isActive = activate;
 	pCharSprite->SetSpriteSkin("derp.png");
+	pLevel = pC->GetLevel();
 }
 
 CEnemyChaingun::~CEnemyChaingun()
 {
-
+	pCharSprite->~CWorldSprite();
 }
 
 void CEnemyChaingun::Update()
 {
-	float playerX = pC->GetPlayer(PlayerTeam)->GetX();
-	float playerY = pC->GetPlayer(PlayerTeam)->GetY();
-	float enemyX = pCharSprite->GetX();
-	float enemyY = pCharSprite->GetY();
+
+}
+
+bool CEnemyChaingun::EUpdate()
+{
+	if (currentHealth <= 0)
+	{
+		Death();
+		return true;
+	}
 
 	if (isActive && !isShooting)
 	{
-		if (enemyX > playerX)
+		SVector2D<float> eMovement;
+		SVector2D<float> testPos;
+		SVector2D<float> playerPos = { pC->GetPlayer(PlayerTeam)->GetX(), pC->GetPlayer(PlayerTeam)->GetY() };
+		SVector2D<float> vec = pC->GetPlayer(PlayerTeam)->GetPos2D() - pCharSprite->GetPosition2D();
+		SVector2D<float> ePos = pCharSprite->GetPosition2D();
+
+		eMovement.x = (vec.x * *pFrameTimer * mMoveSpeed);
+		eMovement.y = (vec.y * *pFrameTimer * mMoveSpeed);
+		testPos = { ePos.x + eMovement.x, ePos.y + eMovement.y };
+		if (!CollisionCheck(testPos))
 		{
-			pCharSprite->MoveX(-mMoveSpeed * *pFrameTimer);
-		}
-		if (enemyX < playerX)
-		{
-			pCharSprite->MoveX(mMoveSpeed * *pFrameTimer);
-		}
-		if (enemyY > playerY)
-		{
-			pCharSprite->MoveY(-mMoveSpeed * *pFrameTimer);
-		}
-		if (enemyY < playerY)
-		{
-			pCharSprite->MoveY(mMoveSpeed * *pFrameTimer);
+			pCharSprite->MoveX(eMovement.x);
+			pCharSprite->MoveY(eMovement.y);
 		}
 	}
 
@@ -76,12 +81,13 @@ void CEnemyChaingun::Update()
 			chaingunFireTime = 0.0f;
 			currentRevTime = 0.0f;
 			chaingunMaxRevTime = 1.5f;
+			bulletTimer = 0.0f;
+			isShooting = false;
 		}
 
 	}
 
-
-
+	return false;
 }
 
 void CEnemyChaingun::Shoot()
@@ -105,7 +111,12 @@ void CEnemyChaingun::Shoot()
 	new CBullet(newBullet);
 }
 
+void CEnemyChaingun::Hit()
+{
+	currentHealth = currentHealth - 1;
+}
+
 void CEnemyChaingun::Death()
 {
-	
+	CEnemyChaingun::~CEnemyChaingun();
 }

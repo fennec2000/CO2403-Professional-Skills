@@ -83,6 +83,34 @@ void CCore::UpdateCore()
 		for (int i = 0; i < pActiveBullets.size(); ++i)
 			pActiveBullets[i]->Update();
 
+			if (pActiveBullets[i]->returnTeam() == EnemyTeam)
+			{
+				SVector2D<float> bulletPos = pActiveBullets[i]->GetPos2D();
+				SVector2D<float> playerPos = GetPlayer(PlayerTeam)->GetPos2D();
+				float distance = sqrt(((playerPos.x - bulletPos.x) * (playerPos.x - bulletPos.x)) + ((playerPos.y - bulletPos.y) * (playerPos.y - bulletPos.y)));
+				if (distance < pActiveBullets[i]->getSize())
+				{
+					pActiveBullets[i]->Remove();
+				}
+			}
+			else if (pActiveBullets[i]->returnTeam() == PlayerTeam)
+			{
+				vector<CEnemy*> enemies = pLevel->getEnemies();
+				for (int k = 0; k < enemies.size(); k++)
+				{
+					SVector2D<float> enemyPos = enemies[k]->GetPos2D();
+					SVector2D<float> bulletPos = pActiveBullets[i]->GetPos2D();
+					float distance = sqrt(((enemyPos.x - bulletPos.x) * (enemyPos.x - bulletPos.x)) + ((enemyPos.y - bulletPos.y) * (enemyPos.y - bulletPos.y)));
+					if (distance < pActiveBullets[i]->getSize())
+					{
+					    cout << "ow";
+						enemies[k]->Hit();
+						pActiveBullets[i]->Remove();
+						cout << "blep";
+					}
+				}
+			}
+
 		break;
 	case Paused:
 		break;

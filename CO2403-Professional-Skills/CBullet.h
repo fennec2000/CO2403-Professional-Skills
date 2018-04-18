@@ -6,8 +6,8 @@ struct bulletSetup
 	const char* spriteFileName = "QuickBullet.png";
 	SVector3D<float> spawnPos = { 0.0f, 0.0f, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Enemy] };
 	SVector2D<float> travelVector = { 1.0f, 1.0f };
-	float BulletTimeMax = 2.5f;
-	float Speed = 1.5f;
+	float BulletTimeMax = 3.5f;
+	float Speed = 2.5f;
 	EPlayers team = EPlayers::EnemyTeam;
 };
 
