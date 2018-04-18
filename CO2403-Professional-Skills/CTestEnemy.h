@@ -16,7 +16,7 @@ public:
 		CTestEnemy(float x, float y, float z, bool activate);
 		~CTestEnemy();
 							
-		void Update();
+		bool EUpdate();
 		void Death();
 		void toggleActive() { isActive = !isActive; };
 		void Shoot();

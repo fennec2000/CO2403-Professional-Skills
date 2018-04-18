@@ -10,7 +10,7 @@ void main()
 {
 	// For leak dectection
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
+  
 	// Create core and set the global pointer to it
 	gpCore = CCore::GetInstance();
 

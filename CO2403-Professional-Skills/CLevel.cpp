@@ -47,8 +47,12 @@ CLevel::~CLevel()
 void CLevel::Update()
 {
 	for (int i = 0; i < levelEnemies.size(); i++)
-	{
-		levelEnemies[i]->Update();
+	{	
+			bool meow = levelEnemies[i]->EUpdate();	
+			if (meow)
+			{
+				levelEnemies.erase(i + levelEnemies.begin());
+			}
 	}
 }
 
@@ -99,7 +103,7 @@ void CLevel::LoadLevel(const char* filePath)
 				mSpawnPos = { static_cast<float>(xPos), static_cast<float>(yPos) };
 				break;
 			case SPAWN_ENEMY:
-				levelEnemies.push_back(new CEnemyShotgun(static_cast<float>(xPos), static_cast<float>(yPos), 0.0f, true));
+				levelEnemies.push_back(new CEnemyChaingun(static_cast<float>(xPos), static_cast<float>(yPos), 0.0f, true));
 				break;
 			}
 		}
