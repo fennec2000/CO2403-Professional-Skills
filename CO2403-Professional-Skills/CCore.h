@@ -12,9 +12,10 @@ class CPlayer;
 class CEProjectile;
 class CLevel;
 class CTestEnemy;
+class CWorldSprite;
+class CButton;
 enum EPlayers { PlayerTeam, EnemyTeam, NumOfEPlayers };
 enum EFontTypes { Large, Medium, NumOfFontTypes };
-
 
 // game states
 enum EGameState { MainMenu, Playing, Paused, GameOver };
@@ -31,6 +32,7 @@ private:
 
 	// Stored data
 	I3DEngine* pTLEngine;	// pointer to the tl engine
+	CInput* pInput;			// pointer to the object that will handle input
 	ICamera* pCamera;		// pointer to the game camera
 	float mFrameTime;		// time between each frame
 	CPlayer* pPlayer[EPlayers::NumOfEPlayers];		// holds pointers to the players - possiable 2 player
@@ -44,6 +46,10 @@ private:
 	IFont* pText[EFontTypes::NumOfFontTypes];			// pointer to font to write to screen
 	const int mTEXT_SIZE[EFontTypes::NumOfFontTypes] = { 150, 50 };
 	const int mTEXT_SPACING[EFontTypes::NumOfFontTypes] = { 150, 50 };
+
+	// Main menu elements
+	CWorldSprite* pBackgroundSprite;
+	CButton* pPlayButton;
 
 	// keybinding
 	EKeyCode G_EXIT = Key_Escape;
@@ -59,11 +65,17 @@ public:
 	// Public functions
 	virtual ~CCore();
 	void UpdateCore();
+
+	// For changing the scene of the game
 	void LoadLevel(const char* levelName = "Levels\\TestLevel");
 	void UnloadGame();
+	void SetupMenu();
+	void UnloadMenu();
+	void FlashLoadScreen();
 
 	// Getters
 	inline I3DEngine* GetTLEngine() { return pTLEngine; };
+	inline CInput* GetInput() { return pInput; };
 	inline ICamera* GetCamera() { return pCamera; };
 	inline float* GetFrameTimer() { return &mFrameTime; };
 	inline CPlayer* GetPlayer(EPlayers player) { return pPlayer[player]; };

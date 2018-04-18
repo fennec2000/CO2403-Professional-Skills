@@ -274,6 +274,16 @@ void CWorldSprite::ResizeSprite(float scalar)
 	mpSpriteModel->ScaleY(scalar);
 }
 
+void CWorldSprite::ResizeX(float scalar)
+{
+	mpSpriteModel->ScaleX(scalar);
+}
+
+void CWorldSprite::ResizeY(float scalar)
+{
+	mpSpriteModel->ScaleY(scalar);
+}
+
 // Getters
 SVector3D<float> CWorldSprite::GetPosition3D()
 {

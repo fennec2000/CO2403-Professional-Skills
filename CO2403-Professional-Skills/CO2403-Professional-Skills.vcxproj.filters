@@ -59,6 +59,11 @@
     <ClCompile Include="CGUI.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
+    <ClCompile Include="CInput.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CHoverUI.cpp" />
+    <ClCompile Include="CButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -152,5 +157,11 @@
     <ClInclude Include="CGUI.h">
       <Filter>Entity</Filter>
     </ClInclude>
+    <ClInclude Include="CInput.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CHoverUI.h" />
+    <ClInclude Include="CButton.h" />
+    <ClInclude Include="SUIData.h" />
   </ItemGroup>
 </Project>
