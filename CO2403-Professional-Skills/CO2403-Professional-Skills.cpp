@@ -24,7 +24,7 @@ void main()
 	// Player test values
 
 
-
+	
 	// Monster
 	//CTestEnemy* mMonster = new CTestEnemy(3.0f, 0, 0.0f, true);
 	//CEnemyShotgun* mShotgun = new CEnemyShotgun(20.0f, 5, 0.0f, true);

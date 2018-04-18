@@ -68,7 +68,20 @@ void CCore::UpdateCore()
 			}
 			else if (pActiveBullets[i]->returnTeam() == PlayerTeam)
 			{
-				// do stuff
+				vector<CEnemy*> enemies = pLevel->getEnemies();
+				for (int k = 0; k < enemies.size(); k++)
+				{
+					SVector2D<float> enemyPos = enemies[k]->GetPos2D();
+					SVector2D<float> bulletPos = pActiveBullets[i]->GetPos2D();
+					float distance = sqrt(((enemyPos.x - bulletPos.x) * (enemyPos.x - bulletPos.x)) + ((enemyPos.y - bulletPos.y) * (enemyPos.y - bulletPos.y)));
+					if (distance < pActiveBullets[i]->getSize())
+					{
+					    cout << "ow";
+						enemies[k]->Hit();
+						pActiveBullets[i]->Remove();
+						cout << "blep";
+					}
+				}
 			}
 
 		}
