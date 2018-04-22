@@ -19,7 +19,9 @@ public:
 	// Building Utills
 	void ChangeSelectedTile(ETileType tileType);
 	void ChangeSpawnerType(ESpawnTypes spawnType);
-	
+	void SelectRoomTool();
+	void ClearRooms();
+
 	// Map genration and unloading
 	void GenerateMap();
 	void UnloadMap();
@@ -35,7 +37,7 @@ private:
 	vector<vector<CWorldSprite*>*> mMapSprites;
 	vector<vector<CWorldSprite*>*> mSpawnerSprites;
 
-	int mSelectedMode = 1;
+	int mSelectedMode = 1; // 1 = tiles, 2 = spawners, 3 = rooms
 	ETileType currentlySelectedTile = NO_TILE; // Mode 1
 	ESpawnTypes currentlySelectedSpawner = SPAWN_NOTHING; // Mode 2
 
@@ -56,13 +58,20 @@ private:
 
 	// Pointers to input and engine
 	tle::I3DEngine* mpEngine;
-	CInput* mpInput;
 
 	// Cursor highlight sprite
 	const char* HIGHLIGHT_SPRITE_NAME = "BlueTrans.png";
 	const char* HIGHLIGHT_OUT_OF_BOUNDS_SPRITE_NAME = "RedTrans.png";
 	const SVector3D<float> DEFAULT_SPRITE_POS = { 0.0f, 0.0f, 0.0f };
 	CWorldSprite* cursorHighlightSprite;
+
+	// Room sprites
+	bool currentlyHighlightingRoom = false;
+	SVector2D<int> roomStartPos;
+	const char* ROOM_WALL_SPRITE = "RoomWall.png";
+	const char* ROOM_HIGHLIGHT_SPRITE = "PurpleTrans.png";
+	std::vector<CWorldSprite*> roomHighLightSprites;
+	std::vector<CWorldSprite*> roomSprites;
 
 	// Level offset from camera
 	SVector2D<float> offSet;

@@ -8,7 +8,6 @@ CLevel::CLevel()
 {
 	// Sets the pointers
 	mpEngine = CCore::GetInstance()->GetTLEngine();
-	mpInput = CCore::GetInstance()->GetInput();
 
 	// Creates the highlight sprite
 	cursorHighlightSprite = new CWorldSprite(HIGHLIGHT_SPRITE_NAME, DEFAULT_SPRITE_POS, BLEND_MULTIPLICATIVE);
@@ -104,7 +103,7 @@ void CLevel::Update()
 	}
 
 	// Checks if the user has clicked over a valid tile
-	if (isMouseInlevelWindow && isMouseOnTileMap && inputHandle->KeyHeld(tle::Mouse_LButton))
+	if (isMouseInlevelWindow && isMouseOnTileMap && inputHandle->KeyHeld(tle::Mouse_LButton) && mSelectedMode != 3)
 	{
 		int xPos = static_cast<int>(tilePos.x);
 		int yPos = static_cast<int>(tilePos.y);
@@ -148,6 +147,12 @@ void CLevel::Update()
 			case WALL_SERVER_ANIMATED:
 				mMapSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::WALL_SERVER_ANIMATED);
 				break;
+			case DOOR:
+				mMapSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::DOOR);
+				break;
+			case DOOR_ROT:
+				mMapSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::DOOR_ROT);
+				break;
 			}
 		}
 		else if (mSelectedMode == 2)
@@ -180,7 +185,78 @@ void CLevel::Update()
 				mSpawnerSprites[xPos]->at(yPos)->SetSpriteSkin(SpawnerNames::ENEMY_SPAWN);
 				break;
 			}
-		}	
+		}
+	}
+	else if (isMouseInlevelWindow && isMouseOnTileMap && mSelectedMode == 3)
+	{
+		int xPos = static_cast<int>(tilePos.x);
+		int yPos = static_cast<int>(tilePos.y);
+
+		if (currentlyHighlightingRoom)
+		{
+			// Check if the user realsed the mouse this frame
+			if (!inputHandle->KeyHeld(Mouse_LButton))
+			{
+				// record the room and generate sprites
+				SRoomData newRoom;
+				newRoom.mMinPos = roomStartPos;
+				newRoom.mMaxPos = { xPos, yPos };
+				mMapData.mRoomData.push_back(newRoom);
+
+				// Remove the sprites
+				while (roomHighLightSprites.size() > 0)
+				{
+					delete roomHighLightSprites[0];
+					roomHighLightSprites.erase(roomHighLightSprites.begin());
+				}
+
+				// Create new ones, for the x first
+				for (int i = roomStartPos.x; i < xPos; i++)
+				{
+					roomSprites.push_back(new CWorldSprite(ROOM_WALL_SPRITE, { static_cast<float>(i), static_cast<float>(roomStartPos.y), DEFAULT_SPRITE_POS.z }, BLEND_CUTOUT));
+					roomSprites.push_back(new CWorldSprite(ROOM_WALL_SPRITE, { static_cast<float>(i), static_cast<float>(yPos), DEFAULT_SPRITE_POS.z }, BLEND_CUTOUT));
+				}
+				// Then for the y
+				for (int i = roomStartPos.y; i <= yPos; i++)
+				{
+					roomSprites.push_back(new CWorldSprite(ROOM_WALL_SPRITE, { static_cast<float>(roomStartPos.x), static_cast<float>(i), DEFAULT_SPRITE_POS.z }, BLEND_CUTOUT));
+					roomSprites.push_back(new CWorldSprite(ROOM_WALL_SPRITE, { static_cast<float>(xPos), static_cast<float>(i), DEFAULT_SPRITE_POS.z }, BLEND_CUTOUT));
+				}
+
+				currentlyHighlightingRoom = false;
+			}
+			else
+			{
+				// Update the highlight sprites
+				// Firstly by destorying the current ones
+				while (roomHighLightSprites.size() > 0)
+				{
+					delete roomHighLightSprites[0];
+					roomHighLightSprites.erase(roomHighLightSprites.begin());
+				}
+
+				// Create new ones, for the x first
+				for (int i = roomStartPos.x; i < xPos; i++)
+				{
+					roomHighLightSprites.push_back(new CWorldSprite(ROOM_HIGHLIGHT_SPRITE, {static_cast<float>(i), static_cast<float>(roomStartPos.y), DEFAULT_SPRITE_POS.z }, BLEND_MULTIPLICATIVE));
+					roomHighLightSprites.push_back(new CWorldSprite(ROOM_HIGHLIGHT_SPRITE, { static_cast<float>(i), static_cast<float>(yPos), DEFAULT_SPRITE_POS.z }, BLEND_MULTIPLICATIVE));
+				}
+				// Then for the y
+				for (int i = roomStartPos.y; i <= yPos; i++)
+				{
+					roomHighLightSprites.push_back(new CWorldSprite(ROOM_HIGHLIGHT_SPRITE, { static_cast<float>(roomStartPos.x), static_cast<float>(i), DEFAULT_SPRITE_POS.z }, BLEND_MULTIPLICATIVE));
+					roomHighLightSprites.push_back(new CWorldSprite(ROOM_HIGHLIGHT_SPRITE, { static_cast<float>(xPos), static_cast<float>(i), DEFAULT_SPRITE_POS.z }, BLEND_MULTIPLICATIVE));
+				}
+			}
+		}
+		else
+		{
+			if (inputHandle->KeyHeld(tle::Mouse_LButton))
+			{
+				roomStartPos = { xPos, yPos };
+				currentlyHighlightingRoom = true;
+			}
+		}
 	}
 }
 
@@ -273,6 +349,34 @@ void CLevel::ChangeSpawnerType(ESpawnTypes spawnType)
 {
 	currentlySelectedSpawner = spawnType;
 	mSelectedMode = 2;
+}
+
+void CLevel::SelectRoomTool()
+{
+	mSelectedMode = 3;
+}
+
+void CLevel::ClearRooms()
+{
+	// Clear room data
+	for (int i = 0; i < mMapData.mRoomData.size(); i++)
+	{
+		mMapData.mRoomData.erase(mMapData.mRoomData.begin());
+	}
+
+	// Remove the sprites
+	// Highlighting
+	while (roomHighLightSprites.size() > 0)
+	{
+		delete roomHighLightSprites[0];
+		roomHighLightSprites.erase(roomHighLightSprites.begin());
+	}
+	// Rooms
+	while (roomSprites.size() > 0)
+	{
+		delete  roomSprites[0];
+		roomSprites.erase(roomSprites.begin());
+	}
 }
 
 SVector2D<float> CLevel::findCursorTilePos()

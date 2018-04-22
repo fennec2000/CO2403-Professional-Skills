@@ -76,6 +76,15 @@ void main()
 	CButtonSprite* WallSideButton = new CButtonSprite("WallSide.png", "WallSide.png", { 1123.0f, 120.0f }, { 64.0f, 64.0f });
 	CButtonSprite* WallSideFlipedButton = new CButtonSprite("WallSideFliped.png", "WallSideFliped.png", { 1197.0f, 120.0f }, { 64.0f, 64.0f });
 	CButtonSprite* WallServerButton = new CButtonSprite("wallServer1.png", "wallServer1.png", { 975.0f, 194.0f }, { 64.0f, 64.0f });
+	CButtonSprite* DoorButton = new CButtonSprite("FloorDoor.png", "FloorDoor.png", { 1049.0f, 194.0f }, { 64.0f, 64.0f });
+	CButtonSprite* DoorRotButton = new CButtonSprite("FloorDoorRot.png", "FloorDoorRot.png", { 1123.0f, 194.0f }, { 64.0f, 64.0f });
+
+	// Room buttons
+	CButtonSprite* roomButton = new CButtonSprite("Room.png", "Room.png", { 700, 12.0f }, { 45, 45 });
+	CButtonSprite* roomClearButton = new CButtonSprite("Clear.png", "Clear.png", { 757, 12.0f }, { 91, 45 });
+
+	// The play button
+	CButtonSprite* playButton = new CButtonSprite("Play.png", "Play.png", { 438, 12.0f }, { 45, 45 });
 
 	// The main game loop, repeat until engine is stopped
 	while (pCore->GetTLEngine()->IsRunning())
@@ -93,6 +102,13 @@ void main()
 		if (loadButton->Update())
 		{
 			pCore->GetLevel()->LoadLevel(filePathBox->GetInputedText().c_str());
+		}
+		if (playButton->CheckClick())
+		{
+			std::string msg = "..\\CO2403-Professional-Skills\\CO2403-Professional-SkillsDebug.exe";
+			msg += " ";
+			msg += filePathBox->GetInputedText().c_str();
+			system(msg.c_str());
 		}
 		filePathBox->Update();
 
@@ -134,6 +150,23 @@ void main()
 		if (WallServerButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(WALL_SERVER_ANIMATED);
+		}
+		if (DoorButton->CheckClick())
+		{
+			pCore->GetLevel()->ChangeSelectedTile(DOOR);
+		}
+		if (DoorRotButton->CheckClick())
+		{
+			pCore->GetLevel()->ChangeSelectedTile(DOOR_ROT);
+		}
+
+		if (roomButton->CheckClick())
+		{
+			pCore->GetLevel()->SelectRoomTool();
+		}
+		if (roomClearButton->CheckClick())
+		{
+			pCore->GetLevel()->ClearRooms();
 		}
 
 		// Fonts

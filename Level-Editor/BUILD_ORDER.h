@@ -36,6 +36,7 @@
 // Level System
 #include "ETileType.h"
 #include "ESpawnerTypes.h"
+#include "SRoomData.h"
 #include "SMapData.h"
 #include "NameSettings.h"
 #include "CMapIO.h"

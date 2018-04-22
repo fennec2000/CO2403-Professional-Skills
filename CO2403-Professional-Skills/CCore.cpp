@@ -98,6 +98,7 @@ void CCore::UpdateCore()
 
 		//update each bullet
 		for (int i = 0; i < pActiveBullets.size(); ++i)
+		{
 			pActiveBullets[i]->Update();
 
 			if (pActiveBullets[i]->returnTeam() == EnemyTeam)
@@ -127,6 +128,7 @@ void CCore::UpdateCore()
 					}
 				}
 			}
+		}
 
 		break;
 	case Paused:

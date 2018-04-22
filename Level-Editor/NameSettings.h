@@ -12,6 +12,10 @@ namespace TileNames
 	extern const char* WALL_SIDE;
 	extern const char* WALL_SIDE_FLIPPED_Y;
 	extern const char* WALL_SERVER_ANIMATED;
+	extern const char* DOOR;
+	extern const char* DOOR_ROT;
+	extern const char* DOOR_OPEN;
+	extern const char* DOOR_ROT_OPEN;
 }
 
 namespace SpawnerNames
