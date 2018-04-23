@@ -3,6 +3,12 @@
 
 enum EPowerUps { GiveShotgun, MoveSpeedUp };
 
+struct SPowerUpInfo
+{
+	EPowerUps power;
+	int strenght;
+};
+
 class CPowerUp
 {
 protected:
@@ -10,6 +16,7 @@ protected:
 public:
 	CWorldSprite * pWorldSprite;
 	CPowerUp();
+	virtual SPowerUpInfo GetEffect() = 0;
 	virtual ~CPowerUp();
 };
 

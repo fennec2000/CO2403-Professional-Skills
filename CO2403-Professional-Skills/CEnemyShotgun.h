@@ -5,7 +5,7 @@ class CEnemyShotgun : public CEnemy
 {
 private:
 
-	const int DROP_SHOTGUN_CHANCE = 20;	// out of 100
+	const int DROP_SHOTGUN_CHANCE = 40;	// out of 100
 	bool isActive = false;
 	bool shot = false;
 	float mMoveSpeed = 0.25f;

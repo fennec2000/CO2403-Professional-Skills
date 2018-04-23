@@ -17,9 +17,10 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 	pLevel = pC->GetLevel();
 	pBullets = pC->GetBullets();
 	pGUI = pC->GetGUI();
-	pGUI->UpdateHealth(3); // resetss health
+	pGUI->UpdateHealth(3); // resets health
 	pCharSprite->SetSpriteSkin("Player.png");
 	pC->AddPlayer(player, *this);
+	pPowerUps = &pC->pPowerUps;
 	SetPosition(x, y, z);
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
 	pCursor = new CWorldSprite("Crosshair.png", { playerPos.x, playerPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::UI] }, BLEND_CUTOUT);
@@ -78,6 +79,23 @@ void CPlayer::Update()
 
 		// rotate
 		pCharSprite->LookAt(pCursor);
+	}
+
+	// powerup check
+	for (auto it = pPowerUps->begin(); it != pPowerUps->end();)
+	{
+		if (*it != NULL && ((*it)->pWorldSprite->GetPosition2D() - pCharSprite->GetPosition2D()).Magnitude() < ITEM_PICKUP_RANGE)
+		{
+			SPowerUpInfo itemInfo = (*it)->GetEffect();
+			if (itemInfo.power == EPowerUps::GiveShotgun)
+			{
+				mShotgunAmmo += itemInfo.strenght; // add ammo
+				pGUI->SetWeaponIcon(EWeapons::Shotgun); // update gui
+			}
+			delete (*it);
+			it = pPowerUps->erase(it);
+		}
+		if (it != pPowerUps->end()) ++it;
 	}
 
 	// cooldowns

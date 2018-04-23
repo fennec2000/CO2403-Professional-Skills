@@ -13,3 +13,8 @@ CPowerShotgun::~CPowerShotgun()
 {
 
 }
+
+SPowerUpInfo CPowerShotgun::GetEffect()
+{
+	return SPowerUpInfo { EPowerUps::GiveShotgun, 10 };
+}

@@ -8,5 +8,6 @@ public:
 	CPowerShotgun():CPowerUp() {};
 	CPowerShotgun(SVector2D<float> spawnPos);
 	virtual ~CPowerShotgun();
+	SPowerUpInfo GetEffect();
 };
 

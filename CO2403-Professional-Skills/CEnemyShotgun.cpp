@@ -102,7 +102,7 @@ void CEnemyShotgun::Hit()
 void CEnemyShotgun::Death()
 {
 	cout << "death" << endl;
-	//if (rand() % 100 < DROP_SHOTGUN_CHANCE)
+	if (rand() % 100 < DROP_SHOTGUN_CHANCE)
 		pC->pPowerUps.push_back(new CPowerShotgun(pCharSprite->GetPosition2D()));
 	CEnemyShotgun::~CEnemyShotgun();
 }

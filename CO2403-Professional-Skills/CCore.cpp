@@ -84,6 +84,8 @@ void CCore::UpdateCore()
 	mFrameTime = pTLEngine->Timer();	// update the frame timer
 	pTLEngine->DrawScene();				// draw the frame
 
+	string ammoText;
+
 	switch (mGameState)
 	{
 	case MainMenu:
@@ -136,6 +138,15 @@ void CCore::UpdateCore()
 
 			pActiveBullets[i]->Update();
 		}
+
+		// Draw GUI Text
+		//pGUI->Update();
+		ammoText = "Ammo: ";
+		if (pPlayer[EPlayers::PlayerTeam]->GetShotgunAmmo() > 0)
+			ammoText.append(to_string(pPlayer[EPlayers::PlayerTeam]->GetShotgunAmmo()));
+		else
+			ammoText.append("infinite");
+		pText[EFontTypes::Medium]->Draw(ammoText, WEAPON_TEXT_OFFSET[0], pTLEngine->GetHeight() - WEAPON_TEXT_OFFSET[1], tle::kBlack, tle::kLeft, tle::kVCentre);
 
 		// exit key
 		if (pInput->KeyHit(Key_Escape))

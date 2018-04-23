@@ -9,6 +9,7 @@ const float OFFSCREEN = -1000.0f;
 const SVector2D<float> HEALTH_OFFSET = { 10, 10 }; // offset from top left
 const int WEAPONS_ICONS_COUNT = 2;
 const int WEAPON_ICON_OFFSET[2] = { 15, 79 }; // ofset from bottom left
+const int WEAPON_TEXT_OFFSET[2] = { 80, 50 }; // ofset from bottom left
 
 class CGUI
 {
@@ -17,6 +18,7 @@ private:
 
 	CUISprite* pHeartSprites[MAX_HEARTS];
 	CUISprite* pWeaponIcon;
+	IFont* pText[EFontTypes::NumOfFontTypes];
 	bool heartHidden[MAX_HEARTS] = { false, false, false }; // false = visable, true = hidden
 	int health;
 	int height;
@@ -31,5 +33,6 @@ public:
 	void TakeDamage(int damage);
 	void SetWeaponHidden(bool hide);
 	void SetWeaponIcon(EWeapons newWeapon);
+	void Update();
 };
 

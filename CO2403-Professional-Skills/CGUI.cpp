@@ -60,6 +60,11 @@ void CGUI::SetWeaponIcon(EWeapons newWeapon)
 	pWeaponIcon = new CUISprite(WEAPON_ICONS_NAMES[newWeapon], SVector2D<float>(WEAPON_ICON_OFFSET[0], height - WEAPON_ICON_OFFSET[1]));
 }
 
+void CGUI::Update()
+{
+
+}
+
 void CGUI::UpdateHealth(int givenHealth)
 {
 	if (givenHealth > MAX_HEARTS)

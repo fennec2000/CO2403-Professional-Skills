@@ -39,6 +39,11 @@ private:
 	const float BULLET_SPREAD_ANGLE = 15.0f;
 	bulletSetup* newBullet;
 
+	// items
+	vector<CPowerUp*>* pPowerUps;
+	const float ITEM_PICKUP_RANGE = 1.0f;
+	const int POWERUP_SHOTGUN_ADD_AMMO = 10;
+
 	// cheats
 	bool mCheatGod = false;
 
@@ -47,7 +52,6 @@ private:
 	void Move(SVector2D<float> movement);
 	void Death();
 	void Shoot();
-	void TakeDamage();
 
 public:
 	CPlayer(EPlayers player);
@@ -60,5 +64,6 @@ public:
 	float GetX() { return pCharSprite->GetX(); };
 	float GetY() { return pCharSprite->GetY(); };
 	SVector2D<float> GetPos2D() { return pCharSprite->GetPosition2D(); };
+	int GetShotgunAmmo() { return mShotgunAmmo; };
 };
 
