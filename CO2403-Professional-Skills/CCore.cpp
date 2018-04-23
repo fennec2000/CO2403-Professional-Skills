@@ -16,7 +16,6 @@ CCore* CCore::GetInstance()
 CCore::CCore()
 {
 	pInstance = this;
-
 	// random
 	srand(time(NULL));
 
@@ -84,6 +83,9 @@ void CCore::UpdateCore()
 	mFrameTime = pTLEngine->Timer();	// update the frame timer
 	pTLEngine->DrawScene();				// draw the frame
 
+	// Update the input class
+	pInput->Update();
+
 	string ammoText;
 
 	switch (mGameState)
@@ -108,7 +110,7 @@ void CCore::UpdateCore()
 		//update each bullet
 		for (int i = 0; i < pActiveBullets.size(); ++i)
 		{
-			pActiveBullets[i]->Update();
+			//pActiveBullets[i]->Update();
 
 			if (pActiveBullets[i]->returnTeam() == EnemyTeam)
 			{
@@ -137,7 +139,6 @@ void CCore::UpdateCore()
 					}
 				}
 			}
-		}
 
 			pActiveBullets[i]->Update();
 		}
@@ -158,7 +159,6 @@ void CCore::UpdateCore()
 			UnloadGame();
 			pTLEngine->Stop();
 		}
-
 		break;
 	case Paused:
 		break;
@@ -187,9 +187,6 @@ void CCore::UpdateCore()
 	default:
 		break;
 	}
-
-	// Update the input class
-	pInput->Update();
 }
 
 void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)
@@ -232,7 +229,6 @@ void CCore::RemoveEnemy(CTestEnemy & givenEnemy)
 void CCore::LoadLevel(const char* levelName)
 {
 	FlashLoadScreen();
-
 	// Level
 	pLevel->LoadLevel(levelName); // test: "Levels\\TestLevel"
 
@@ -314,7 +310,6 @@ void CCore::UnloadMenu()
 
 	delete pBackgroundSprite;
 	delete pPlayButton;
-	std::cout << "HIT! ";
 }
 
 void CCore::FlashLoadScreen()
@@ -343,7 +338,9 @@ void CCore::FlashLoadScreen()
 
 void CCore::BypassFrontEnd(const char* filePath)
 {
-	//UnloadMenu();
+	pGUI->UpdateHealth(0);
+	pGUI->SetWeaponHidden(true);
+	UnloadMenu();
 	LoadLevel(filePath);
 	mFrontEndBypassed = true;
 }
