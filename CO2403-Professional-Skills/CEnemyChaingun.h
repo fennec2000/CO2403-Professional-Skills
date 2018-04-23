@@ -4,7 +4,6 @@
 class CEnemyChaingun : public CEnemy
 {
 private:
-
 	bool isActive = false;
 	bool isShooting = false;
 	float mMoveSpeed = 0.5f;

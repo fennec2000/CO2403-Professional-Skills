@@ -17,6 +17,9 @@ CCore::CCore()
 {
 	pInstance = this;
 
+	// random
+	srand(time(NULL));
+
 	// Load engine
 	pTLEngine = New3DEngine(kTLX);
 
@@ -38,7 +41,7 @@ CCore::CCore()
 	pCamera = pTLEngine->CreateCamera(kManual, 0.0f, 0.0f, -10.0f);
 
 	// GUI
-	pGUI = new CGUI();
+	pGUI = new CGUI(pTLEngine->GetHeight(), pTLEngine->GetWidth());
 
 	// Data setup
 	for (int i = 0; i < EPlayers::NumOfEPlayers; ++i)
@@ -52,8 +55,11 @@ CCore::CCore()
 	pLevel = new CLevel();
 
 	// Loads the main menu
-	FlashLoadScreen();
+	UnloadGame();
 	SetupMenu();
+
+	// for debuging
+	pGUI->SetWeaponIcon(EWeapons::Shotgun);
 }
 
 CCore::~CCore()
@@ -82,6 +88,8 @@ void CCore::UpdateCore()
 	{
 	case MainMenu:
 		// temp
+		pGUI->UpdateHealth(0);
+		pGUI->SetWeaponHidden(true);
 		if (pPlayButton->Update())
 		{
 			UnloadMenu();
@@ -210,6 +218,10 @@ void CCore::LoadLevel(const char* levelName)
 	SVector2D<float> spawnPos = pLevel->GetSpawnPos();
 	pPlayer[EPlayers::PlayerTeam] = new CPlayer(EPlayers::PlayerTeam, spawnPos.x, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
 	mGameState = EGameState::Playing;
+
+	// Update UI
+	pGUI->UpdateHealth(3);
+	pGUI->SetWeaponHidden(false);
 }
 
 void CCore::UnloadGame()
@@ -223,6 +235,13 @@ void CCore::UnloadGame()
 		else
 			cout << "NULL bullet found, bullet was removed incorrectly." << endl;
 
+	// unload powerups
+	while (pPowerUps.size() > 0)
+		if (pPowerUps[pPowerUps.size() - 1] != NULL)
+		{
+			delete pPowerUps[pPowerUps.size() - 1];
+			pPowerUps.pop_back();
+		}
 
 	// unload player
 	if (pPlayer[EPlayers::PlayerTeam] != NULL)
@@ -233,7 +252,6 @@ void CCore::UnloadGame()
 
 	// unload level
 	//pLevel->UnloadLevel();
-
 }
 
 void CCore::SetupMenu()

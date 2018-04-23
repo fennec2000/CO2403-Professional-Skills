@@ -68,6 +68,12 @@
     <ClCompile Include="CHoverUI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="CPowerUp.cpp">
+      <Filter>Entity\PowerUp</Filter>
+    </ClCompile>
+    <ClCompile Include="CPowerShotgun.cpp">
+      <Filter>Entity\PowerUp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -91,6 +97,9 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{3f3be5b1-e76d-4eb9-bc08-a486ec80f61f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\PowerUp">
+      <UniqueIdentifier>{0e3e0829-fc2e-446c-bae2-25bede0d49b9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +184,12 @@
     </ClInclude>
     <ClInclude Include="SUIData.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CPowerUp.h">
+      <Filter>Entity\PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="CPowerShotgun.h">
+      <Filter>Entity\PowerUp</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

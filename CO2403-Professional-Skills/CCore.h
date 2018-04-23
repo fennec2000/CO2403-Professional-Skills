@@ -14,6 +14,7 @@ class CLevel;
 class CTestEnemy;
 class CWorldSprite;
 class CButton;
+class CPowerUp;
 enum EPlayers { PlayerTeam, EnemyTeam, NumOfEPlayers };
 enum EFontTypes { Large, Medium, NumOfFontTypes };
 
@@ -61,6 +62,7 @@ public:
 	//Static access method.
 	static CCore* GetInstance();
 	vector<CEProjectile*> eBullets;
+	vector<CPowerUp*> pPowerUps;	// list of power ups active
   
 	// Public functions
 	virtual ~CCore();

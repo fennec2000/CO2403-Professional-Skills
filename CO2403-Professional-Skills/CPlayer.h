@@ -35,6 +35,8 @@ private:
 	// firing
 	float mFireTimeMax = 0.5f;
 	float mFireTimeCurrent = 0.0f;
+	int mShotgunAmmo = 3;
+	const float BULLET_SPREAD_ANGLE = 15.0f;
 	bulletSetup* newBullet;
 
 	// cheats
