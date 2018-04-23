@@ -5,7 +5,6 @@
 CPowerUp::CPowerUp()
 {
 	c = CCore::GetInstance();
-	c->pPowerUps.push_back(this);
 }
 
 
