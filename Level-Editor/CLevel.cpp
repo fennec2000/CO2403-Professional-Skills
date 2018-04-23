@@ -184,6 +184,15 @@ void CLevel::Update()
 			case SPAWN_ENEMY:
 				mSpawnerSprites[xPos]->at(yPos)->SetSpriteSkin(SpawnerNames::ENEMY_SPAWN);
 				break;
+			case SPAWN_CHAIN_ENEMY:
+				mSpawnerSprites[xPos]->at(yPos)->SetSpriteSkin(SpawnerNames::ENEMY_CHAIN_SPAWN);
+				break;
+			case SPAWN_SHOT_ENEMY:
+				mSpawnerSprites[xPos]->at(yPos)->SetSpriteSkin(SpawnerNames::ENEMY_SHOT_SPAWN);
+				break;
+			case SPAWN_RAND_ENEMY:
+				mSpawnerSprites[xPos]->at(yPos)->SetSpriteSkin(SpawnerNames::ENEMY_RAND_SPAWN);
+				break;
 			}
 		}
 	}
@@ -312,6 +321,15 @@ void CLevel::GenerateMap()
 					break;
 				case SPAWN_ENEMY:
 					GenerateSprite(SpawnerNames::ENEMY_SPAWN, { xPos, yPos }, 2);
+					break;
+				case SPAWN_CHAIN_ENEMY:
+					GenerateSprite(SpawnerNames::ENEMY_CHAIN_SPAWN, { xPos, yPos }, 2);
+					break;
+				case SPAWN_SHOT_ENEMY:
+					GenerateSprite(SpawnerNames::ENEMY_SHOT_SPAWN, { xPos, yPos }, 2);
+					break;
+				case SPAWN_RAND_ENEMY:
+					GenerateSprite(SpawnerNames::ENEMY_RAND_SPAWN, { xPos, yPos }, 2);
 					break;
 				}
 			}

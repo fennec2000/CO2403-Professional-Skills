@@ -144,7 +144,15 @@ void CCore::UpdateCore()
 		if (pTLEngine->AnyKeyHit())
 		{
 			UnloadGame();
-			SetupMenu();
+			if (!mFrontEndBypassed)
+			{
+				SetupMenu();
+			}
+			else
+			{
+				FlashLoadScreen();
+				pTLEngine->Stop();
+			}
 		}
 		break;
 	default:
@@ -273,6 +281,7 @@ void CCore::UnloadMenu()
 
 	delete pBackgroundSprite;
 	delete pPlayButton;
+	std::cout << "HIT! ";
 }
 
 void CCore::FlashLoadScreen()
@@ -297,4 +306,11 @@ void CCore::FlashLoadScreen()
 
 	// Clean up the load screen
 	delete pLoadScreen;
+}
+
+void CCore::BypassFrontEnd(const char* filePath)
+{
+	//UnloadMenu();
+	LoadLevel(filePath);
+	mFrontEndBypassed = true;
 }

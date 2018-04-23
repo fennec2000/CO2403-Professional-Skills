@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <Windows.h>
 
 // TL-Engine
 #include <TL-Engine.h>

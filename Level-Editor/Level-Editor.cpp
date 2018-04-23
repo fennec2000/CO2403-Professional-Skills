@@ -2,6 +2,8 @@
 #include "BUILD_ORDER.h"
 using namespace tle;
 
+const char* TEMP_FILE_NAME = "..\\tempMap";
+
 void main()
 {
 	// Creates the Core
@@ -69,6 +71,9 @@ void main()
 	CButtonSprite* deleteSpawnButton = new CButtonSprite("BinSmall.png", "BinSmall.png", { 1200, 12.0f }, { 45, 45 });
 	CButtonSprite* playerSpawnButton = new CButtonSprite("PlayerSpawn.png", "PlayerSpawn.png", { 1145, 12.0f }, { 45, 45 });
 	CButtonSprite* enemySpawnButton = new CButtonSprite("EnemySpawn.png", "EnemySpawn.png", { 1090, 12.0f }, { 45, 45 });
+	CButtonSprite* chainEnemySpawnButton = new CButtonSprite("ChainEnemySpawn.png", "ChainEnemySpawn.png", { 1040, 12.0f }, { 45, 45 });
+	CButtonSprite* shotEnemySpawnButton = new CButtonSprite("ShotEnemySpawn.png", "ShotEnemySpawn.png", { 985, 12.0f }, { 45, 45 });
+	CButtonSprite* randEnemySpawnButton = new CButtonSprite("RandEnemySpawn.png", "RandEnemySpawn.png", { 930, 12.0f }, { 45, 45 });
 
 	// Selectable tile buttons
 	CButtonSprite* FullWallButton = new CButtonSprite("FullWall.png", "FullWall.png", { 975.0f, 120.0f }, { 64.0f, 64.0f });
@@ -80,8 +85,8 @@ void main()
 	CButtonSprite* DoorRotButton = new CButtonSprite("FloorDoorRot.png", "FloorDoorRot.png", { 1123.0f, 194.0f }, { 64.0f, 64.0f });
 
 	// Room buttons
-	CButtonSprite* roomButton = new CButtonSprite("Room.png", "Room.png", { 700, 12.0f }, { 45, 45 });
-	CButtonSprite* roomClearButton = new CButtonSprite("Clear.png", "Clear.png", { 757, 12.0f }, { 91, 45 });
+	CButtonSprite* roomButton = new CButtonSprite("Room.png", "Room.png", { 600, 12.0f }, { 45, 45 });
+	CButtonSprite* roomClearButton = new CButtonSprite("Clear.png", "Clear.png", { 657, 12.0f }, { 91, 45 });
 
 	// The play button
 	CButtonSprite* playButton = new CButtonSprite("Play.png", "Play.png", { 438, 12.0f }, { 45, 45 });
@@ -105,9 +110,13 @@ void main()
 		}
 		if (playButton->CheckClick())
 		{
+			// Create a tempory file
+			pCore->GetLevel()->ExportLevel(TEMP_FILE_NAME);
+
+			// Send the data off to the game and load it up
 			std::string msg = "..\\CO2403-Professional-Skills\\CO2403-Professional-SkillsDebug.exe";
 			msg += " ";
-			msg += filePathBox->GetInputedText().c_str();
+			msg += TEMP_FILE_NAME;
 			system(msg.c_str());
 		}
 		filePathBox->Update();
@@ -124,6 +133,18 @@ void main()
 		if (enemySpawnButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSpawnerType(SPAWN_ENEMY);
+		}
+		if (chainEnemySpawnButton->CheckClick())
+		{
+			pCore->GetLevel()->ChangeSpawnerType(SPAWN_CHAIN_ENEMY);
+		}
+		if (shotEnemySpawnButton->CheckClick())
+		{
+			pCore->GetLevel()->ChangeSpawnerType(SPAWN_SHOT_ENEMY);
+		}
+		if (randEnemySpawnButton->CheckClick())
+		{
+			pCore->GetLevel()->ChangeSpawnerType(SPAWN_RAND_ENEMY);
 		}
 
 		// Tiles

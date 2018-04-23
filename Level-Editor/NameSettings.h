@@ -22,4 +22,7 @@ namespace SpawnerNames
 {
 	extern const char* PLAYER_SPAWN;
 	extern const char* ENEMY_SPAWN;
+	extern const char* ENEMY_CHAIN_SPAWN;
+	extern const char* ENEMY_SHOT_SPAWN;
+	extern const char* ENEMY_RAND_SPAWN;
 }

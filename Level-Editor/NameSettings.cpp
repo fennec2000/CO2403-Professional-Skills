@@ -20,4 +20,7 @@ namespace SpawnerNames
 {
 	const char* PLAYER_SPAWN = "PlayerSpawn.png";
 	const char* ENEMY_SPAWN = "EnemySpawn.png";
+	const char* ENEMY_CHAIN_SPAWN = "ChainEnemySpawn.png";
+	const char* ENEMY_SHOT_SPAWN = "ShotEnemySpawn.png";
+	const char* ENEMY_RAND_SPAWN = "RandEnemySpawn.png";
 }
