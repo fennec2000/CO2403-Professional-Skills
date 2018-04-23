@@ -25,63 +25,152 @@ SMapData CMapIO::ReadMapFile(const char* pMapFilePath)
 	// Reads the file
 	char ch;
 	int xPos = 0;
-	int yPos = 0;
+	int yPos = -1;
 	while (mapFile.get(ch))
 	{
 		switch (ch)
 		{
 		case '<':
+		{
+			// This is the start of map data
+			string currentData;
+			// Gets the tile type
+			mapFile.get(ch);
+			while (ch != '|')
 			{
-				// This is the start of map data
-				string currentData;
-				// Gets the tile type
+				currentData += ch;
 				mapFile.get(ch);
-				while (ch != '|')
-				{
-					currentData += ch;
-					mapFile.get(ch);
-				}
-				// Sets the tile type
-				mapData.mTileMap[yPos].at(xPos) = static_cast<ETileType>(stoi(currentData));
-				// And the collision type
-				mapData.mCollisionMap[yPos].at(xPos) = false;
-
-				// Gets the spawn data
-				currentData = "";
-				// Gets the tile type
-				mapFile.get(ch);
-				while (ch != '|')
-				{
-					currentData += ch;
-					mapFile.get(ch);
-				}
-				// Sets the tile type
-				mapData.mSpawnerMap[yPos].at(xPos) = static_cast<ESpawnTypes>(stoi(currentData));
-
-				// Gets the item data
-				currentData = "";
-				// Gets the tile type
-				mapFile.get(ch);
-				while (ch != '>')
-				{
-					currentData += ch;
-					mapFile.get(ch);
-				}
-				// Discard data for now
-
-				// Increement xpos
-				xPos++;
 			}
-			break;
+			// Sets the tile type
+			mapData.mTileMap[yPos].at(xPos) = static_cast<ETileType>(stoi(currentData));
+			if (mapData.mTileMap[yPos].at(xPos) == END_GOAL)
+			{
+				mapData.mWinPosition = { xPos, yPos };
+			}
+
+			// Gets the spawn data
+			currentData = "";
+			// Gets the tile type
+			mapFile.get(ch);
+			while (ch != '|')
+			{
+				currentData += ch;
+				mapFile.get(ch);
+			}
+			// Sets the tile type
+			mapData.mSpawnerMap[yPos].at(xPos) = static_cast<ESpawnTypes>(stoi(currentData));
+
+			// Gets the item data
+			currentData = "";
+			// Gets the tile type
+			mapFile.get(ch);
+			while (ch != '>')
+			{
+				currentData += ch;
+				mapFile.get(ch);
+			}
+			// Discard data for now
+
+			// Increement xpos
+			xPos++;
+		}
+		break;
 
 		case ' ':
 			// Blank, do nothing
 			break;
-		
+
 		case '\n':
 			yPos++;
 			xPos = 0;
 			break;
+		case '{':
+		{ // Signals the start of somthing
+			mapFile.get(ch);
+			if (ch == 'M')
+			{
+				mapFile.get(ch);
+			}
+			else if (ch == 'R')
+			{
+				// Starts reading the room data
+				while (mapFile.get(ch))
+				{
+					switch (ch)
+					{
+					case '<':
+					{
+						// Gets the room we are working on
+						string currentData = "";
+						mapFile.get(ch);
+						while (ch != '|')
+						{
+							currentData += ch;
+							mapFile.get(ch);
+						}
+						// Gets the room we are working on
+						int roomNo = static_cast<ETileType>(stoi(currentData));
+
+						// Gets the type of data that this is
+						currentData = "";
+						// Gets the data
+						mapFile.get(ch);
+						while (ch != '|')
+						{
+							currentData += ch;
+							mapFile.get(ch);
+						}
+						// Converts the data
+						int dataType = static_cast<ESpawnTypes>(stoi(currentData));
+
+
+						// Gets the x pos of the data
+						currentData = "";
+						mapFile.get(ch);
+						while (ch != '|')
+						{
+							currentData += ch;
+							mapFile.get(ch);
+						}
+						// Converts the data
+						int xPos = static_cast<ESpawnTypes>(stoi(currentData));
+
+						// Gets the y pos of the data
+						currentData = "";
+						mapFile.get(ch);
+						while (ch != '>')
+						{
+							currentData += ch;
+							mapFile.get(ch);
+						}
+						// Converts the data
+						int yPos = static_cast<ESpawnTypes>(stoi(currentData));
+
+						if (dataType == 1)
+						{
+							mapData.mRoomData.push_back(SRoomData());
+							mapData.mRoomData[roomNo].mMinPos = { xPos, yPos };
+						}
+						else if (dataType == 2)
+						{
+							mapData.mRoomData[roomNo].mMaxPos = { xPos, yPos };
+						}
+						else if (dataType == 3)
+						{
+							mapData.mRoomData[roomNo].mDoorPositions.push_back(SVector2D<int>(xPos, yPos));
+						}
+
+						break;
+					}
+
+					case ' ':
+						// Blank, do nothing
+						break;
+					}
+				}
+			}
+		}
+		break;
 
 		default:
 			// The char is invalid or somthing has gone seriusly wrong
@@ -89,45 +178,6 @@ SMapData CMapIO::ReadMapFile(const char* pMapFilePath)
 			return mapData;
 			break;
 		}
-
-		//// Checks if char is valid
-		//switch (ch)
-		//{
-		//case (char)NO_TILE + 48:
-		//	delete levelSprites[xPos]->at(yPos);
-		//	levelSprites[xPos]->at(yPos) = nullptr;
-		//	break;
-		//
-		//case (char)WALL + 48:
-		//	newTileMap[xPos]->at(yPos) = WALL;
-		//	GenerateSprite("FullWall.png", { xPos, yPos });
-		//	break;
-		//
-		//case (char)FLOOR + 48:
-		//	newTileMap[xPos]->at(yPos) = FLOOR;
-		//	GenerateSprite("Floor.png", { xPos, yPos });
-		//	break;
-		//
-		//case (char)WALL_WITH_SIDE + 48:
-		//	newTileMap[xPos]->at(yPos) = WALL_WITH_SIDE;
-		//	GenerateSprite("WallSide.png", { xPos, yPos });
-		//	break;
-		//
-		//case (char)WALL_WITH_SIDE_FLIPPED_Y + 48:
-		//	newTileMap[xPos]->at(yPos) = WALL_WITH_SIDE_FLIPPED_Y;
-		//	GenerateSprite("WallSide.png", { xPos, yPos });
-		//	levelSprites[xPos]->at(yPos)->RotateZ(180.0f);
-		//	break;
-		//
-		//case (char)SPAWN + 48:
-		//	newTileMap[xPos]->at(yPos) = SPAWN;
-		//	GenerateSprite("FloorSpawn.png", { xPos, yPos });
-		//	break;
-
-		//if (ch != ' ' && ch != '\n')
-		//{
-		//	xPos++;
-		//}
 	}
 
 	// Close file and return

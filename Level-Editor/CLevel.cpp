@@ -153,6 +153,9 @@ void CLevel::Update()
 			case DOOR_ROT:
 				mMapSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::DOOR_ROT);
 				break;
+			case END_GOAL:
+				mMapSprites[xPos]->at(yPos)->SetSpriteSkin(TileNames::END_GOAL);
+				break;
 			}
 		}
 		else if (mSelectedMode == 2)
@@ -210,6 +213,32 @@ void CLevel::Update()
 				SRoomData newRoom;
 				newRoom.mMinPos = roomStartPos;
 				newRoom.mMaxPos = { xPos, yPos };
+
+				// Find doors allong the walls and record them for later use
+				// On the x axis firstly
+				for (int i = roomStartPos.x; i <= xPos; i++)
+				{
+					if (mMapData.mTileMap[roomStartPos.y].at(i) == DOOR || mMapData.mTileMap[roomStartPos.y].at(i) == DOOR_ROT)
+					{
+						newRoom.mDoorPositions.push_back(SVector2D<int>(i, roomStartPos.y));
+					}
+					if (mMapData.mTileMap[yPos].at(i) == DOOR || mMapData.mTileMap[yPos].at(i) == DOOR_ROT)
+					{
+						newRoom.mDoorPositions.push_back(SVector2D<int>(i, yPos));
+					}
+				}
+				// Then on the y
+				for (int i = roomStartPos.y; i <= yPos; i++)
+				{
+					if (mMapData.mTileMap[i].at(roomStartPos.x) == DOOR || mMapData.mTileMap[i].at(roomStartPos.x) == DOOR_ROT)
+					{
+						newRoom.mDoorPositions.push_back(SVector2D<int>(roomStartPos.x, i));
+					}
+					if (mMapData.mTileMap[i].at(xPos) == DOOR || mMapData.mTileMap[i].at(xPos) == DOOR_ROT)
+					{
+						newRoom.mDoorPositions.push_back(SVector2D<int>(xPos, i));
+					}
+				}
 				mMapData.mRoomData.push_back(newRoom);
 
 				// Remove the sprites
@@ -307,6 +336,16 @@ void CLevel::GenerateMap()
 					break;
 				case WALL_SERVER_ANIMATED:
 					GenerateSprite(TileNames::WALL_SERVER_ANIMATED, { xPos, yPos });
+					break;
+				case DOOR:
+					GenerateSprite(TileNames::DOOR, { xPos, yPos });
+					break;
+				case DOOR_ROT:
+					GenerateSprite(TileNames::DOOR_ROT, { xPos, yPos });
+					break;
+				case END_GOAL:
+					GenerateSprite(TileNames::END_GOAL, { xPos, yPos });
+					break;
 				}
 			}
 
@@ -377,7 +416,7 @@ void CLevel::SelectRoomTool()
 void CLevel::ClearRooms()
 {
 	// Clear room data
-	for (int i = 0; i < mMapData.mRoomData.size(); i++)
+	while (mMapData.mRoomData.size() > 0)
 	{
 		mMapData.mRoomData.erase(mMapData.mRoomData.begin());
 	}

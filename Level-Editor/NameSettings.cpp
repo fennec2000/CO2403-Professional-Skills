@@ -14,6 +14,7 @@ namespace TileNames
 	const char* DOOR_ROT = "FloorDoorRot.png";
 	const char* DOOR_OPEN = "FloorDoorOpen.png";
 	const char* DOOR_ROT_OPEN = "FloorDoorRotOpen.png";
+	const char* END_GOAL = "EndGoal.png";
 }
 
 namespace SpawnerNames

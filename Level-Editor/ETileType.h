@@ -15,5 +15,6 @@ enum ETileType
 	DOOR = 6,
 	DOOR_ROT = 7,
 	DOOR_OPEN = 8,
-	DOOR_ROT_OPEN = 9
+	DOOR_ROT_OPEN = 9,
+	END_GOAL = 10
 };
