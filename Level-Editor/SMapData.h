@@ -12,4 +12,6 @@ struct SMapData
 
 	vector<vector<ETileType>> mTileMap;
 	vector<vector<ESpawnTypes>> mSpawnerMap;
+
+	vector<SRoomData> mRoomData;
 };

@@ -9,6 +9,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <windows.h>
 
 // Memory leak detection
 #define _CRTDBG_MAP_ALLOC

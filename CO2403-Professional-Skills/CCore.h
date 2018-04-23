@@ -43,6 +43,7 @@ private:
 	EGameState mGameState;	// the current game state
 	unsigned int mGameScore;// the current score of the game
 	CGUI* pGUI;				// pointer to the GUI
+	bool mFrontEndBypassed = false;
 
 	IFont* pText[EFontTypes::NumOfFontTypes];			// pointer to font to write to screen
 	const int mTEXT_SIZE[EFontTypes::NumOfFontTypes] = { 150, 50 };
@@ -74,6 +75,7 @@ public:
 	void SetupMenu();
 	void UnloadMenu();
 	void FlashLoadScreen();
+	void BypassFrontEnd(const char* filePath);
 
 	// Getters
 	inline I3DEngine* GetTLEngine() { return pTLEngine; };

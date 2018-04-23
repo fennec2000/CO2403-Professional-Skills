@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <Windows.h>
 
 // TL-Engine
 #include <TL-Engine.h>
@@ -36,6 +37,7 @@
 // Level System
 #include "ETileType.h"
 #include "ESpawnerTypes.h"
+#include "SRoomData.h"
 #include "SMapData.h"
 #include "NameSettings.h"
 #include "CMapIO.h"

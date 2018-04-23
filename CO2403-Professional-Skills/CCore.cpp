@@ -108,6 +108,8 @@ void CCore::UpdateCore()
 		//update each bullet
 		for (int i = 0; i < pActiveBullets.size(); ++i)
 		{
+			pActiveBullets[i]->Update();
+
 			if (pActiveBullets[i]->returnTeam() == EnemyTeam)
 			{
 				SVector2D<float> bulletPos = pActiveBullets[i]->GetPos2D();
@@ -135,6 +137,7 @@ void CCore::UpdateCore()
 					}
 				}
 			}
+		}
 
 			pActiveBullets[i]->Update();
 		}
@@ -170,7 +173,15 @@ void CCore::UpdateCore()
 		if (pTLEngine->AnyKeyHit())
 		{
 			UnloadGame();
-			SetupMenu();
+			if (!mFrontEndBypassed)
+			{
+				SetupMenu();
+			}
+			else
+			{
+				FlashLoadScreen();
+				pTLEngine->Stop();
+			}
 		}
 		break;
 	default:
@@ -303,6 +314,7 @@ void CCore::UnloadMenu()
 
 	delete pBackgroundSprite;
 	delete pPlayButton;
+	std::cout << "HIT! ";
 }
 
 void CCore::FlashLoadScreen()
@@ -327,4 +339,11 @@ void CCore::FlashLoadScreen()
 
 	// Clean up the load screen
 	//delete pLoadScreen;
+}
+
+void CCore::BypassFrontEnd(const char* filePath)
+{
+	//UnloadMenu();
+	LoadLevel(filePath);
+	mFrontEndBypassed = true;
 }
