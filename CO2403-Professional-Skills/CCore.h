@@ -12,11 +12,13 @@ class CPlayer;
 class CEProjectile;
 class CLevel;
 class CTestEnemy;
+class CWorldSprite;
+class CButton;
 enum EPlayers { PlayerTeam, EnemyTeam, NumOfEPlayers };
-
+enum EFontTypes { Large, Medium, NumOfFontTypes };
 
 // game states
-enum EGameState { Playing, Paused };
+enum EGameState { MainMenu, Playing, Paused, GameOver };
 
 // global sprite layers floats
 enum ESpriteLayers { Floor, Enemy, Player, UI, NumOfESpriteLayers };
@@ -30,6 +32,7 @@ private:
 
 	// Stored data
 	I3DEngine* pTLEngine;	// pointer to the tl engine
+	CInput* pInput;			// pointer to the object that will handle input
 	ICamera* pCamera;		// pointer to the game camera
 	float mFrameTime;		// time between each frame
 	CPlayer* pPlayer[EPlayers::NumOfEPlayers];		// holds pointers to the players - possiable 2 player
@@ -40,6 +43,17 @@ private:
 	unsigned int mGameScore;// the current score of the game
 	CGUI* pGUI;				// pointer to the GUI
 
+	IFont* pText[EFontTypes::NumOfFontTypes];			// pointer to font to write to screen
+	const int mTEXT_SIZE[EFontTypes::NumOfFontTypes] = { 150, 50 };
+	const int mTEXT_SPACING[EFontTypes::NumOfFontTypes] = { 150, 50 };
+
+	// Main menu elements
+	CWorldSprite* pBackgroundSprite;
+	CButton* pPlayButton;
+
+	// keybinding
+	EKeyCode G_EXIT = Key_Escape;
+
 	// Private constructor to prevent instancing.
 	CCore();
 
@@ -49,21 +63,32 @@ public:
 	vector<CEProjectile*> eBullets;
   
 	// Public functions
+	virtual ~CCore();
 	void UpdateCore();
 
+	// For changing the scene of the game
+	void LoadLevel(const char* levelName = "Levels\\TestLevel");
+	void UnloadGame();
+	void SetupMenu();
+	void UnloadMenu();
+	void FlashLoadScreen();
+
 	// Getters
-	I3DEngine* GetTLEngine() { return pTLEngine; };
-	ICamera* GetCamera() { return pCamera; };
-	float* GetFrameTimer() { return &mFrameTime; };
-	CPlayer* GetPlayer(EPlayers player) { return pPlayer[player]; };
-	CLevel* GetLevel() { return pLevel; };
-	vector<CTestEnemy*> GetEnemyList() { return mEnemyList; };
+	inline I3DEngine* GetTLEngine() { return pTLEngine; };
+	inline CInput* GetInput() { return pInput; };
+	inline ICamera* GetCamera() { return pCamera; };
+	inline float* GetFrameTimer() { return &mFrameTime; };
+	inline CPlayer* GetPlayer(EPlayers player) { return pPlayer[player]; };
+	inline CLevel* GetLevel() { return pLevel; };
+	inline vector<CTestEnemy*> GetEnemyList() { return mEnemyList; };
+	inline vector<CBullet*>* GetBullets() { return &pActiveBullets; };
+	inline CGUI* GetGUI() { return pGUI; }
 
 	// Setters
 	void AddPlayer(EPlayers player, CPlayer &givenPlayer);
-	void AddBullet(float ex, float ey, SVector2D<float> bulletVector);
 	void AddBullet(CBullet &givenBullet);
 	void RemoveBullet(CBullet &givenBullet);
 	void AddEnemy(CTestEnemy &givenEnemy);
 	void RemoveEnemy(CTestEnemy &givenEnemy);
+	inline void SetGameState(EGameState newState) { mGameState = newState; };
 };

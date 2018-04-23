@@ -18,13 +18,20 @@ CLevel::CLevel()
 	}
 }
 
-CLevel::~CLevel() { }
+CLevel::~CLevel() 
+{ 
+	UnloadLevel();
+}
 
 void CLevel::Update()
 {
 	for (int i = 0; i < levelEnemies.size(); i++)
-	{
-		levelEnemies[i]->Update();
+	{	
+			bool meow = levelEnemies[i]->EUpdate();	
+			if (meow)
+			{
+				levelEnemies.erase(i + levelEnemies.begin());
+			}
 	}
 }
 
@@ -75,7 +82,7 @@ void CLevel::LoadLevel(const char* filePath)
 				mSpawnPos = { static_cast<float>(xPos), static_cast<float>(yPos) };
 				break;
 			case SPAWN_ENEMY:
-				levelEnemies.push_back(new CEnemyShotgun(static_cast<float>(xPos), static_cast<float>(yPos), 0.0f, true));
+				levelEnemies.push_back(new CEnemyChaingun(static_cast<float>(xPos), static_cast<float>(yPos), 0.0f, true));
 				break;
 			}
 		}
@@ -117,18 +124,27 @@ void CLevel::UnloadLevel()
 	// Reset all the data
 	mMapData = SMapData();
 
-	// Reset all of the sprites to NULL
-	for (int i = 0; i < MAP_MAX_SIZE.x; i++)
+	// Cleans the sprites
+	for (int yPos = 0; yPos < CLevel::MAP_MAX_SIZE.y; yPos++)
 	{
-		for (int j = 0; j < MAP_MAX_SIZE.y; j++)
+		for (int xPos = 0; xPos < CLevel::MAP_MAX_SIZE.x; xPos++)
 		{
-			// Check if there is a sprite here
-			if (mWorldSprites[j]->at(i) != nullptr)
+			if (mWorldSprites.at(yPos)->at(xPos) != nullptr)
 			{
-				delete mWorldSprites[j]->at(i);
-				mWorldSprites[j]->at(i) = nullptr;
+
+				delete mWorldSprites.at(yPos)->at(xPos);
+				mWorldSprites.at(yPos)->at(xPos) = nullptr;
 			}
 		}
+	}
+
+	// remove enemies
+	int size = levelEnemies.size();
+	while (levelEnemies.size() > 0)
+	{
+		delete levelEnemies[levelEnemies.size() - 1];
+		levelEnemies[levelEnemies.size() - 1] = nullptr;
+		levelEnemies.pop_back();
 	}
 }
 

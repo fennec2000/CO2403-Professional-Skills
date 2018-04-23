@@ -10,6 +10,11 @@
 #include <vector>
 #include <fstream>
 
+// Memory leak detection
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 // Other files
 
 // Maths
@@ -18,8 +23,8 @@
 #include "SMatrix4x4.h"
 #include "Maths.h"
 
-
-// Core
+// Core systems
+#include "CInput.h"
 #include "CCore.h"
 
 // Spirte system
@@ -29,6 +34,11 @@
 #include "CUISprite.h"
 #include "CWorldSprite.h"
 #include "CAnimatedWorldSprite.h"
+
+// Regular UI
+#include "SUIData.h"
+#include "CHoverUI.h"
+#include "CButton.h"
 
 // GUI
 #include "CGUI.h"

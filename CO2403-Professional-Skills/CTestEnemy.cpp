@@ -18,7 +18,7 @@ CTestEnemy::~CTestEnemy()
 	pC->RemoveEnemy(*this);
 }
 
-void CTestEnemy::Update()
+bool CTestEnemy::EUpdate()
 {
 	float playerX = pC->GetPlayer(PlayerTeam)->GetX();
 	float playerY = pC->GetPlayer(PlayerTeam)->GetY();
@@ -52,6 +52,7 @@ void CTestEnemy::Update()
 		Shoot();
 		mShootTimerCurrent = 0.0f;
 	}
+	return false;
 }
 
 void CTestEnemy::Shoot()
@@ -72,5 +73,5 @@ void CTestEnemy::Shoot()
 
 void CTestEnemy::Death()
 {
-
+	
 }

@@ -25,13 +25,14 @@ public:
 
 	// Map genration and unloading
 	void LoadLevel(const char* filePath);
+	vector<CEnemy*> getEnemies() { return levelEnemies; };
+	void UnloadLevel();
 
 	static const SVector2D<int> MAP_MAX_SIZE;
 
 private:
 
 	void GenerateLevel();
-	void UnloadLevel();
 
 	vector<CEnemy*> levelEnemies;
 

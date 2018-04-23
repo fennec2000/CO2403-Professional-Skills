@@ -9,7 +9,7 @@ const SVector2D<float> HEALTH_OFFSET = { 10, 10 };
 class CGUI
 {
 private:
-	CUISprite* pHeartSprites[MAX_HEARTS];
+	CUISprite * pHeartSprites[MAX_HEARTS];
 	bool heartHidden[MAX_HEARTS] = { false, false, false }; // false = visable, true = hidden
 	int health;
 
