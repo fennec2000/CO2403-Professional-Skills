@@ -16,7 +16,7 @@ CEnemyChaingun::CEnemyChaingun(float x, float y, float z, bool activate)
 
 CEnemyChaingun::~CEnemyChaingun()
 {
-	pCharSprite->~CWorldSprite();
+	
 }
 
 void CEnemyChaingun::Update()
@@ -32,7 +32,7 @@ bool CEnemyChaingun::EUpdate()
 		return true;
 	}
 
-	if (isActive && !isShooting)
+	if (isActive && !isShooting && *pFrameTimer < 1.0f)
 	{
 		SVector2D<float> eMovement;
 		SVector2D<float> testPos;
@@ -118,5 +118,8 @@ void CEnemyChaingun::Hit()
 
 void CEnemyChaingun::Death()
 {
+	cout << "death" << endl;
+	if (rand() % 100 < DROP_SHOTGUN_CHANCE)
+		pC->pPowerUps.push_back(new CPowerShotgun(pCharSprite->GetPosition2D()));
 	CEnemyChaingun::~CEnemyChaingun();
 }

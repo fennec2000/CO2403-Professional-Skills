@@ -17,9 +17,10 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 	pLevel = pC->GetLevel();
 	pBullets = pC->GetBullets();
 	pGUI = pC->GetGUI();
-	pGUI->UpdateHealth(3); // resetss health
+	pGUI->UpdateHealth(3); // resets health
 	pCharSprite->SetSpriteSkin("Player.png");
 	pC->AddPlayer(player, *this);
+	pPowerUps = &pC->pPowerUps;
 	SetPosition(x, y, z);
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
 	pCursor = new CWorldSprite("Crosshair.png", { playerPos.x, playerPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::UI] }, BLEND_CUTOUT);
@@ -78,6 +79,23 @@ void CPlayer::Update()
 
 		// rotate
 		pCharSprite->LookAt(pCursor);
+	}
+
+	// powerup check
+	for (auto it = pPowerUps->begin(); it != pPowerUps->end();)
+	{
+		if (*it != NULL && ((*it)->pWorldSprite->GetPosition2D() - pCharSprite->GetPosition2D()).Magnitude() < ITEM_PICKUP_RANGE)
+		{
+			SPowerUpInfo itemInfo = (*it)->GetEffect();
+			if (itemInfo.power == EPowerUps::GiveShotgun)
+			{
+				mShotgunAmmo += itemInfo.strenght; // add ammo
+				pGUI->SetWeaponIcon(EWeapons::Shotgun); // update gui
+			}
+			delete (*it);
+			it = pPowerUps->erase(it);
+		}
+		if (it != pPowerUps->end()) ++it;
 	}
 
 	// cooldowns
@@ -169,6 +187,33 @@ void CPlayer::Shoot()
 
 	// create bullet
 	new CBullet(*newBullet);
+
+	// shotgun
+	if (mShotgunAmmo > 0)
+	{
+		// set up spread
+		float firingAngle = BULLET_SPREAD_ANGLE * 3.14 / 180;
+		SVector2D<float> vec2;
+		SVector2D<float> vec3;
+		vec2.x = newBullet->travelVector.x * cos(firingAngle) - newBullet->travelVector.y * sin(firingAngle);
+		vec2.y = newBullet->travelVector.x * sin(firingAngle) + newBullet->travelVector.y * cos(firingAngle);
+		vec3.x = newBullet->travelVector.x * cos(-firingAngle) - newBullet->travelVector.y * sin(-firingAngle);
+		vec3.y = newBullet->travelVector.x * sin(-firingAngle) + newBullet->travelVector.y * cos(-firingAngle);
+
+		// fire
+		newBullet->travelVector = vec2;
+		new CBullet(*newBullet);
+		newBullet->travelVector = vec3;
+		new CBullet(*newBullet);
+
+		// decrement ammo
+		--mShotgunAmmo;
+		if (mShotgunAmmo <= 0)
+		{
+			mShotgunAmmo = 0; 
+			pGUI->SetWeaponIcon(EWeapons::Default);
+		}
+	}
 
 	// fire timer
 	mFireTimeCurrent = mFireTimeMax;

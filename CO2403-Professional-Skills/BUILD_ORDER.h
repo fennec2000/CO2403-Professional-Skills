@@ -16,6 +16,10 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 
+// random
+//#include <stdlib.h> // already defined
+#include <time.h>
+
 // Other files
 
 // Maths
@@ -52,6 +56,9 @@
 #include "CLevel.h"
 
 // Entity
+#include "CPowerUp.h"
+#include "CPowerShotgun.h"
+
 #include "CBullet.h"
 #include "CCharacter.h"
 #include "CEnemy.h"

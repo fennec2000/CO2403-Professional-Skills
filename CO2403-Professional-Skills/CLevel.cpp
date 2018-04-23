@@ -20,28 +20,7 @@ CLevel::CLevel()
 
 CLevel::~CLevel() 
 { 
-	// Clean the levels enemies
-	for (int i = 0; i < levelEnemies.size(); i++)
-	{
-		delete levelEnemies[i]; 
-		levelEnemies[i] = nullptr;
-	}
-
-	// Cleans the sprites
-	for (int yPos = 0; yPos < CLevel::MAP_MAX_SIZE.y; yPos++)
-	{
-		for (int xPos = 0; xPos < CLevel::MAP_MAX_SIZE.x; xPos++)
-		{
-			if (mWorldSprites.at(yPos)->at(xPos) != nullptr)
-			{
-				delete mWorldSprites.at(yPos)->at(xPos);
-				mWorldSprites.at(yPos)->at(xPos) = nullptr;
-			}
-		}
-
-		delete mWorldSprites.at(yPos);
-		mWorldSprites.at(yPos) = nullptr;
-	}
+	UnloadLevel();
 }
 
 void CLevel::Update()
@@ -145,27 +124,28 @@ void CLevel::UnloadLevel()
 	// Reset all the data
 	mMapData = SMapData();
 
-	// Reset all of the sprites to NULL
-	for (int i = 0; i < MAP_MAX_SIZE.x; i++)
+	// Cleans the sprites
+	for (int yPos = 0; yPos < CLevel::MAP_MAX_SIZE.y; yPos++)
 	{
-		for (int j = 0; j < MAP_MAX_SIZE.y; j++)
+		for (int xPos = 0; xPos < CLevel::MAP_MAX_SIZE.x; xPos++)
 		{
-			// Check if there is a sprite here
-			if (mWorldSprites[j]->at(i) != nullptr)
+			if (mWorldSprites.at(yPos)->at(xPos) != nullptr)
 			{
-				delete mWorldSprites[j]->at(i);
-				mWorldSprites[j]->at(i) = nullptr;
+
+				delete mWorldSprites.at(yPos)->at(xPos);
+				mWorldSprites.at(yPos)->at(xPos) = nullptr;
 			}
 		}
 	}
 
 	// remove enemies
+	int size = levelEnemies.size();
 	while (levelEnemies.size() > 0)
 	{
 		delete levelEnemies[levelEnemies.size() - 1];
+		levelEnemies[levelEnemies.size() - 1] = nullptr;
 		levelEnemies.pop_back();
 	}
-		
 }
 
 void CLevel::GenerateSprite(const char* pSpriteName, SVector2D<int> position)

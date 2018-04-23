@@ -4,10 +4,9 @@
 class CEnemyChaingun : public CEnemy
 {
 private:
-
+	const int DROP_SHOTGUN_CHANCE = 20;	// out of 100
 	bool isActive = false;
 	bool isShooting = false;
-	CEProjectile * bullet;
 	float mMoveSpeed = 0.5f;
 	SVector2D<float> mFireVector;
 	float bulletTimer = 0.0f;

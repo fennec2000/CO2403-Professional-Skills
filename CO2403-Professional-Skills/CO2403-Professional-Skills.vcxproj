@@ -135,6 +135,8 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="CHoverUI.cpp" />
     <ClCompile Include="CInput.cpp" />
     <ClCompile Include="CMapIO.cpp" />
+    <ClCompile Include="CPowerShotgun.cpp" />
+    <ClCompile Include="CPowerUp.cpp" />
     <ClCompile Include="NameSettings.cpp" />
     <ClCompile Include="SBaseSprite.cpp" />
     <ClCompile Include="CCharacter.cpp" />
@@ -164,6 +166,8 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="CHoverUI.h" />
     <ClInclude Include="CInput.h" />
     <ClInclude Include="CMapIO.h" />
+    <ClInclude Include="CPowerShotgun.h" />
+    <ClInclude Include="CPowerUp.h" />
     <ClInclude Include="ESpawnerTypes.h" />
     <ClInclude Include="ESpriteBlend.h" />
     <ClInclude Include="NameSettings.h" />

@@ -17,6 +17,9 @@ CCore::CCore()
 {
 	pInstance = this;
 
+	// random
+	srand(time(NULL));
+
 	// Load engine
 	pTLEngine = New3DEngine(kTLX);
 
@@ -38,7 +41,7 @@ CCore::CCore()
 	pCamera = pTLEngine->CreateCamera(kManual, 0.0f, 0.0f, -10.0f);
 
 	// GUI
-	pGUI = new CGUI();
+	pGUI = new CGUI(pTLEngine->GetHeight(), pTLEngine->GetWidth());
 
 	// Data setup
 	for (int i = 0; i < EPlayers::NumOfEPlayers; ++i)
@@ -52,8 +55,11 @@ CCore::CCore()
 	pLevel = new CLevel();
 
 	// Loads the main menu
-	FlashLoadScreen();
+	UnloadGame();
 	SetupMenu();
+
+	// for debuging
+	pGUI->SetWeaponIcon(EWeapons::Shotgun);
 }
 
 CCore::~CCore()
@@ -66,7 +72,6 @@ CCore::~CCore()
 
 	delete pGUI;
 	delete pInput;
-	//delete pText;
 	delete pLevel;
 
 	// Delete the 3D engine now we are finished with it
@@ -79,10 +84,14 @@ void CCore::UpdateCore()
 	mFrameTime = pTLEngine->Timer();	// update the frame timer
 	pTLEngine->DrawScene();				// draw the frame
 
+	string ammoText;
+
 	switch (mGameState)
 	{
 	case MainMenu:
 		// temp
+		pGUI->UpdateHealth(0);
+		pGUI->SetWeaponHidden(true);
 		if (pPlayButton->Update())
 		{
 			UnloadMenu();
@@ -130,6 +139,26 @@ void CCore::UpdateCore()
 			}
 		}
 
+			pActiveBullets[i]->Update();
+		}
+
+		// Draw GUI Text
+		//pGUI->Update();
+		ammoText = "Ammo: ";
+		if (pPlayer[EPlayers::PlayerTeam]->GetShotgunAmmo() > 0)
+			ammoText.append(to_string(pPlayer[EPlayers::PlayerTeam]->GetShotgunAmmo()));
+		else
+			ammoText.append("infinite");
+		pText[EFontTypes::Medium]->Draw(ammoText, WEAPON_TEXT_OFFSET[0], pTLEngine->GetHeight() - WEAPON_TEXT_OFFSET[1], tle::kBlack, tle::kLeft, tle::kVCentre);
+
+		// exit key
+		if (pInput->KeyHit(Key_Escape))
+		{
+			FlashLoadScreen();
+			UnloadGame();
+			pTLEngine->Stop();
+		}
+
 		break;
 	case Paused:
 		break;
@@ -161,13 +190,6 @@ void CCore::UpdateCore()
 
 	// Update the input class
 	pInput->Update();
-
-	// exit key
-	if (pInput->KeyHit(Key_Escape))
-	{
-		FlashLoadScreen();
-		pTLEngine->Stop();
-	}
 }
 
 void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)
@@ -218,6 +240,10 @@ void CCore::LoadLevel(const char* levelName)
 	SVector2D<float> spawnPos = pLevel->GetSpawnPos();
 	pPlayer[EPlayers::PlayerTeam] = new CPlayer(EPlayers::PlayerTeam, spawnPos.x, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
 	mGameState = EGameState::Playing;
+
+	// Update UI
+	pGUI->UpdateHealth(3);
+	pGUI->SetWeaponHidden(false);
 }
 
 void CCore::UnloadGame()
@@ -231,6 +257,13 @@ void CCore::UnloadGame()
 		else
 			cout << "NULL bullet found, bullet was removed incorrectly." << endl;
 
+	// unload powerups
+	while (pPowerUps.size() > 0)
+		if (pPowerUps[pPowerUps.size() - 1] != NULL)
+		{
+			delete pPowerUps[pPowerUps.size() - 1];
+			pPowerUps.pop_back();
+		}
 
 	// unload player
 	if (pPlayer[EPlayers::PlayerTeam] != NULL)
@@ -240,7 +273,7 @@ void CCore::UnloadGame()
 	}
 
 	// unload level
-	pLevel->UnloadLevel();
+	//pLevel->UnloadLevel();
 }
 
 void CCore::SetupMenu()
@@ -287,8 +320,8 @@ void CCore::UnloadMenu()
 void CCore::FlashLoadScreen()
 {
 	// Create the load screen model
-	CWorldSprite* pLoadScreen = new CWorldSprite("Black.png", { -1000.0f, -1000.0f }, BLEND_NORMAL);
-	pLoadScreen->ResizeSprite(256.0f);
+	//CWorldSprite* pLoadScreen = new CWorldSprite("Black.png", { -1000.0f, -1000.0f }, BLEND_NORMAL);
+	//pLoadScreen->ResizeSprite(256.0f);
 
 	// Store the camera coords
 	SVector3D<float> cameraPos = { pCamera->GetX(),  pCamera->GetY(),  pCamera->GetZ() };
@@ -305,7 +338,7 @@ void CCore::FlashLoadScreen()
 	pCamera->SetPosition(cameraPos.x, cameraPos.y, cameraPos.z);
 
 	// Clean up the load screen
-	delete pLoadScreen;
+	//delete pLoadScreen;
 }
 
 void CCore::BypassFrontEnd(const char* filePath)
