@@ -2,7 +2,8 @@
 #include "BUILD_ORDER.h"
 using namespace tle;
 
-const char* TEMP_FILE_NAME = "..\\tempMap";
+const char* TEMP_FILE_NAME = "..\\CO2403-Professional-Skills\\tempMap";
+const char* GAME_EXE_FILE_PATH = "..\\CO2403-Professional-Skills\\CO2403-Professional-SkillsDebug.exe";
 
 void main()
 {
@@ -68,29 +69,28 @@ void main()
 	IFont* deleteTileFont = pCore->GetTLEngine()->LoadFont("Font1.bmp");
 
 	// Selectable spawner buttons
-	CButtonSprite* deleteSpawnButton = new CButtonSprite("BinSmall.png", "BinSmall.png", { 1200, 12.0f }, { 45, 45 });
-	CButtonSprite* playerSpawnButton = new CButtonSprite("PlayerSpawn.png", "PlayerSpawn.png", { 1145, 12.0f }, { 45, 45 });
-	CButtonSprite* enemySpawnButton = new CButtonSprite("EnemySpawn.png", "EnemySpawn.png", { 1090, 12.0f }, { 45, 45 });
-	CButtonSprite* chainEnemySpawnButton = new CButtonSprite("ChainEnemySpawn.png", "ChainEnemySpawn.png", { 1040, 12.0f }, { 45, 45 });
-	CButtonSprite* shotEnemySpawnButton = new CButtonSprite("ShotEnemySpawn.png", "ShotEnemySpawn.png", { 985, 12.0f }, { 45, 45 });
-	CButtonSprite* randEnemySpawnButton = new CButtonSprite("RandEnemySpawn.png", "RandEnemySpawn.png", { 930, 12.0f }, { 45, 45 });
+	CButtonSprite* deleteSpawnButton = new CButtonSprite("BinSmall.png", "BinSmallHover.png", { 1200, 12.0f }, { 45, 45 });
+	CButtonSprite* playerSpawnButton = new CButtonSprite("PlayerSpawn.png", "PlayerSpawnHover.png", { 1145, 12.0f }, { 45, 45 });
+	CButtonSprite* chainEnemySpawnButton = new CButtonSprite("ChainEnemySpawn.png", "ChainEnemySpawnHover.png", { 1090, 12.0f }, { 45, 45 });
+	CButtonSprite* shotEnemySpawnButton = new CButtonSprite("ShotEnemySpawn.png", "ShotEnemySpawnHover.png", { 1040, 12.0f }, { 45, 45 });
+	CButtonSprite* randEnemySpawnButton = new CButtonSprite("RandEnemySpawn.png", "RandEnemySpawnHover.png", { 985, 12.0f }, { 45, 45 });
 
 	// Selectable tile buttons
-	CButtonSprite* FullWallButton = new CButtonSprite("FullWall.png", "FullWall.png", { 975.0f, 120.0f }, { 64.0f, 64.0f });
-	CButtonSprite* FloorButton = new CButtonSprite("Floor.png", "Floor.png", { 1049.0f, 120.0f }, { 64.0f, 64.0f });
-	CButtonSprite* WallSideButton = new CButtonSprite("WallSide.png", "WallSide.png", { 1123.0f, 120.0f }, { 64.0f, 64.0f });
-	CButtonSprite* WallSideFlipedButton = new CButtonSprite("WallSideFliped.png", "WallSideFliped.png", { 1197.0f, 120.0f }, { 64.0f, 64.0f });
-	CButtonSprite* WallServerButton = new CButtonSprite("wallServer1.png", "wallServer1.png", { 975.0f, 194.0f }, { 64.0f, 64.0f });
-	CButtonSprite* DoorButton = new CButtonSprite("FloorDoor.png", "FloorDoor.png", { 1049.0f, 194.0f }, { 64.0f, 64.0f });
-	CButtonSprite* DoorRotButton = new CButtonSprite("FloorDoorRot.png", "FloorDoorRot.png", { 1123.0f, 194.0f }, { 64.0f, 64.0f });
-	CButtonSprite* EndGoalButton = new CButtonSprite("EndGoal.png", "EndGoal.png", { 1197.0f, 194.0f }, { 64.0f, 64.0f });
+	CButtonSprite* FullWallButton = new CButtonSprite("FullWall.png", "FullWallHover.png", { 975.0f, 120.0f }, { 64.0f, 64.0f });
+	CButtonSprite* FloorButton = new CButtonSprite("Floor.png", "FloorHover.png", { 1049.0f, 120.0f }, { 64.0f, 64.0f });
+	CButtonSprite* WallSideButton = new CButtonSprite("WallSide.png", "WallSideHover.png", { 1123.0f, 120.0f }, { 64.0f, 64.0f });
+	CButtonSprite* WallSideFlipedButton = new CButtonSprite("WallSideFliped.png", "WallSideFlipedHover.png", { 1197.0f, 120.0f }, { 64.0f, 64.0f });
+	CButtonSprite* WallServerButton = new CButtonSprite("wallServer1.png", "wallServerHover.png", { 975.0f, 194.0f }, { 64.0f, 64.0f });
+	CButtonSprite* DoorButton = new CButtonSprite("FloorDoor.png", "FloorDoorHover.png", { 1049.0f, 194.0f }, { 64.0f, 64.0f });
+	CButtonSprite* DoorRotButton = new CButtonSprite("FloorDoorRot.png", "FloorDoorRotHover.png", { 1123.0f, 194.0f }, { 64.0f, 64.0f });
+	CButtonSprite* EndGoalButton = new CButtonSprite("EndGoal.png", "EndGoalHover.png", { 1197.0f, 194.0f }, { 64.0f, 64.0f });
 
 	// Room buttons
-	CButtonSprite* roomButton = new CButtonSprite("Room.png", "Room.png", { 600, 12.0f }, { 45, 45 });
-	CButtonSprite* roomClearButton = new CButtonSprite("Clear.png", "Clear.png", { 657, 12.0f }, { 91, 45 });
+	CButtonSprite* roomButton = new CButtonSprite("Room.png", "RoomHover.png", { 600, 12.0f }, { 45, 45 });
+	CButtonSprite* roomClearButton = new CButtonSprite("Clear.png", "ClearHover.png", { 657, 12.0f }, { 91, 45 });
 
 	// The play button
-	CButtonSprite* playButton = new CButtonSprite("Play.png", "Play.png", { 438, 12.0f }, { 45, 45 });
+	CButtonSprite* playButton = new CButtonSprite("Play.png", "PlayHover.png", { 438, 12.0f }, { 45, 45 });
 
 	// The main game loop, repeat until engine is stopped
 	while (pCore->GetTLEngine()->IsRunning())
@@ -115,7 +115,7 @@ void main()
 			pCore->GetLevel()->ExportLevel(TEMP_FILE_NAME);
 
 			// Send the data off to the game and load it up
-			std::string msg = "..\\CO2403-Professional-Skills\\CO2403-Professional-SkillsDebug.exe";
+			std::string msg = GAME_EXE_FILE_PATH;
 			msg += " ";
 			msg += TEMP_FILE_NAME;
 			system(msg.c_str());
@@ -130,10 +130,6 @@ void main()
 		if (playerSpawnButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSpawnerType(SPAWN_PLAYER);
-		}
-		if (enemySpawnButton->CheckClick())
-		{
-			pCore->GetLevel()->ChangeSpawnerType(SPAWN_ENEMY);
 		}
 		if (chainEnemySpawnButton->CheckClick())
 		{
