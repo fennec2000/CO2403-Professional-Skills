@@ -9,4 +9,5 @@ struct SRoomData
 	SVector2D<int> mMaxPos;
 
 	vector<SVector2D<int>> mDoorPositions;
+	bool mRoomCleared = false;
 };

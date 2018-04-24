@@ -16,7 +16,6 @@ CCore* CCore::GetInstance()
 CCore::CCore()
 {
 	pInstance = this;
-
 	// random
 	srand(time(NULL));
 
@@ -84,6 +83,9 @@ void CCore::UpdateCore()
 	mFrameTime = pTLEngine->Timer();	// update the frame timer
 	pTLEngine->DrawScene();				// draw the frame
 
+	// Update the input class
+	pInput->Update();
+
 	string ammoText;
 
 	switch (mGameState)
@@ -97,6 +99,14 @@ void CCore::UpdateCore()
 			UnloadMenu();
 			LoadLevel();
 		}
+
+		// exit key
+		if (pInput->KeyHit(Key_Escape))
+		{
+			UnloadMenu();
+			pTLEngine->Stop();
+		}
+
 		break;
 	case Playing:
 		// level update
@@ -108,7 +118,7 @@ void CCore::UpdateCore()
 		//update each bullet
 		for (int i = 0; i < pActiveBullets.size(); ++i)
 		{
-			pActiveBullets[i]->Update();
+			//pActiveBullets[i]->Update();
 
 			if (pActiveBullets[i]->returnTeam() == EnemyTeam)
 			{
@@ -137,7 +147,6 @@ void CCore::UpdateCore()
 					}
 				}
 			}
-		}
 
 			pActiveBullets[i]->Update();
 		}
@@ -154,11 +163,9 @@ void CCore::UpdateCore()
 		// exit key
 		if (pInput->KeyHit(Key_Escape))
 		{
-			FlashLoadScreen();
 			UnloadGame();
 			pTLEngine->Stop();
 		}
-
 		break;
 	case Paused:
 		break;
@@ -170,7 +177,8 @@ void CCore::UpdateCore()
 		pText[EFontTypes::Medium]->Draw("Press any key to return to the main menu", pTLEngine->GetWidth() / 2, pTLEngine->GetHeight() / 2 + mTEXT_SPACING[EFontTypes::Large] * 3 / 2 - mTEXT_SPACING[EFontTypes::Medium], tle::kRed, tle::kCentre, tle::kVCentre);
 
 		// return key
-		if (pTLEngine->AnyKeyHit())
+		//if (pTLEngine->AnyKeyHit())
+		if (pInput->KeyHit(Key_Return))
 		{
 			UnloadGame();
 			if (!mFrontEndBypassed)
@@ -187,9 +195,6 @@ void CCore::UpdateCore()
 	default:
 		break;
 	}
-
-	// Update the input class
-	pInput->Update();
 }
 
 void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)
@@ -232,7 +237,6 @@ void CCore::RemoveEnemy(CTestEnemy & givenEnemy)
 void CCore::LoadLevel(const char* levelName)
 {
 	FlashLoadScreen();
-
 	// Level
 	pLevel->LoadLevel(levelName); // test: "Levels\\TestLevel"
 
@@ -314,7 +318,6 @@ void CCore::UnloadMenu()
 
 	delete pBackgroundSprite;
 	delete pPlayButton;
-	std::cout << "HIT! ";
 }
 
 void CCore::FlashLoadScreen()
@@ -343,7 +346,9 @@ void CCore::FlashLoadScreen()
 
 void CCore::BypassFrontEnd(const char* filePath)
 {
-	//UnloadMenu();
+	pGUI->UpdateHealth(0);
+	pGUI->SetWeaponHidden(true);
+	UnloadMenu();
 	LoadLevel(filePath);
 	mFrontEndBypassed = true;
 }

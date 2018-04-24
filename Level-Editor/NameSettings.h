@@ -16,6 +16,7 @@ namespace TileNames
 	extern const char* DOOR_ROT;
 	extern const char* DOOR_OPEN;
 	extern const char* DOOR_ROT_OPEN;
+	extern const char* END_GOAL;
 }
 
 namespace SpawnerNames

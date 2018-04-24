@@ -1,6 +1,5 @@
 #include "BUILD_ORDER.h"
 
-
 CEnemyChaingun::CEnemyChaingun()
 {
 	toggleActive();

@@ -83,6 +83,7 @@ void main()
 	CButtonSprite* WallServerButton = new CButtonSprite("wallServer1.png", "wallServer1.png", { 975.0f, 194.0f }, { 64.0f, 64.0f });
 	CButtonSprite* DoorButton = new CButtonSprite("FloorDoor.png", "FloorDoor.png", { 1049.0f, 194.0f }, { 64.0f, 64.0f });
 	CButtonSprite* DoorRotButton = new CButtonSprite("FloorDoorRot.png", "FloorDoorRot.png", { 1123.0f, 194.0f }, { 64.0f, 64.0f });
+	CButtonSprite* EndGoalButton = new CButtonSprite("EndGoal.png", "EndGoal.png", { 1197.0f, 194.0f }, { 64.0f, 64.0f });
 
 	// Room buttons
 	CButtonSprite* roomButton = new CButtonSprite("Room.png", "Room.png", { 600, 12.0f }, { 45, 45 });
@@ -179,6 +180,10 @@ void main()
 		if (DoorRotButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(DOOR_ROT);
+		}
+		if (EndGoalButton->CheckClick())
+		{
+			pCore->GetLevel()->ChangeSelectedTile(END_GOAL);
 		}
 
 		if (roomButton->CheckClick())

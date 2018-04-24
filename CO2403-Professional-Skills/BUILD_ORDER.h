@@ -51,6 +51,7 @@
 // Level System
 #include "ETileType.h"
 #include "ESpawnerTypes.h"
+#include "SRoomData.h"
 #include "SMapData.h"
 #include "CMapIO.h"
 #include "CLevel.h"

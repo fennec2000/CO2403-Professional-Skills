@@ -16,7 +16,7 @@ CBullet::CBullet(bulletSetup givenSetup)
 
 CBullet::~CBullet()
 {
-	pCharSprite->~CWorldSprite();
+	delete pCharSprite;
 }
 
 void CBullet::Update()

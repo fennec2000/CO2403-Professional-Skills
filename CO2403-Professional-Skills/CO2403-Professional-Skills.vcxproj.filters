@@ -197,5 +197,8 @@
     <ClInclude Include="CTestEnemy.h">
       <Filter>Entity\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="SRoomData.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
