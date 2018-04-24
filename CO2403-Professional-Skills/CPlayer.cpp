@@ -18,7 +18,7 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 	pBullets = pC->GetBullets();
 	pGUI = pC->GetGUI();
 	pGUI->UpdateHealth(3); // resets health
-	pCharSprite->SetSpriteSkin("Player.png");
+	pCharSprite->SetSpriteSkin(PlayerSkins[0]);
 	pC->AddPlayer(player, *this);
 	pPowerUps = &pC->pPowerUps;
 	SetPosition(x, y, z);
@@ -29,8 +29,8 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 	// bullet setup
 	newBullet = new bulletSetup;
 	newBullet->spriteFileName = "QuickBullet.png";
-	newBullet->BulletTimeMax = 3.0f;
-	newBullet->Speed = 1.5f;
+	newBullet->BulletTimeMax = 5.0f;
+	newBullet->Speed = 3.0f;
 	newBullet->team = EPlayers::PlayerTeam;
 
 	LoadSounds();
@@ -46,7 +46,14 @@ void CPlayer::Update()
 {
 	// iframes
 	if (mIFrames > 0.0f)
+	{
 		mIFrames -= *pFrameTimer;
+		if (mIFrames <= 0.0f)
+		{
+			mIFrames = 0.0f;
+			pCharSprite->SetSpriteSkin(PlayerSkins[0]);
+		}
+	}
 
 	// movement
 	mMovement = { 0.0f, 0.0f };
@@ -175,6 +182,7 @@ void CPlayer::ChangeHealth(int change)
 		pGUI->TakeDamage(-change);
 		CCharacter::ChangeHealth(change);
 		mIFrames = mIFRAMES_MAX;
+		pCharSprite->SetSpriteSkin(PlayerSkins[1]);
 	}
 }
 
@@ -195,6 +203,9 @@ void CPlayer::Shoot()
 	// create bullet
 	new CBullet(*newBullet);
 
+	// play sound
+	playerSounds[EPlayerSounds::PlayerFireSound]->Play();
+
 	// shotgun
 	if (mShotgunAmmo > 0)
 	{
@@ -212,9 +223,6 @@ void CPlayer::Shoot()
 		new CBullet(*newBullet);
 		newBullet->travelVector = vec3;
 		new CBullet(*newBullet);
-
-		// play sound
-		playerSounds[EPlayerSounds::PlayerFireSound]->Play();
 
 		// decrement ammo
 		--mShotgunAmmo;
@@ -244,6 +252,7 @@ void CPlayer::LoadSounds()
 void CPlayer::FreeSounds()
 {
 	delete playerSounds[EPlayerSounds::PlayerRoll];
+
 	delete gunSounds[EGunSounds::ShotgunSound];
 	delete gunSounds[EGunSounds::PistolSound];
 }

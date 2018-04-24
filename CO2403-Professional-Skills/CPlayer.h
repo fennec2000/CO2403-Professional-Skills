@@ -14,6 +14,11 @@ private:
 	ICamera* pCamera;
 	CGUI* pGUI;
 	vector<CBullet*>* pBullets;
+
+	// player skin names
+	const char* PlayerSkins[2] = { "Player.png", "PlayerShielded.png" };
+
+	// take damage
 	const float mIFRAMES_MAX = 2.0f;
 	float mIFrames = 0;
 
