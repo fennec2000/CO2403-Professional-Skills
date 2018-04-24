@@ -74,6 +74,9 @@
     <ClCompile Include="CTestEnemy.cpp">
       <Filter>Entity\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="CAudio.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -106,6 +109,9 @@
     </Filter>
     <Filter Include="Entity\Player">
       <UniqueIdentifier>{2dbb70ab-b4f3-446a-a33d-f08597602b2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{d0f31dbb-45d6-4364-af3b-156df337a588}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="SRoomData.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="CAudio.h">
+      <Filter>Audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

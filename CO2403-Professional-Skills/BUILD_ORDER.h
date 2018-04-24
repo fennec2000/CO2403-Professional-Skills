@@ -28,6 +28,11 @@
 #include "SMatrix4x4.h"
 #include "Maths.h"
 
+// Audio
+#include <alut.h>
+#include <al.h>
+#include "CAudio.h"
+
 // Core systems
 #include "CInput.h"
 #include "CCore.h"

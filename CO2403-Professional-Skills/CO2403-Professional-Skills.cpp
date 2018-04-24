@@ -30,7 +30,7 @@ void main(int argc, char* argv[])
 		// Create core and set the global pointer to it
 		gpCore = CCore::GetInstance();
 	}
-  
+
 	// The main program loop, repeat until the user wishes to exit
 	// In this case when the user wishes to exit we will shut the
 	// engine down
