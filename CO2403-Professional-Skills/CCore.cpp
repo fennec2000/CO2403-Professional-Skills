@@ -297,8 +297,6 @@ void CCore::UnloadGame()
 	while (pActiveBullets.size() > 0)
 		if (pActiveBullets[0] != NULL)
 			pActiveBullets[0]->Remove();
-		else
-			cout << "NULL bullet found, bullet was removed incorrectly." << endl;
 
 	// unload powerups
 	while (pPowerUps.size() > 0)

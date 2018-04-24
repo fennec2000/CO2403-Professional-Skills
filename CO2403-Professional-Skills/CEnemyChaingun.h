@@ -4,6 +4,8 @@
 class CEnemyChaingun : public CEnemy
 {
 private:
+	CAudio* gunSound;
+	const int POINTS = 10;
 	const int DROP_SHOTGUN_CHANCE = 20;	// out of 100
 	bool isActive = false;
 	bool isShooting = false;

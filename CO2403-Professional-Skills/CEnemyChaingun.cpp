@@ -11,11 +11,12 @@ CEnemyChaingun::CEnemyChaingun(float x, float y, float z, bool activate)
 	isActive = activate;
 	pCharSprite->SetSpriteSkin("derp.png");
 	pLevel = pC->GetLevel();
+	gunSound = new CAudio("Media\\Sound\\ShotgunSound.wav", false);
 }
 
 CEnemyChaingun::~CEnemyChaingun()
 {
-	
+	delete gunSound;
 }
 
 void CEnemyChaingun::Update()
@@ -108,6 +109,9 @@ void CEnemyChaingun::Shoot()
 	newBullet.travelVector = adjustedBullet;
 	// create bullet
 	new CBullet(newBullet);
+
+	// fire sound
+	gunSound->Play();
 }
 
 void CEnemyChaingun::Hit()
@@ -117,7 +121,7 @@ void CEnemyChaingun::Hit()
 
 void CEnemyChaingun::Death()
 {
-	cout << "death" << endl;
+	pC->AddScore(POINTS);
 	if (rand() % 100 < DROP_SHOTGUN_CHANCE)
 		pC->pPowerUps.push_back(new CPowerShotgun(pCharSprite->GetPosition2D()));
 	CEnemyChaingun::~CEnemyChaingun();

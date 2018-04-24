@@ -102,4 +102,6 @@ public:
 	void AddEnemy(CTestEnemy &givenEnemy);
 	void RemoveEnemy(CTestEnemy &givenEnemy);
 	void SetGameState(EGameState newState);
+
+	inline void AddScore(int points) { mGameScore += points; };
 };
