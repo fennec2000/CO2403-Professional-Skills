@@ -66,12 +66,16 @@ CCore::CCore()
 
 void CCore::LoadSound()
 {
+	mGameMusic[EBackgroundMusic::MainMenuMusic] = new CAudio("Media\\Sound\\MainMenuMusic.wav", true);
 	mGameMusic[EBackgroundMusic::PlayingMusic] = new CAudio("Media\\Sound\\PlayingBackgroundMusic.wav", true);
+	mGameMusic[EBackgroundMusic::GameOverMusic] = new CAudio("Media\\Sound\\GameOverMusic.wav", true);
 }
 
 void CCore::FreeSound()
 {
+	delete mGameMusic[EBackgroundMusic::GameOverMusic];
 	delete mGameMusic[EBackgroundMusic::PlayingMusic];
+	delete mGameMusic[EBackgroundMusic::MainMenuMusic];
 }
 
 CCore::~CCore()
@@ -183,9 +187,6 @@ void CCore::UpdateCore()
 	case Paused:
 		break;
 	case GameOver:
-		// stop music
-		mGameMusic[EBackgroundMusic::PlayingMusic]->Stop();
-
 		// show score
 		pText[EFontTypes::Large]->Draw("Game over", pTLEngine->GetWidth() / 2, pTLEngine->GetHeight() / 2 - mTEXT_SPACING[EFontTypes::Large] * 3 / 2, tle::kRed, tle::kCentre, tle::kVCentre);
 		pText[EFontTypes::Large]->Draw("Score:", pTLEngine->GetWidth() / 2, pTLEngine->GetHeight() / 2 - mTEXT_SPACING[EFontTypes::Large] / 2, tle::kRed, tle::kCentre, tle::kVCentre);
@@ -250,6 +251,28 @@ void CCore::RemoveEnemy(CTestEnemy & givenEnemy)
 	}
 }
 
+void CCore::SetGameState(EGameState newState)
+{
+	// stop old music
+	if (mGameState == Playing)
+		mGameMusic[EBackgroundMusic::PlayingMusic]->Stop();
+	else if (mGameState == MainMenu)
+		mGameMusic[EBackgroundMusic::MainMenuMusic]->Stop();
+	else if (mGameState == GameOver)
+		mGameMusic[EBackgroundMusic::GameOverMusic]->Stop();
+
+	mGameState = newState;
+
+	// start new music
+	if (mGameState == Playing)
+		mGameMusic[EBackgroundMusic::PlayingMusic]->Play();
+	else if (mGameState == MainMenu)
+		mGameMusic[EBackgroundMusic::MainMenuMusic]->Play();
+	else if (mGameState == GameOver)
+		mGameMusic[EBackgroundMusic::GameOverMusic]->Play();
+
+}
+
 void CCore::LoadLevel(const char* levelName)
 {
 	FlashLoadScreen();
@@ -259,8 +282,7 @@ void CCore::LoadLevel(const char* levelName)
 	// Player
 	SVector2D<float> spawnPos = pLevel->GetSpawnPos();
 	pPlayer[EPlayers::PlayerTeam] = new CPlayer(EPlayers::PlayerTeam, spawnPos.x, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
-	mGameState = EGameState::Playing;
-	mGameMusic[EBackgroundMusic::PlayingMusic]->Play();
+	SetGameState(EGameState::Playing);
 
 	// Update UI
 	pGUI->UpdateHealth(3);
@@ -326,7 +348,7 @@ void CCore::SetupMenu()
 	// Unlock the mouse
 	pTLEngine->StopMouseCapture();
 
-	mGameState = EGameState::MainMenu;
+	SetGameState(EGameState::MainMenu);
 }
 
 void CCore::UnloadMenu()

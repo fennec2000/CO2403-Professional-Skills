@@ -101,5 +101,5 @@ public:
 	void RemoveBullet(CBullet &givenBullet);
 	void AddEnemy(CTestEnemy &givenEnemy);
 	void RemoveEnemy(CTestEnemy &givenEnemy);
-	inline void SetGameState(EGameState newState) { mGameState = newState; };
+	void SetGameState(EGameState newState);
 };
