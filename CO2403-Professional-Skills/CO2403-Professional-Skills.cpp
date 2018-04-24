@@ -30,11 +30,6 @@ void main()
 	animatedSprites.push_back("wallServer6.png");
 	//CAnimatedWorldSprite* animatedSprite = new CAnimatedWorldSprite(animatedSprites, { spawnPos.x - 7.0f, spawnPos.y,  G_SPRITE_LAYER_Z_POS[ESpriteLayers::Floor] });
 
-	// Monster Test
-	CWorldSprite* mWorldSprite;
-	SVector2D<float> spawnPos = c->GetLevel()->GetSpawnPos();
-	mWorldSprite = new CWorldSprite("derp.png", { spawnPos.x + 1.0f, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Enemy]});
-
 	// The main game loop, repeat until engine is stopped
 	while (myEngine->IsRunning())
 	{

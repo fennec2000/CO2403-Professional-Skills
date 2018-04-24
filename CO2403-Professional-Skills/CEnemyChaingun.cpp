@@ -10,7 +10,7 @@ CEnemyChaingun::CEnemyChaingun(float x, float y, float z, bool activate)
 {
 	SetPosition(x, y, z);
 	isActive = activate;
-	pCharSprite->SetSpriteSkin("derp.png");
+	pCharSprite->SetSpriteSkin("robot1_machine.png");
 	pLevel = pC->GetLevel();
 }
 

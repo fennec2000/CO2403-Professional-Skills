@@ -81,6 +81,7 @@ void CCore::UpdateCore()
 
 		//update each bullet
 		for (int i = 0; i < pActiveBullets.size(); ++i)
+		{
 			pActiveBullets[i]->Update();
 
 			if (pActiveBullets[i]->returnTeam() == EnemyTeam)
@@ -103,13 +104,12 @@ void CCore::UpdateCore()
 					float distance = sqrt(((enemyPos.x - bulletPos.x) * (enemyPos.x - bulletPos.x)) + ((enemyPos.y - bulletPos.y) * (enemyPos.y - bulletPos.y)));
 					if (distance < pActiveBullets[i]->getSize())
 					{
-					    cout << "ow";
 						enemies[k]->Hit();
 						pActiveBullets[i]->Remove();
-						cout << "blep";
 					}
 				}
 			}
+		}
 
 		break;
 	case Paused:
