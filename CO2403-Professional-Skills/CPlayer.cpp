@@ -195,6 +195,9 @@ void CPlayer::Shoot()
 	// create bullet
 	new CBullet(*newBullet);
 
+	// play sound
+	playerSounds[EPlayerSounds::PlayerFireSound]->Play();
+
 	// shotgun
 	if (mShotgunAmmo > 0)
 	{
@@ -212,9 +215,6 @@ void CPlayer::Shoot()
 		new CBullet(*newBullet);
 		newBullet->travelVector = vec3;
 		new CBullet(*newBullet);
-
-		// play sound
-		playerSounds[EPlayerSounds::PlayerFireSound]->Play();
 
 		// decrement ammo
 		--mShotgunAmmo;

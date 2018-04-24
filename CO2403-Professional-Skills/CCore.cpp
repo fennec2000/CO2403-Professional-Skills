@@ -86,6 +86,8 @@ CCore::~CCore()
 	delete pInput;
 	delete pLevel;
 
+	FreeSound();
+
 	// Delete the 3D engine now we are finished with it
 	pTLEngine->Delete();
 }

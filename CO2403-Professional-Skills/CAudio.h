@@ -18,6 +18,8 @@ private:
 	static ALCdevice* device;
 	static ALCcontext* context;
 
+	static int audioCount;
+
 	ALuint source;
 	ALuint buffer;
 };

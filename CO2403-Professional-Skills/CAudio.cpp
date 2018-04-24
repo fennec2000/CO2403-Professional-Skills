@@ -6,12 +6,16 @@
 ALCcontext* CAudio::context = nullptr;
 ALCdevice* CAudio::device = nullptr;
 
+// Inits the audio conter
+int CAudio::audioCount = 0;
+
 CAudio::CAudio(ALbyte* fileName, bool loopAudio)
 {
-	if (context == nullptr)
+	if (audioCount == 0)
 	{
 		InitAudio();
 	}
+	audioCount++;
 
 	// Sets up the source with some hardcoded default variables for now
 	// untill we need to change them
@@ -44,9 +48,18 @@ CAudio::~CAudio()
 	alDeleteSources(1, &source);
 	alDeleteBuffers(1, &buffer);
 	device = alcGetContextsDevice(context);
-	alcMakeContextCurrent(NULL);
-	alcDestroyContext(context);
-	alcCloseDevice(device);
+
+	if (audioCount == 1)
+	{
+		alcMakeContextCurrent(NULL);
+		alcDestroyContext(context);
+		alcCloseDevice(device);
+
+		context = nullptr;
+		device = nullptr;
+	}
+
+	audioCount--;
 }
 
 void CAudio::Play()
