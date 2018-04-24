@@ -46,6 +46,9 @@ CCore::CCore()
 	for (int i = 0; i < EPlayers::NumOfEPlayers; ++i)
 		pPlayer[i] = nullptr;
 
+	// load sounds
+	LoadSound();
+
 	// set game state
 	mGameState = EGameState::MainMenu;
 	mGameScore = 0;
@@ -59,6 +62,16 @@ CCore::CCore()
 
 	// for debuging
 	pGUI->SetWeaponIcon(EWeapons::Shotgun);
+}
+
+void CCore::LoadSound()
+{
+	mGameMusic[EBackgroundMusic::PlayingMusic] = new CAudio("Media\\Sound\\PlayingBackgroundMusic.wav", true);
+}
+
+void CCore::FreeSound()
+{
+	delete mGameMusic[EBackgroundMusic::PlayingMusic];
 }
 
 CCore::~CCore()
@@ -140,10 +153,8 @@ void CCore::UpdateCore()
 					float distance = sqrt(((enemyPos.x - bulletPos.x) * (enemyPos.x - bulletPos.x)) + ((enemyPos.y - bulletPos.y) * (enemyPos.y - bulletPos.y)));
 					if (distance < pActiveBullets[i]->getSize())
 					{
-					    cout << "ow";
 						enemies[k]->Hit();
 						pActiveBullets[i]->Remove();
-						cout << "blep";
 					}
 				}
 			}
@@ -170,11 +181,14 @@ void CCore::UpdateCore()
 	case Paused:
 		break;
 	case GameOver:
+		// stop music
+		mGameMusic[EBackgroundMusic::PlayingMusic]->Stop();
+
 		// show score
 		pText[EFontTypes::Large]->Draw("Game over", pTLEngine->GetWidth() / 2, pTLEngine->GetHeight() / 2 - mTEXT_SPACING[EFontTypes::Large] * 3 / 2, tle::kRed, tle::kCentre, tle::kVCentre);
 		pText[EFontTypes::Large]->Draw("Score:", pTLEngine->GetWidth() / 2, pTLEngine->GetHeight() / 2 - mTEXT_SPACING[EFontTypes::Large] / 2, tle::kRed, tle::kCentre, tle::kVCentre);
 		pText[EFontTypes::Large]->Draw(to_string(mGameScore), pTLEngine->GetWidth() / 2, pTLEngine->GetHeight() / 2 + mTEXT_SPACING[EFontTypes::Large] / 2, tle::kRed, tle::kCentre, tle::kVCentre);
-		pText[EFontTypes::Medium]->Draw("Press any key to return to the main menu", pTLEngine->GetWidth() / 2, pTLEngine->GetHeight() / 2 + mTEXT_SPACING[EFontTypes::Large] * 3 / 2 - mTEXT_SPACING[EFontTypes::Medium], tle::kRed, tle::kCentre, tle::kVCentre);
+		pText[EFontTypes::Medium]->Draw("Press return to return to the main menu", pTLEngine->GetWidth() / 2, pTLEngine->GetHeight() / 2 + mTEXT_SPACING[EFontTypes::Large] * 3 / 2 - mTEXT_SPACING[EFontTypes::Medium], tle::kRed, tle::kCentre, tle::kVCentre);
 
 		// return key
 		//if (pTLEngine->AnyKeyHit())
@@ -244,6 +258,7 @@ void CCore::LoadLevel(const char* levelName)
 	SVector2D<float> spawnPos = pLevel->GetSpawnPos();
 	pPlayer[EPlayers::PlayerTeam] = new CPlayer(EPlayers::PlayerTeam, spawnPos.x, spawnPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::Player]);
 	mGameState = EGameState::Playing;
+	mGameMusic[EBackgroundMusic::PlayingMusic]->Play();
 
 	// Update UI
 	pGUI->UpdateHealth(3);

@@ -32,10 +32,13 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 	newBullet->BulletTimeMax = 3.0f;
 	newBullet->Speed = 1.5f;
 	newBullet->team = EPlayers::PlayerTeam;
+
+	LoadSounds();
 }
 
 CPlayer::~CPlayer()
 {
+	FreeSounds();
 	delete pCursor;
 }
 
@@ -91,6 +94,7 @@ void CPlayer::Update()
 			{
 				mShotgunAmmo += itemInfo.strenght; // add ammo
 				pGUI->SetWeaponIcon(EWeapons::Shotgun); // update gui
+				playerSounds[EPlayerSounds::PlayerFireSound] = gunSounds[EGunSounds::ShotgunSound];
 			}
 			delete (*it);
 			it = pPowerUps->erase(it);
@@ -136,6 +140,9 @@ void CPlayer::InputCheck()
 				mRollVector.y /= lenght;
 				mRollCurrent = mROLL_DISTANCE_MAX;
 			}
+
+			// play roll sound
+			playerSounds[EPlayerSounds::PlayerRoll]->Play();
 		}
 		if (pTLEngine->KeyHeld(mPlayerMoveUp))
 		{
@@ -206,15 +213,37 @@ void CPlayer::Shoot()
 		newBullet->travelVector = vec3;
 		new CBullet(*newBullet);
 
+		// play sound
+		playerSounds[EPlayerSounds::PlayerFireSound]->Play();
+
 		// decrement ammo
 		--mShotgunAmmo;
 		if (mShotgunAmmo <= 0)
 		{
 			mShotgunAmmo = 0; 
 			pGUI->SetWeaponIcon(EWeapons::Default);
+			playerSounds[EPlayerSounds::PlayerFireSound] = gunSounds[EGunSounds::PistolSound];
 		}
 	}
 
 	// fire timer
 	mFireTimeCurrent = mFireTimeMax;
+}
+
+void CPlayer::LoadSounds()
+{
+	// guns sounds
+	gunSounds[EGunSounds::PistolSound] = new CAudio("Media\\Sound\\PistolSound.wav", false);
+	gunSounds[EGunSounds::ShotgunSound] = new CAudio("Media\\Sound\\ShotgunSound.wav", false);
+
+	// player sounds
+	playerSounds[EPlayerSounds::PlayerRoll] = new CAudio("Media\\Sound\\Roll.wav", false);
+	playerSounds[EPlayerSounds::PlayerFireSound] = gunSounds[EGunSounds::ShotgunSound];
+}
+
+void CPlayer::FreeSounds()
+{
+	delete playerSounds[EPlayerSounds::PlayerRoll];
+	delete gunSounds[EGunSounds::ShotgunSound];
+	delete gunSounds[EGunSounds::PistolSound];
 }

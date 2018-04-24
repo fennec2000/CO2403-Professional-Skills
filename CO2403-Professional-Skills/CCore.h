@@ -17,6 +17,7 @@ class CButton;
 class CPowerUp;
 enum EPlayers { PlayerTeam, EnemyTeam, NumOfEPlayers };
 enum EFontTypes { Large, Medium, NumOfFontTypes };
+enum EBackgroundMusic { MainMenuMusic, PlayingMusic, GameOverMusic, NumOfBackgroundMusic };
 
 // game states
 enum EGameState { MainMenu, Playing, Paused, GameOver };
@@ -53,11 +54,17 @@ private:
 	CWorldSprite* pBackgroundSprite;
 	CButton* pPlayButton;
 
+	// music
+	CAudio* mGameMusic[EBackgroundMusic::NumOfBackgroundMusic];	// array of game music
+
 	// keybinding
 	EKeyCode G_EXIT = Key_Escape;
 
 	// Private constructor to prevent instancing.
 	CCore();
+
+	void LoadSound();
+	void FreeSound();
 
 public:
 	//Static access method.

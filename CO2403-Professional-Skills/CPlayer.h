@@ -3,6 +3,9 @@
 
 struct bulletSetup;
 
+enum EPlayerSounds { PlayerMoveSound, PlayerFireSound, PlayerRoll, NumOfPlayerSounds };
+enum EGunSounds { PistolSound, ShotgunSound, NumOfGunSounds };
+
 class CPlayer : protected CCharacter
 {
 private:
@@ -25,6 +28,10 @@ private:
 	const SVector3D<float> mCAMERA_OFFSET = { 0.0f, 0.0f, -10.0f };
 	int mScreenSize[2]; // 0 - height, 1 - width
 	SVector2D<float> mMovement;
+
+	// sound
+	CAudio* playerSounds[EPlayerSounds::NumOfPlayerSounds];
+	CAudio* gunSounds[EPlayerSounds::NumOfPlayerSounds];
 
 	// roll
 	SVector2D<float> mRollVector;
@@ -52,6 +59,8 @@ private:
 	void Move(SVector2D<float> movement);
 	void Death();
 	void Shoot();
+	void LoadSounds();
+	void FreeSounds();
 
 public:
 	CPlayer(EPlayers player);
