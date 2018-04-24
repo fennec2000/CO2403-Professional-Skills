@@ -99,6 +99,14 @@ void CCore::UpdateCore()
 			UnloadMenu();
 			LoadLevel();
 		}
+
+		// exit key
+		if (pInput->KeyHit(Key_Escape))
+		{
+			UnloadMenu();
+			pTLEngine->Stop();
+		}
+
 		break;
 	case Playing:
 		// level update
@@ -155,7 +163,6 @@ void CCore::UpdateCore()
 		// exit key
 		if (pInput->KeyHit(Key_Escape))
 		{
-			FlashLoadScreen();
 			UnloadGame();
 			pTLEngine->Stop();
 		}
@@ -170,7 +177,8 @@ void CCore::UpdateCore()
 		pText[EFontTypes::Medium]->Draw("Press any key to return to the main menu", pTLEngine->GetWidth() / 2, pTLEngine->GetHeight() / 2 + mTEXT_SPACING[EFontTypes::Large] * 3 / 2 - mTEXT_SPACING[EFontTypes::Medium], tle::kRed, tle::kCentre, tle::kVCentre);
 
 		// return key
-		if (pTLEngine->AnyKeyHit())
+		//if (pTLEngine->AnyKeyHit())
+		if (pInput->KeyHit(Key_Return))
 		{
 			UnloadGame();
 			if (!mFrontEndBypassed)

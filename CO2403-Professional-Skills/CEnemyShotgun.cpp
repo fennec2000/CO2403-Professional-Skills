@@ -12,7 +12,7 @@ CEnemyShotgun::CEnemyShotgun(float x, float y, float z, bool activate)
 CEnemyShotgun::~CEnemyShotgun()
 {
 	cout << "Hep, am ded";
-	pCharSprite->~CWorldSprite();
+	//delete pCharSprite;
 }
 void CEnemyShotgun::Update()
 {

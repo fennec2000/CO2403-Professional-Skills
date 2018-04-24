@@ -82,7 +82,7 @@ bool CCharacter::CollisionCheck(SVector2D<float> pos)
 	// sphere collision
 
 	ETileType test = pLevel->GetTile(pos);
-	if (test == ETileType::WALL || test == ETileType::WALL_WITH_SIDE || test == ETileType::WALL_WITH_SIDE_FLIPPED_Y)
+	if (test == ETileType::WALL || test == ETileType::WALL_WITH_SIDE || test == ETileType::WALL_WITH_SIDE_FLIPPED_Y || test == ETileType::DOOR || test == ETileType::DOOR_ROT)
 		return true;
 	return false;
 }
