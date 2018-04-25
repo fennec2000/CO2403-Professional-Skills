@@ -149,6 +149,10 @@ void CCore::UpdateCore()
 				{
 					pActiveBullets[i]->Remove();
 				}
+				else
+				{
+					pActiveBullets[i]->Update();
+				}
 			}
 			else if (pActiveBullets[i]->returnTeam() == PlayerTeam)
 			{
@@ -161,10 +165,8 @@ void CCore::UpdateCore()
 					if (distance < pActiveBullets[i]->getSize())
 					{
 						enemies[k]->Hit();
-						pActiveBullets[i]->Remove();
-					}
+						pActiveBullets[i]->Remove();					}
 				}
-			}
 
 			pActiveBullets[i]->Update();
 		}

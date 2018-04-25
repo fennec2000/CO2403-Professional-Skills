@@ -11,6 +11,7 @@ public:
 	~CButtonSprite();
 
 	bool CheckClick();
+	void ChangeSprites(const char* pSpriteName, const char* pHoverSpriteName);
 
 private:
 	void CalculateColisionBox(SVector2D<float> position, SVector2D<float> size);

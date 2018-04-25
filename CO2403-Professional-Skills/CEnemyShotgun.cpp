@@ -11,15 +11,12 @@ CEnemyShotgun::CEnemyShotgun(float x, float y, float z, bool activate)
 }
 
 CEnemyShotgun::~CEnemyShotgun()
-{
-	//delete pCharSprite;
+{	//delete pCharSprite;
 	delete gunSound;
 }
 
 void CEnemyShotgun::Update()
-{
-
-}
+{}
 
 bool CEnemyShotgun::EUpdate()
 {
@@ -109,5 +106,5 @@ void CEnemyShotgun::Death()
 	pC->AddScore(POINTS);
 	if (rand() % 100 < DROP_SHOTGUN_CHANCE)
 		pC->pPowerUps.push_back(new CPowerShotgun(pCharSprite->GetPosition2D()));
-	CEnemyShotgun::~CEnemyShotgun();
+	delete this;
 }

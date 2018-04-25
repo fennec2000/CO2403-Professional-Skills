@@ -28,6 +28,10 @@ CLevel::CLevel()
 			mSpawnerSprites[i]->push_back(nullptr);
 		}
 	}
+
+	// Create the skybox
+	mpSkyBoxMesh = mpEngine->LoadMesh("Stars.x");
+	mpSkyboxModel = mpSkyBoxMesh->CreateModel();
 }
 
 CLevel::~CLevel() { }
@@ -109,7 +113,7 @@ void CLevel::Update()
 		int yPos = static_cast<int>(tilePos.y);
 
 		// Checks the mode
-		if (mSelectedMode == 1)
+		if (mSelectedMode == TILES)
 		{
 			// Changes the tile map
 			mMapData.mTileMap[yPos].at(xPos) = currentlySelectedTile;
@@ -158,7 +162,7 @@ void CLevel::Update()
 				break;
 			}
 		}
-		else if (mSelectedMode == 2)
+		else if (mSelectedMode == SPAWNERS)
 		{
 			// Changes the spawner
 			mMapData.mSpawnerMap[yPos].at(xPos) = currentlySelectedSpawner;
@@ -199,7 +203,7 @@ void CLevel::Update()
 			}
 		}
 	}
-	else if (isMouseInlevelWindow && isMouseOnTileMap && mSelectedMode == 3)
+	else if (isMouseInlevelWindow && isMouseOnTileMap && mSelectedMode == ROOMS)
 	{
 		int xPos = static_cast<int>(tilePos.x);
 		int yPos = static_cast<int>(tilePos.y);
@@ -399,18 +403,18 @@ void CLevel::UnloadMap()
 void CLevel::ChangeSelectedTile(ETileType tileType)
 {
 	currentlySelectedTile = tileType;
-	mSelectedMode = 1;
+	mSelectedMode = TILES;
 }
 
 void CLevel::ChangeSpawnerType(ESpawnTypes spawnType)
 {
 	currentlySelectedSpawner = spawnType;
-	mSelectedMode = 2;
+	mSelectedMode = SPAWNERS;
 }
 
 void CLevel::SelectRoomTool()
 {
-	mSelectedMode = 3;
+	mSelectedMode = ROOMS;
 }
 
 void CLevel::ClearRooms()
