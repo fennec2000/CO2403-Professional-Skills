@@ -39,7 +39,9 @@ bool CEnemyChaingun::EUpdate()
 		SVector2D<float> playerPos = { pC->GetPlayer(PlayerTeam)->GetX(), pC->GetPlayer(PlayerTeam)->GetY() };
 		SVector2D<float> vec = pC->GetPlayer(PlayerTeam)->GetPos2D() - pCharSprite->GetPosition2D();
 		SVector2D<float> ePos = pCharSprite->GetPosition2D();
-		pCharSprite->LookAt(playerPos.x, playerPos.y, pC->GetPlayer(PlayerTeam)->GetZ());
+		pCharSprite->LookAt(playerPos.x, playerPos.y, pCharSprite->GetZ());
+		if (playerPos.x > pCharSprite->GetX())
+			pCharSprite->RotateZ(180.0f);
 	
 		testPos = { ePos.x + eMovement.x + spriteSizeX, ePos.y + eMovement.y + spriteSizeY };
 		if (!CollisionCheck(testPos))
