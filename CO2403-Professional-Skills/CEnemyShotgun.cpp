@@ -5,7 +5,7 @@ CEnemyShotgun::CEnemyShotgun(float x, float y, float z, bool activate)
 {
 	SetPosition(x, y, z);
 	isActive = activate;
-	pCharSprite->SetSpriteSkin("derp.png");
+	pCharSprite->SetSpriteSkin("zoimbie1_gun.png");
 	pLevel = pC->GetLevel();
 	gunSound = new CAudio("Media\\Sound\\ShotgunSound.wav", false);
 }
@@ -16,7 +16,8 @@ CEnemyShotgun::~CEnemyShotgun()
 }
 
 void CEnemyShotgun::Update()
-{}
+{
+}
 
 bool CEnemyShotgun::EUpdate()
 {
@@ -26,44 +27,41 @@ bool CEnemyShotgun::EUpdate()
 		return true;
 	}
 
-	SVector2D<float> eMovement;
-	SVector2D<float> testPos;
-	SVector2D<float> playerPos = { pC->GetPlayer(PlayerTeam)->GetX(), pC->GetPlayer(PlayerTeam)->GetY() };
-	SVector2D<float> vec = pC->GetPlayer(PlayerTeam)->GetPos2D() - pCharSprite->GetPosition2D();
-	SVector2D<float> ePos = pCharSprite->GetPosition2D();
-	float distance = sqrt(((playerPos.x - ePos.x) * (playerPos.x - ePos.x)) + ((playerPos.y - ePos.y) * (playerPos.y - ePos.y)));
-	if (distance < DISTANCE_TO_KEEP)
+	
+	if (*pFrameTimer < 1.0f)
 	{
-		eMovement.x = (-vec.x * *pFrameTimer * mMoveSpeed);
-		eMovement.y = (-vec.y * *pFrameTimer * mMoveSpeed);
-		testPos = { ePos.x + eMovement.x, ePos.y + eMovement.y };
-		if (!CollisionCheck(testPos))
-		{
-			pCharSprite->MoveX(eMovement.x);
-			pCharSprite->MoveY(eMovement.y);
-		}
-	}
-	else
-	{
-		eMovement.x = (vec.x * *pFrameTimer * mMoveSpeed);
-		eMovement.y = (vec.y * *pFrameTimer * mMoveSpeed);
-		testPos = { ePos.x + eMovement.x, ePos.y + eMovement.y };
-		if (!CollisionCheck(testPos))
-		{
-			pCharSprite->MoveX(eMovement.x);
-			pCharSprite->MoveY(eMovement.y);
-		}
-	}
+		SVector2D<float> eMovement;
+		SVector2D<float> testPos;
+		SVector2D<float> playerPos = { pC->GetPlayer(PlayerTeam)->GetX(), pC->GetPlayer(PlayerTeam)->GetY() };
+		SVector2D<float> vec = pC->GetPlayer(PlayerTeam)->GetPos2D() - pCharSprite->GetPosition2D();
+		SVector2D<float> ePos = pCharSprite->GetPosition2D();
+		pCharSprite->LookAt(playerPos.x, playerPos.y, pC->GetPlayer(PlayerTeam)->GetZ());
+		float frameSpeed = mMoveSpeed * *pFrameTimer;
+		vec = vec.Normalised();
 
 
-	if (bulletTimer < MAX_BULLET_TIMER)
-	{
-		bulletTimer = bulletTimer + *pFrameTimer;
-	}
-	else
-	{
-		Shoot();
-		bulletTimer = 0;
+
+
+
+
+			testPos = { ePos.x + spriteSizeX + vec.x * frameSpeed, ePos.y + spriteSizeY + vec.y * frameSpeed};
+			if (!CollisionCheck(testPos))
+			{
+				pCharSprite->MoveX(vec.x * frameSpeed);
+				pCharSprite->MoveY(vec.y * frameSpeed);
+			}
+
+
+
+		if (bulletTimer < MAX_BULLET_TIMER)
+		{
+			bulletTimer = bulletTimer + *pFrameTimer;
+		}
+		else
+		{
+			Shoot();
+			bulletTimer = 0;
+		}
 	}
 	return false;
 }

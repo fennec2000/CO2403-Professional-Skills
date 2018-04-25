@@ -79,6 +79,7 @@ public:
 	void ChangeHealth(int change);
 	float GetX() { return pCharSprite->GetX(); };
 	float GetY() { return pCharSprite->GetY(); };
+	float GetZ() { return pCharSprite->GetZ(); };
 	SVector2D<float> GetPos2D() { return pCharSprite->GetPosition2D(); };
 	int GetShotgunAmmo() { return mShotgunAmmo; };
 };

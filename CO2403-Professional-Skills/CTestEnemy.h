@@ -1,27 +1,30 @@
 #pragma once
 #include "BUILD_ORDER.h"
 
-class CTestEnemy : protected CEnemy
+class CTestEnemy : public CEnemy
 {
 private:
+	CAudio * gunSound;
+	const int POINTS = 5;
+	bool isActive = false;
+	bool shot = false;
+	float mMoveSpeed = 0.25f;
+	float bulletTimer = 0.0f;
+	const float MAX_BULLET_TIMER = 2.5f;
+	const int MaxHealth = 1;
+	int currentHealth = 1;
+	float spriteSizeX = 0.8f;
+	float spriteSizeY = 0.8f;
 
-		bool isActive = false;
-		bool shot = false;
-		CEProjectile * bullet;
-		float mMoveSpeed = 0.5f;
-		float mShootTimerMax = 1.0f;
-		float mShootTimerCurrent = 0.0f;
 public:
-		CTestEnemy();
-		CTestEnemy(float x, float y, float z, bool activate);
-		~CTestEnemy();
-							
-		bool EUpdate();
-		void Death();
-		void toggleActive() { isActive = !isActive; };
-		void Shoot();
+	CTestEnemy(float x, float y, float z, bool activate);
+	~CTestEnemy();
 
-		void ChangeHealth(int change) { CCharacter::ChangeHealth(change); };
-
-		SVector2D<float> GetPos2D() { return pCharSprite->GetPosition2D(); };
+	bool EUpdate();
+	void Update();
+	void Death();
+	void toggleActive() { isActive = !isActive; };
+	void Shoot();
+	void Hit();
+	SVector2D<float> blorp() { return pCharSprite->GetPosition2D(); };
 };

@@ -9,7 +9,7 @@ CEnemyChaingun::CEnemyChaingun(float x, float y, float z, bool activate)
 {
 	SetPosition(x, y, z);
 	isActive = activate;
-	pCharSprite->SetSpriteSkin("derp.png");
+	pCharSprite->SetSpriteSkin("robot1_machine.png");
 	pLevel = pC->GetLevel();
 	gunSound = new CAudio("Media\\Sound\\ShotgunSound.wav", false);
 }
@@ -39,10 +39,9 @@ bool CEnemyChaingun::EUpdate()
 		SVector2D<float> playerPos = { pC->GetPlayer(PlayerTeam)->GetX(), pC->GetPlayer(PlayerTeam)->GetY() };
 		SVector2D<float> vec = pC->GetPlayer(PlayerTeam)->GetPos2D() - pCharSprite->GetPosition2D();
 		SVector2D<float> ePos = pCharSprite->GetPosition2D();
-
-		eMovement.x = (vec.x * *pFrameTimer * mMoveSpeed);
-		eMovement.y = (vec.y * *pFrameTimer * mMoveSpeed);
-		testPos = { ePos.x + eMovement.x, ePos.y + eMovement.y };
+		pCharSprite->LookAt(playerPos.x, playerPos.y, pC->GetPlayer(PlayerTeam)->GetZ());
+	
+		testPos = { ePos.x + eMovement.x + spriteSizeX, ePos.y + eMovement.y + spriteSizeY };
 		if (!CollisionCheck(testPos))
 		{
 			pCharSprite->MoveX(eMovement.x);

@@ -15,6 +15,7 @@ class CBullet
 {
 private:
 	CCore * pC;
+	CLevel* pLevel;
 	CWorldSprite* pCharSprite;
 	float* pFrameTimer;
 	SVector2D<float> mVector = { 0, 0 };
@@ -23,10 +24,12 @@ private:
 	float mMoveSpeed = 1.5f;
 	float bulletSize = 0.3f;
 	EPlayers bulletTeam;
+	SVector2D<float> mBulletSize = { 0.1f, 0.1f };
 
 
 public:
 	CBullet(bulletSetup givenSetup);
+	bool CBullet::CollisionCheck(SVector2D<float> pos);
 	~CBullet();
 	void Update();
 	void CBullet::Remove();

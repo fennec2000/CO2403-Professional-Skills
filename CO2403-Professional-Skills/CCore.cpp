@@ -17,7 +17,7 @@ CCore::CCore()
 {
 	pInstance = this;
 	// random
-	srand(static_cast<unsigned int>(time(NULL)));
+	srand(time(NULL));
 
 	// Load engine
 	pTLEngine = New3DEngine(kTLX);
@@ -56,10 +56,6 @@ CCore::CCore()
 	// Creates the level
 	pLevel = new CLevel();
 
-	// Create the skybox
-	mpSkyBoxMesh = pTLEngine->LoadMesh("Stars.x");
-	mpSkyboxModel = mpSkyBoxMesh->CreateModel();
-
 	// Loads the main menu
 	UnloadGame();
 	SetupMenu();
@@ -96,9 +92,6 @@ CCore::~CCore()
 	delete pLevel;
 
 	FreeSound();
-
-	mpSkyBoxMesh->RemoveModel(mpSkyboxModel);
-	pTLEngine->RemoveMesh(mpSkyBoxMesh);
 
 	// Delete the 3D engine now we are finished with it
 	pTLEngine->Delete();
@@ -146,9 +139,8 @@ void CCore::UpdateCore()
 		pPlayer[EPlayers::PlayerTeam]->Update();
 
 		//update each bullet
-		for (unsigned int i = 0; i < pActiveBullets.size(); ++i)
+		for (int i = 0; i < pActiveBullets.size(); i++)
 		{
-			//pActiveBullets[i]->Update();
 
 			if (pActiveBullets[i]->returnTeam() == EnemyTeam)
 			{
@@ -159,16 +151,13 @@ void CCore::UpdateCore()
 				{
 					pActiveBullets[i]->Remove();
 				}
-				else
-				{
-					pActiveBullets[i]->Update();
-				}
+
 			}
 			else if (pActiveBullets[i]->returnTeam() == PlayerTeam)
 			{
+
 				vector<CEnemy*> enemies = pLevel->getEnemies();
-				bool bulletRemoved = false;
-				for (unsigned int k = 0; k < enemies.size(); k++)
+				for (int k = 0; k < enemies.size(); k++)
 				{
 					SVector2D<float> enemyPos = enemies[k]->GetPos2D();
 					SVector2D<float> bulletPos = pActiveBullets[i]->GetPos2D();
@@ -177,13 +166,17 @@ void CCore::UpdateCore()
 					{
 						enemies[k]->Hit();
 						pActiveBullets[i]->Remove();
-						bulletRemoved = true;
+						break;
 					}
 				}
-
-				if (!bulletRemoved)
-					pActiveBullets[i]->Update();
 			}
+			
+			
+		}
+
+		for (int i = 0; i < pActiveBullets.size(); i++)
+		{
+			pActiveBullets[i]->Update();
 		}
 
 		// Draw GUI Text
@@ -263,7 +256,7 @@ void CCore::AddEnemy(CTestEnemy &givenEnemy)
 
 void CCore::RemoveEnemy(CTestEnemy & givenEnemy)
 {
-	for (unsigned int i = 0; i < mEnemyList.size(); ++i)
+	for (int i = 0; i < mEnemyList.size(); ++i)
 	{
 		if (mEnemyList[i] == &givenEnemy)
 			mEnemyList.erase(mEnemyList.begin() + i);

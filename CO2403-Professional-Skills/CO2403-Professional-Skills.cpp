@@ -18,6 +18,8 @@ void main(int argc, char* argv[])
 		// we need to ensure our wokring directory is updated
 		SetCurrentDirectory("..\\CO2403-Professional-Skills");
 
+
+        // The main game loop, repeat until engine is stopped
 		// Create core and set the global pointer to it
 		gpCore = CCore::GetInstance();
 
@@ -26,6 +28,7 @@ void main(int argc, char* argv[])
 		gpCore->BypassFrontEnd(argv[1]);
 	}
 	else
+
 	{
 		// Create core and set the global pointer to it
 		gpCore = CCore::GetInstance();
