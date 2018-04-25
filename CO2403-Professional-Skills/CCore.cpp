@@ -33,7 +33,7 @@ CCore::CCore()
 	pInput = new CInput(pTLEngine);
 
 	// Font
-	for(int i = 0; i < EFontTypes::NumOfFontTypes; i++)
+	for (int i = 0; i < EFontTypes::NumOfFontTypes; i++)
 		pText[i] = pTLEngine->LoadFont("Lucida Sans", mTEXT_SIZE[i]);
 
 	// Camera
@@ -108,6 +108,10 @@ void CCore::UpdateCore()
 
 	string ammoText;
 
+	if (MainMenu == mGameState)
+	{
+
+	}
 	switch (mGameState)
 	{
 	case MainMenu:
@@ -126,7 +130,6 @@ void CCore::UpdateCore()
 			UnloadMenu();
 			pTLEngine->Stop();
 		}
-
 		break;
 	case Playing:
 		// level update
@@ -165,10 +168,12 @@ void CCore::UpdateCore()
 					if (distance < pActiveBullets[i]->getSize())
 					{
 						enemies[k]->Hit();
-						pActiveBullets[i]->Remove();					}
+						pActiveBullets[i]->Remove();
+					}
 				}
 
-			pActiveBullets[i]->Update();
+				pActiveBullets[i]->Update();
+			}
 		}
 
 		// Draw GUI Text
@@ -231,7 +236,7 @@ void CCore::AddBullet(CBullet &givenBullet)
 
 void CCore::RemoveBullet(CBullet & givenBullet)
 {
-	for(unsigned int i = 0; i < pActiveBullets.size(); ++i)
+	for (unsigned int i = 0; i < pActiveBullets.size(); ++i)
 	{
 		if (pActiveBullets[i] == &givenBullet)
 		{

@@ -123,7 +123,9 @@ void CPlayer::Update()
 
 void CPlayer::InputCheck()
 {
+	if (mRenderedFirstFrame)
 	{
+		pCursor->MoveX(pTLEngine->GetMouseMovementX() * *pFrameTimer);
 		pCursor->MoveY(-pTLEngine->GetMouseMovementY() * *pFrameTimer);
 	}
 	else
