@@ -141,12 +141,7 @@ void CCore::UpdateCore()
 		//update each bullet
 		for (int i = 0; i < pActiveBullets.size(); ++i)
 		{
-<<<<<<< HEAD
 			pActiveBullets[i]->Update();
-=======
-			//pActiveBullets[i]->Update();
->>>>>>> master
-
 			if (pActiveBullets[i]->returnTeam() == EnemyTeam)
 			{
 				SVector2D<float> bulletPos = pActiveBullets[i]->GetPos2D();
