@@ -9,7 +9,7 @@ private:
 	const int DROP_SHOTGUN_CHANCE = 40;	// out of 100
 	bool isActive = false;
 	bool shot = false;
-	float mMoveSpeed = 1.5f;
+	float mMoveSpeed = 1.0f;
 	float bulletTimer = 0.0f;
 	float bulletSpreadAngle = 15;
 	const float MAX_BULLET_TIMER = 2.5f;
