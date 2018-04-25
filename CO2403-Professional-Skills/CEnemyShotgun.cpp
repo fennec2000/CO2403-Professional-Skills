@@ -36,31 +36,21 @@ bool CEnemyShotgun::EUpdate()
 		SVector2D<float> vec = pC->GetPlayer(PlayerTeam)->GetPos2D() - pCharSprite->GetPosition2D();
 		SVector2D<float> ePos = pCharSprite->GetPosition2D();
 		pCharSprite->LookAt(playerPos.x, playerPos.y, pC->GetPlayer(PlayerTeam)->GetZ());
+		float frameSpeed = mMoveSpeed * *pFrameTimer;
+		vec = vec.Normalised();
 
 
-		float distance = sqrt(((playerPos.x - ePos.x) * (playerPos.x - ePos.x)) + ((playerPos.y - ePos.y) * (playerPos.y - ePos.y)));
-		if (distance < DISTANCE_TO_KEEP)
-		{
-			eMovement.x = (-vec.x * *pFrameTimer * mMoveSpeed);
-			eMovement.y = (-vec.y * *pFrameTimer * mMoveSpeed);
-			testPos = { ePos.x + eMovement.x + spriteSizeX, ePos.y + eMovement.y + spriteSizeY };
+
+
+
+
+			testPos = { ePos.x + spriteSizeX + vec.x * frameSpeed, ePos.y + spriteSizeY + vec.y * frameSpeed};
 			if (!CollisionCheck(testPos))
 			{
-				pCharSprite->MoveX(eMovement.x);
-				pCharSprite->MoveY(eMovement.y);
+				pCharSprite->MoveX(vec.x * frameSpeed);
+				pCharSprite->MoveY(vec.y * frameSpeed);
 			}
-		}
-		else
-		{
-			eMovement.x = (vec.x * *pFrameTimer * mMoveSpeed);
-			eMovement.y = (vec.y * *pFrameTimer * mMoveSpeed);
-			testPos = { ePos.x + eMovement.x + spriteSizeX, ePos.y + eMovement.y + spriteSizeY };
-			if (!CollisionCheck(testPos))
-			{
-				pCharSprite->MoveX(eMovement.x);
-				pCharSprite->MoveY(eMovement.y);
-			}
-		}
+
 
 
 		if (bulletTimer < MAX_BULLET_TIMER)

@@ -29,18 +29,19 @@ bool CTestEnemy::EUpdate()
 
 	if (*pFrameTimer < 1.0f)
 	{
-		SVector2D<float> eMovement;
 		SVector2D<float> testPos;
 		SVector2D<float> playerPos = { pC->GetPlayer(PlayerTeam)->GetX(), pC->GetPlayer(PlayerTeam)->GetY() };
 		SVector2D<float> vec = pC->GetPlayer(PlayerTeam)->GetPos2D() - pCharSprite->GetPosition2D();
 		SVector2D<float> ePos = pCharSprite->GetPosition2D();
 		pCharSprite->LookAt(playerPos.x, playerPos.y, pC->GetPlayer(PlayerTeam)->GetZ());
+		float frameSpeed = mMoveSpeed * *pFrameTimer;
+		vec = vec.Normalised();
 
-		testPos = { ePos.x + eMovement.x + spriteSizeX, ePos.y + eMovement.y + spriteSizeY };
+		testPos = { ePos.x + spriteSizeX + vec.x * frameSpeed, ePos.y + spriteSizeY + vec.y * frameSpeed };
 		if (!CollisionCheck(testPos))
 		{
-			pCharSprite->MoveX(eMovement.x);
-			pCharSprite->MoveY(eMovement.y);
+			pCharSprite->MoveX(vec.x * frameSpeed);
+			pCharSprite->MoveY(vec.y * frameSpeed);
 		}
 	
 		if (bulletTimer < MAX_BULLET_TIMER)

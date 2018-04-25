@@ -139,9 +139,9 @@ void CCore::UpdateCore()
 		pPlayer[EPlayers::PlayerTeam]->Update();
 
 		//update each bullet
-		for (int i = 0; i < pActiveBullets.size(); ++i)
+		for (int i = 0; i < pActiveBullets.size(); i++)
 		{
-			pActiveBullets[i]->Update();
+
 			if (pActiveBullets[i]->returnTeam() == EnemyTeam)
 			{
 				SVector2D<float> bulletPos = pActiveBullets[i]->GetPos2D();
@@ -158,6 +158,7 @@ void CCore::UpdateCore()
 			}
 			else if (pActiveBullets[i]->returnTeam() == PlayerTeam)
 			{
+				pActiveBullets[i]->Update();
 				vector<CEnemy*> enemies = pLevel->getEnemies();
 				for (int k = 0; k < enemies.size(); k++)
 				{
@@ -168,10 +169,13 @@ void CCore::UpdateCore()
 					{
 						enemies[k]->Hit();
 						pActiveBullets[i]->Remove();
+						break;
 					}
 				}
 			}
+			
 		}
+
 
 		// Draw GUI Text
 		//pGUI->Update();
