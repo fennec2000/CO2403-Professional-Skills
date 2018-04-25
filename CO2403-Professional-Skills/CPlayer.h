@@ -14,6 +14,7 @@ private:
 	ICamera* pCamera;
 	CGUI* pGUI;
 	vector<CBullet*>* pBullets;
+	bool mFirstRun;
 
 	// player skin names
 	const char* PlayerSkins[2] = { "Player.png", "PlayerShielded.png" };

@@ -60,8 +60,9 @@ CCore::CCore()
 	UnloadGame();
 	SetupMenu();
 
-	// for debuging
+	// give taster shotgun
 	pGUI->SetWeaponIcon(EWeapons::Shotgun);
+	mFirstRun = true;
 }
 
 void CCore::LoadSound()
@@ -212,6 +213,7 @@ void CCore::UpdateCore()
 	default:
 		break;
 	}
+	mFirstRun = false;
 }
 
 void CCore::AddPlayer(EPlayers player, CPlayer &givenPlayer)

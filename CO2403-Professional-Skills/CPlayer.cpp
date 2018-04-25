@@ -13,6 +13,7 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 	mScreenSize[1] = pTLEngine->GetWidth();
 
 	// setup
+	pTLEngine->StartMouseCapture();
 	pCamera = pC->GetCamera();
 	pLevel = pC->GetLevel();
 	pBullets = pC->GetBullets();
@@ -24,12 +25,12 @@ CPlayer::CPlayer(EPlayers player, float x, float y, float z)
 	SetPosition(x, y, z);
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
 	pCursor = new CWorldSprite("Crosshair.png", { playerPos.x, playerPos.y, G_SPRITE_LAYER_Z_POS[ESpriteLayers::UI] }, BLEND_CUTOUT);
-	pTLEngine->StartMouseCapture();
+	mFirstRun = true;
 
 	// bullet setup
 	newBullet = new bulletSetup;
 	newBullet->spriteFileName = "QuickBullet.png";
-	newBullet->BulletTimeMax = 5.0f;
+	newBullet->BulletTimeMax = 3.0f;
 	newBullet->Speed = 3.0f;
 	newBullet->team = EPlayers::PlayerTeam;
 
@@ -88,7 +89,7 @@ void CPlayer::Update()
 		}
 
 		// rotate
-		pCharSprite->LookAt(pCursor);
+		pCharSprite->LookAt(pCursor->GetX(), pCursor->GetY(), pCharSprite->GetZ());
 	}
 
 	// powerup check
@@ -120,10 +121,13 @@ void CPlayer::Update()
 
 void CPlayer::InputCheck()
 {
-	if (*pFrameTimer < 1.0f)
+	float x, y;
+	x = pTLEngine->GetMouseMovementX() * *pFrameTimer;
+	y = -pTLEngine->GetMouseMovementY() * *pFrameTimer;
+	if (x <= 1 && x >= -1 || y <= 1 || y >= -1)
 	{
-		pCursor->MoveX(pTLEngine->GetMouseMovementX() * *pFrameTimer);
-		pCursor->MoveY(-pTLEngine->GetMouseMovementY() * *pFrameTimer);
+		pCursor->MoveX(x);
+		pCursor->MoveY(y);
 	}
 
 	// keybindings

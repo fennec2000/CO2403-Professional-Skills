@@ -45,6 +45,7 @@ private:
 	unsigned int mGameScore;// the current score of the game
 	CGUI* pGUI;				// pointer to the GUI
 	bool mFrontEndBypassed = false;
+	bool mFirstRun = true;
 
 	IFont* pText[EFontTypes::NumOfFontTypes];			// pointer to font to write to screen
 	const int mTEXT_SIZE[EFontTypes::NumOfFontTypes] = { 150, 50 };
@@ -94,6 +95,7 @@ public:
 	inline vector<CTestEnemy*> GetEnemyList() { return mEnemyList; };
 	inline vector<CBullet*>* GetBullets() { return &pActiveBullets; };
 	inline CGUI* GetGUI() { return pGUI; }
+	inline bool GetFirstRun() { return mFirstRun; };
 
 	// Setters
 	void AddPlayer(EPlayers player, CPlayer &givenPlayer);
