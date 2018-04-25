@@ -26,7 +26,7 @@ void CBullet::Update()
 	myPos.x = myPos.x + 0.5f;
 	myPos.y = myPos.y + 0.5f;
 
-	if (!CollisionCheck(myPos))
+		if (!CollisionCheck(myPos))
 	{
 		pCharSprite->MoveX(mVector.x * *pFrameTimer * mMoveSpeed);
 		pCharSprite->MoveY(mVector.y * *pFrameTimer * mMoveSpeed);
@@ -40,10 +40,6 @@ void CBullet::Update()
 	{
 		Remove();
 	}
-
-
-
-
 }
 
 void CBullet::Remove()

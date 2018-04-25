@@ -151,14 +151,11 @@ void CCore::UpdateCore()
 				{
 					pActiveBullets[i]->Remove();
 				}
-				else
-				{
-					pActiveBullets[i]->Update();
-				}
+
 			}
 			else if (pActiveBullets[i]->returnTeam() == PlayerTeam)
 			{
-				pActiveBullets[i]->Update();
+
 				vector<CEnemy*> enemies = pLevel->getEnemies();
 				for (int k = 0; k < enemies.size(); k++)
 				{
@@ -174,8 +171,13 @@ void CCore::UpdateCore()
 				}
 			}
 			
+			
 		}
 
+		for (int i = 0; i < pActiveBullets.size(); i++)
+		{
+			pActiveBullets[i]->Update();
+		}
 
 		// Draw GUI Text
 		//pGUI->Update();
