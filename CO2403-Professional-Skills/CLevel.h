@@ -23,6 +23,8 @@ public:
 	bool GetTileCollision(int x, int y);
 	bool GetTileCollision(SVector2D<int> position);
 
+	SVector2D<int> GetWinPos();
+
 	// Map genration and unloading
 	void LoadLevel(const char* filePath);
 	vector<CEnemy*> getEnemies() { return levelEnemies; };

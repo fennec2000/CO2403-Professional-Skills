@@ -18,6 +18,7 @@ private:
 
 	CUISprite* pHeartSprites[MAX_HEARTS];
 	CUISprite* pWeaponIcon;
+	CUISprite* pWeaponBG;
 	IFont* pText[EFontTypes::NumOfFontTypes];
 	bool heartHidden[MAX_HEARTS] = { false, false, false }; // false = visable, true = hidden
 	int health;

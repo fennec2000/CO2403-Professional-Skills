@@ -35,18 +35,20 @@ void CBullet::Update()
 	else
 	{
 		Remove();
+		return;
 	}
 	mBulletTimerCurrent += *pFrameTimer;
 	if (mBulletTimerCurrent >= mBulletTimerMax)
 	{
 		Remove();
+		return;
 	}
 }
 
 void CBullet::Remove()
 {
 	pC->RemoveBullet(*this);
-	CBullet::~CBullet();
+	delete this;
 }
 
 bool CBullet::CollisionCheck(SVector2D<float> pos)

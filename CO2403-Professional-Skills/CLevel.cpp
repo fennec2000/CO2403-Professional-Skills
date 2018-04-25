@@ -190,6 +190,11 @@ bool CLevel::GetTileCollision(SVector2D<int> position)
 	return mCollisionMap->at(position.y)->at(position.x);
 }
 
+SVector2D<int> CLevel::GetWinPos()
+{
+	return mMapData.mWinPosition;
+}
+
 void CLevel::LoadLevel(const char* filePath)
 {
 	UnloadLevel();

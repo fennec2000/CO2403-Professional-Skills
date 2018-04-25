@@ -155,11 +155,15 @@ void CCore::UpdateCore()
 				{
 					pActiveBullets[i]->Remove();
 				}
+				else
+				{
+					pActiveBullets[i]->Update();
+				}
 
 			}
 			else if (pActiveBullets[i]->returnTeam() == PlayerTeam)
 			{
-
+				bool isDeleted = false;
 				vector<CEnemy*> enemies = pLevel->getEnemies();
 				for (int k = 0; k < enemies.size(); k++)
 				{
@@ -170,18 +174,21 @@ void CCore::UpdateCore()
 					{
 						enemies[k]->Hit();
 						pActiveBullets[i]->Remove();
+						isDeleted = true;
 						break;
 					}
+				}
+
+				if (!isDeleted)
+				{
+					if (pActiveBullets[i] != NULL)
+						pActiveBullets[i]->Update();
 				}
 			}
 			
 			
 		}
 
-		for (int i = 0; i < pActiveBullets.size(); i++)
-		{
-			pActiveBullets[i]->Update();
-		}
 
 		// Draw GUI Text
 		//pGUI->Update();
@@ -192,12 +199,29 @@ void CCore::UpdateCore()
 			ammoText.append("infinite");
 		pText[EFontTypes::Medium]->Draw(ammoText, WEAPON_TEXT_OFFSET[0], pTLEngine->GetHeight() - WEAPON_TEXT_OFFSET[1], tle::kBlack, tle::kLeft, tle::kVCentre);
 
+		{
+			// Check if player is in win pos
+			SVector2D<float> winPosition = { (float)pLevel->GetWinPos().x, (float)pLevel->GetWinPos().y };
+			SVector2D<float> playerPos = pPlayer[EPlayers::PlayerTeam]->GetPos2D();
+
+			if (playerPos.x > winPosition.x - 0.5f && playerPos.x < winPosition.x + 0.5f)
+			{
+				if (playerPos.y > winPosition.y - 0.5f && playerPos.y < winPosition.y + 0.5f)
+				{
+					//std::cout << "Won!";
+					UnloadGame();
+					LoadLevel();
+				}
+			}
+		}
+
 		// exit key
 		if (pInput->KeyHit(Key_Escape))
 		{
 			UnloadGame();
 			pTLEngine->Stop();
 		}
+
 		break;
 	case Paused:
 		break;
@@ -212,6 +236,7 @@ void CCore::UpdateCore()
 		//if (pTLEngine->AnyKeyHit())
 		if (pInput->KeyHit(Key_Return))
 		{
+			mGameScore = 0;
 			UnloadGame();
 			if (!mFrontEndBypassed)
 			{

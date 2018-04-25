@@ -15,6 +15,9 @@ CGUI::CGUI(int givenHeight, int givenWidth)
 		pHeartSprites[i] = new CUISprite("Heart.png", hpPos);
 	}
 	pWeaponIcon = new CUISprite(WEAPON_ICONS_NAMES[0], SVector2D<float>((float)WEAPON_ICON_OFFSET[0], (float)(height - WEAPON_ICON_OFFSET[1])));
+
+	pWeaponBG = new CUISprite("WeaponBG.png", SVector2D<float>(0.0f, (float)(height - WEAPON_ICON_OFFSET[1])));
+	pWeaponBG->SetZ(pWeaponIcon->GetZ() + 0.01f);
 }
 
 
@@ -49,9 +52,15 @@ void CGUI::SetHiddenHeart(int heart)
 void CGUI::SetWeaponHidden(bool hide)
 {
 	if (hide)
+	{
 		pWeaponIcon->SetY(OFFSCREEN);
+		pWeaponBG->SetY(OFFSCREEN);
+	}
 	else
+	{
 		pWeaponIcon->SetY(static_cast<float>(height - WEAPON_ICON_OFFSET[1]));
+		pWeaponBG->SetY(static_cast<float>(height - WEAPON_ICON_OFFSET[1]));
+	}
 }
 
 void CGUI::SetWeaponIcon(EWeapons newWeapon)
