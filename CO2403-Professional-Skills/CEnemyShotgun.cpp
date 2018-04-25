@@ -11,12 +11,12 @@ CEnemyShotgun::CEnemyShotgun(float x, float y, float z, bool activate)
 
 CEnemyShotgun::~CEnemyShotgun()
 {
-	cout << "Hep, am ded";
+	//cout << "Hep, am ded";
 	//delete pCharSprite;
 }
 void CEnemyShotgun::Update()
 {
-	cout << "meggle";
+	//cout << "meggle";
 }
 
 bool CEnemyShotgun::EUpdate()
@@ -101,7 +101,7 @@ void CEnemyShotgun::Hit()
 
 void CEnemyShotgun::Death()
 {
-	cout << "death" << endl;
+	//cout << "death" << endl;
 	if (rand() % 100 < DROP_SHOTGUN_CHANCE)
 		pC->pPowerUps.push_back(new CPowerShotgun(pCharSprite->GetPosition2D()));
 	delete this;

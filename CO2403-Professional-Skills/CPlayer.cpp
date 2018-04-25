@@ -105,14 +105,26 @@ void CPlayer::Update()
 	// update camera
 	SVector2D<float> playerPos = pCharSprite->GetPosition2D();
 	pCamera->SetPosition(playerPos.x + mCAMERA_OFFSET.x, playerPos.y + mCAMERA_OFFSET.y, mCAMERA_OFFSET.z);
+
+	mRenderedFirstFrame = true;
 }
 
 void CPlayer::InputCheck()
 {
-	if (*pFrameTimer < 1.0f)
+	if (mRenderedFirstFrame)
 	{
 		pCursor->MoveX(pTLEngine->GetMouseMovementX() * *pFrameTimer);
 		pCursor->MoveY(-pTLEngine->GetMouseMovementY() * *pFrameTimer);
+	}
+	else
+	{
+		// Set the cursor just over the player
+		pCursor->SetPosition({ GetX() + 1.0f, GetY() });
+
+		// get the mouse movement but not do anything with it so that
+		// tl resets it
+		pTLEngine->GetMouseMovementX();
+		pTLEngine->GetMouseMovementY();
 	}
 
 	// keybindings

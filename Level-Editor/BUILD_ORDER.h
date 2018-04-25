@@ -35,6 +35,7 @@
 #include "CButtonSprite.h"
 
 // Level System
+#include "EToolMode.h"
 #include "ETileType.h"
 #include "ESpawnerTypes.h"
 #include "SRoomData.h"

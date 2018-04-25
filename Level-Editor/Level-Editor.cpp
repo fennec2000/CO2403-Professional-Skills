@@ -3,7 +3,13 @@
 using namespace tle;
 
 const char* TEMP_FILE_NAME = "..\\CO2403-Professional-Skills\\tempMap";
-const char* GAME_EXE_FILE_PATH = "..\\CO2403-Professional-Skills\\CO2403-Professional-SkillsDebug.exe";
+
+#ifdef _DEBUG
+	const char* GAME_EXE_FILE_PATH = "..\\CO2403-Professional-Skills\\CO2403-Professional-SkillsDebug.exe";
+#else
+	const char* GAME_EXE_FILE_PATH = "..\\CO2403-Professional-Skills\\CO2403-Professional-Skills.exe";
+#endif // DEBUG
+
 
 void main()
 {
@@ -92,6 +98,13 @@ void main()
 	// The play button
 	CButtonSprite* playButton = new CButtonSprite("Play.png", "PlayHover.png", { 438, 12.0f }, { 45, 45 });
 
+	// The selected tile
+	CButtonSprite* selectedTile = new CButtonSprite("Floor.png", "Floor.png", { 1000, 590}, { 45,45 });
+	IFont* selectedFont = pCore->GetTLEngine()->LoadFont("Font1.bmp");
+
+	// Force the floor to be selected by default
+	pCore->GetLevel()->ChangeSelectedTile(FLOOR);
+
 	// The main game loop, repeat until engine is stopped
 	while (pCore->GetTLEngine()->IsRunning())
 	{
@@ -126,65 +139,80 @@ void main()
 		if (deleteSpawnButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSpawnerType(SPAWN_NOTHING);
+			selectedTile->ChangeSprites("BinIcon.png", "BinIcon.png");
 		}
 		if (playerSpawnButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSpawnerType(SPAWN_PLAYER);
+			selectedTile->ChangeSprites("PlayerSpawn.png", "PlayerSpawn.png");
 		}
 		if (chainEnemySpawnButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSpawnerType(SPAWN_CHAIN_ENEMY);
+			selectedTile->ChangeSprites("ChainEnemySpawn.png", "ChainEnemySpawn.png");
 		}
 		if (shotEnemySpawnButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSpawnerType(SPAWN_SHOT_ENEMY);
+			selectedTile->ChangeSprites("ShotEnemySpawn.png", "ShotEnemySpawn.png");
 		}
 		if (randEnemySpawnButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSpawnerType(SPAWN_RAND_ENEMY);
+			selectedTile->ChangeSprites("RandEnemySpawn.png", "RandEnemySpawn.png");
 		}
 
 		// Tiles
 		if (deleteButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(NO_TILE);
+			selectedTile->ChangeSprites("BinIcon.png", "BinIcon.png");
 		}
 		if (FullWallButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(WALL);
+			selectedTile->ChangeSprites("FullWall.png", "FullWall.png");
 		}
 		if (FloorButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(FLOOR);
+			selectedTile->ChangeSprites("Floor.png", "Floor.png");
 		}
 		if (WallSideButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(WALL_WITH_SIDE);
+			selectedTile->ChangeSprites("WallSide.png", "WallSide.png");
 		}
 		if (WallSideFlipedButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(WALL_WITH_SIDE_FLIPPED_Y);
+			selectedTile->ChangeSprites("WallSideFliped.png", "WallSideFliped.png");
 		}
 		if (WallServerButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(WALL_SERVER_ANIMATED);
+			selectedTile->ChangeSprites("wallServer1.png", "wallServer1.png");
 		}
 		if (DoorButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(DOOR);
+			selectedTile->ChangeSprites("FloorDoor.png", "FloorDoor.png");
 		}
 		if (DoorRotButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(DOOR_ROT);
+			selectedTile->ChangeSprites("FloorDoorRot.png", "FloorDoorRot.png");
 		}
 		if (EndGoalButton->CheckClick())
 		{
 			pCore->GetLevel()->ChangeSelectedTile(END_GOAL);
+			selectedTile->ChangeSprites("EndGoal.png", "EndGoal.png");
 		}
 
 		if (roomButton->CheckClick())
 		{
 			pCore->GetLevel()->SelectRoomTool();
+			selectedTile->ChangeSprites("Room.png", "Room.png");
 		}
 		if (roomClearButton->CheckClick())
 		{
@@ -193,8 +221,71 @@ void main()
 
 		// Fonts
 		tileBarTitleFont->Draw("Tiles", 1090, 80);
-		tileInfoBarTitleFont->Draw("Selected Tile", 1060, 510);
+		tileInfoBarTitleFont->Draw("Selected Tool/Tile", 1040, 520);
 		deleteTileFont->Draw("Remove Tile", 1070, 450);
+
+		// Selection font
+		EToolMode toolMode = pCore->GetLevel()->GetToolMode();
+		if (toolMode == TILES)
+		{
+			ETileType currentTile = pCore->GetLevel()->GetCurrentTile();
+			switch (currentTile)
+			{
+			case NO_TILE:
+				selectedFont->Draw("Delete Tile", 1074, 610);
+				break;
+			case WALL:
+				selectedFont->Draw("Wall Tile", 1074, 610);
+				break;
+			case FLOOR:
+				selectedFont->Draw("Floor Tile", 1074, 610);
+				break;
+			case WALL_WITH_SIDE:
+				selectedFont->Draw("Wall Tile", 1074, 610);
+				break;
+			case WALL_WITH_SIDE_FLIPPED_Y:
+				selectedFont->Draw("Wall Tile", 1074, 610);
+				break;
+			case WALL_SERVER_ANIMATED:
+				selectedFont->Draw("Server Tile", 1074, 610);
+				break;
+			case DOOR:
+				selectedFont->Draw("Door Tile", 1074, 610);
+				break;
+			case DOOR_ROT:
+				selectedFont->Draw("Door Tile", 1074, 610);
+				break;
+			case END_GOAL:
+				selectedFont->Draw("Goal Tile", 1074, 610);
+				break;
+			}
+		}
+		else if (toolMode == SPAWNERS)
+		{
+			ESpawnTypes currentSpawner = pCore->GetLevel()->GetCurrentSpawner();
+			switch (currentSpawner)
+			{
+			case SPAWN_NOTHING:
+				selectedFont->Draw("Delete Spawner", 1074, 610);
+				break;
+			case SPAWN_PLAYER:
+				selectedFont->Draw("Spawn Player", 1074, 610);
+				break;
+			case SPAWN_CHAIN_ENEMY:
+				selectedFont->Draw("Chaingun Enemy", 1074, 610);
+				break;
+			case SPAWN_SHOT_ENEMY:
+				selectedFont->Draw("Shotgun Enemy", 1074, 610);
+				break;
+			case SPAWN_RAND_ENEMY:
+				selectedFont->Draw("Random Enemy", 1074, 610);
+				break;
+			}
+		}
+		else
+		{
+			selectedFont->Draw("Create Room", 1074, 610);
+		}
 
 		// Checks if the user wishes to exit
 		if (pCore->GetInput()->KeyHit(Key_Escape))
