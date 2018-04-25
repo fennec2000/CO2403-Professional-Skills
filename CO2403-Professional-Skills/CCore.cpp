@@ -129,6 +129,10 @@ void CCore::UpdateCore()
 				{
 					pActiveBullets[i]->Remove();
 				}
+				else
+				{
+					pActiveBullets[i]->Update();
+				}
 			}
 			else if (pActiveBullets[i]->returnTeam() == PlayerTeam)
 			{
@@ -140,15 +144,15 @@ void CCore::UpdateCore()
 					float distance = sqrt(((enemyPos.x - bulletPos.x) * (enemyPos.x - bulletPos.x)) + ((enemyPos.y - bulletPos.y) * (enemyPos.y - bulletPos.y)));
 					if (distance < pActiveBullets[i]->getSize())
 					{
-					    cout << "ow";
+					    //cout << "ow";
 						enemies[k]->Hit();
 						pActiveBullets[i]->Remove();
-						cout << "blep";
+						//cout << "blep";
 					}
 				}
-			}
 
-			pActiveBullets[i]->Update();
+				pActiveBullets[i]->Update();
+			}	
 		}
 
 		// Draw GUI Text

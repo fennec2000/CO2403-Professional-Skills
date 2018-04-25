@@ -13,6 +13,7 @@ private:
 	vector<CBullet*>* pBullets;
 	const float mIFRAMES_MAX = 2.0f;
 	float mIFrames = 0;
+	bool mRenderedFirstFrame = false;
 
 	// keybindings
 	EKeyCode mPlayerMoveUp = EKeyCode::Key_W;

@@ -70,7 +70,7 @@ public:
 	void UpdateCore();
 
 	// For changing the scene of the game
-	void LoadLevel(const char* levelName = "Levels\\TestLevel");
+	void LoadLevel(const char* levelName = "Levels\\Level1");
 	void UnloadGame();
 	void SetupMenu();
 	void UnloadMenu();

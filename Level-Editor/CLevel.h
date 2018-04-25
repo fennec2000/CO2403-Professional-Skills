@@ -22,6 +22,11 @@ public:
 	void SelectRoomTool();
 	void ClearRooms();
 
+	// Return building settings
+	EToolMode GetToolMode() { return mSelectedMode; };
+	ETileType GetCurrentTile() { return currentlySelectedTile; };
+	ESpawnTypes GetCurrentSpawner() { return currentlySelectedSpawner; };
+
 	// Map genration and unloading
 	void GenerateMap();
 	void UnloadMap();
@@ -32,12 +37,16 @@ private:
 	SVector2D<float> findCursorTilePos();
 	void GenerateSprite(const char* pSpriteName, SVector2D<int> position, int selectedMode = 1);
 
+	// Skybox
+	tle::IMesh* mpSkyBoxMesh;
+	tle::IModel* mpSkyboxModel;
+
 	// Map data
 	SMapData mMapData;
 	vector<vector<CWorldSprite*>*> mMapSprites;
 	vector<vector<CWorldSprite*>*> mSpawnerSprites;
 
-	int mSelectedMode = 1; // 1 = tiles, 2 = spawners, 3 = rooms
+	EToolMode mSelectedMode = TILES; 
 	ETileType currentlySelectedTile = NO_TILE; // Mode 1
 	ESpawnTypes currentlySelectedSpawner = SPAWN_NOTHING; // Mode 2
 
