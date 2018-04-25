@@ -17,7 +17,7 @@ CCore::CCore()
 {
 	pInstance = this;
 	// random
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(NULL)));
 
 	// Load engine
 	pTLEngine = New3DEngine(kTLX);
@@ -55,6 +55,10 @@ CCore::CCore()
 
 	// Creates the level
 	pLevel = new CLevel();
+
+	// Create the skybox
+	mpSkyBoxMesh = pTLEngine->LoadMesh("Stars.x");
+	mpSkyboxModel = mpSkyBoxMesh->CreateModel();
 
 	// Loads the main menu
 	UnloadGame();
