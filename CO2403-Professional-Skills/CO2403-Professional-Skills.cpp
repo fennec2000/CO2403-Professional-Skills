@@ -19,9 +19,7 @@ void main(int argc, char* argv[])
 		SetCurrentDirectory("..\\CO2403-Professional-Skills");
 
 
-	// The main game loop, repeat until engine is stopped
-	while (myEngine->IsRunning())
-
+        // The main game loop, repeat until engine is stopped
 		// Create core and set the global pointer to it
 		gpCore = CCore::GetInstance();
 

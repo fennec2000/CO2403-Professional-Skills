@@ -16,6 +16,8 @@ private:
 	const float DISTANCE_TO_KEEP = 5.0f;
 	const int MaxHealth = 1;
 	int currentHealth = 1;
+	float spriteSizeX = 0.8f;
+	float spriteSizeY = 0.8f;
 
 public:
 	CEnemyShotgun(float x, float y, float z, bool activate);

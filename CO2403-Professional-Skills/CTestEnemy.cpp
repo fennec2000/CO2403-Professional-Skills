@@ -1,56 +1,57 @@
 #include "BUILD_ORDER.h"
-
-CTestEnemy::CTestEnemy()
-{
-	toggleActive();
-}
+#include "math.h"
 
 CTestEnemy::CTestEnemy(float x, float y, float z, bool activate)
 {
 	SetPosition(x, y, z);
 	isActive = activate;
-	pCharSprite->SetSpriteSkin("derp.png");
-	pC->AddEnemy(*this);
+	pCharSprite->SetSpriteSkin("hitman1_gun.png");
+	pLevel = pC->GetLevel();
+	gunSound = new CAudio("Media\\Sound\\ShotgunSound.wav", false);
 }
 
 CTestEnemy::~CTestEnemy()
+{	//delete pCharSprite;
+	delete gunSound;
+}
+
+void CTestEnemy::Update()
 {
-	pC->RemoveEnemy(*this);
 }
 
 bool CTestEnemy::EUpdate()
 {
-	float playerX = pC->GetPlayer(PlayerTeam)->GetX();
-	float playerY = pC->GetPlayer(PlayerTeam)->GetY();
-	float enemyX = pCharSprite->GetX();
-	float enemyY = pCharSprite->GetY();
-
-	if (isActive)
+	if (currentHealth <= 0)
 	{
-		if (enemyX > playerX)
-		{
-			pCharSprite->MoveX(-mMoveSpeed * *pFrameTimer);
-		}
-		if (enemyX < playerX)
-		{
-			pCharSprite->MoveX(mMoveSpeed * *pFrameTimer);
-		}
-		if (enemyY > playerY)
-		{
-			pCharSprite->MoveY(-mMoveSpeed * *pFrameTimer);
-		}
-		if (enemyY < playerY)
-		{
-			pCharSprite->MoveY(mMoveSpeed * *pFrameTimer);
-		}
+		Death();
+		return true;
 	}
 
-	// shooting
-	mShootTimerCurrent += *pFrameTimer;
-	if (mShootTimerCurrent >= mShootTimerMax)
+	if (*pFrameTimer < 1.0f)
 	{
-		Shoot();
-		mShootTimerCurrent = 0.0f;
+		SVector2D<float> eMovement;
+		SVector2D<float> testPos;
+		SVector2D<float> playerPos = { pC->GetPlayer(PlayerTeam)->GetX(), pC->GetPlayer(PlayerTeam)->GetY() };
+		SVector2D<float> vec = pC->GetPlayer(PlayerTeam)->GetPos2D() - pCharSprite->GetPosition2D();
+		SVector2D<float> ePos = pCharSprite->GetPosition2D();
+		pCharSprite->LookAt(playerPos.x, playerPos.y, pC->GetPlayer(PlayerTeam)->GetZ());
+
+		testPos = { ePos.x + eMovement.x + spriteSizeX, ePos.y + eMovement.y + spriteSizeY };
+		if (!CollisionCheck(testPos))
+		{
+			pCharSprite->MoveX(eMovement.x);
+			pCharSprite->MoveY(eMovement.y);
+		}
+	
+		if (bulletTimer < MAX_BULLET_TIMER)
+		{
+			bulletTimer = bulletTimer + *pFrameTimer;
+		}
+		else
+		{
+			Shoot();
+			bulletTimer = 0;
+		}
 	}
 	return false;
 }
@@ -58,20 +59,28 @@ bool CTestEnemy::EUpdate()
 void CTestEnemy::Shoot()
 {
 	// Setup bullet
+	SVector2D<float> vec2;
+	SVector2D<float> vec3;
 	bulletSetup newBullet;
 	newBullet.spawnPos = GetPos3D();
-	//newBullet.spawnPos.z -= 0.2f;
 	newBullet.BulletTimeMax = 3.0f;
 	newBullet.Speed = 1.5f;
 	CPlayer* target = pC->GetPlayer(PlayerTeam);
 	SVector2D<float> vec = target->GetPos2D() - pCharSprite->GetPosition2D();
 	newBullet.travelVector = vec.Normalised();
-
 	// create bullet
-	//new CBullet(newBullet, EnemyTeam);
+	new CBullet(newBullet);
+	// fire sound
+	gunSound->Play();
+}
+
+void CTestEnemy::Hit()
+{
+	currentHealth = currentHealth - 1;
 }
 
 void CTestEnemy::Death()
 {
-	
+	pC->AddScore(POINTS);
+	delete this;
 }

@@ -23,6 +23,8 @@ private:
 	const float MAXC_HAINGUN_DISPLACEMENT = 3.0f;
 	const int MaxHealth = 1;
 	int currentHealth = 1;
+	float spriteSizeX = 0.8f;
+	float spriteSizeY = 0.8f;
 
 
 public:
