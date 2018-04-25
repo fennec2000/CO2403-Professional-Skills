@@ -296,6 +296,8 @@ void CLevel::UnloadLevel()
 		levelEnemies[levelEnemies.size() - 1] = nullptr;
 		levelEnemies.pop_back();
 	}
+
+	currentRoom = -1;
 }
 
 void CLevel::GenerateSprite(const char* pSpriteName, SVector2D<int> position)

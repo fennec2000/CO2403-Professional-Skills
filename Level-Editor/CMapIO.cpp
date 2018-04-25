@@ -147,7 +147,7 @@ int CMapIO::SaveMapFile(SMapData* pMapData, const char* pMapFilePath)
 
 	// Write start of rooms signal
 	mapFile << "{R}" << "\n";
-	for (int i = 0; i < pMapData->mRoomData.size(); i++)
+	for (unsigned int i = 0; i < pMapData->mRoomData.size(); i++)
 	{
 		SRoomData* currentRoom = &pMapData->mRoomData[i];
 
@@ -160,7 +160,7 @@ int CMapIO::SaveMapFile(SMapData* pMapData, const char* pMapFilePath)
 		mapFile << " ";
 
 		// Door positions in room
-		for (int j = 0; j < currentRoom->mDoorPositions.size(); j++)
+		for (unsigned int j = 0; j < currentRoom->mDoorPositions.size(); j++)
 		{
 			mapFile << "<" << i << "|3|" << currentRoom->mDoorPositions[j].x << "|" << currentRoom->mDoorPositions[j].y << ">";
 			mapFile << " ";
