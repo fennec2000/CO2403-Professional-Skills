@@ -46,7 +46,7 @@ CHoverUI::CHoverUI(SUIData* pUIData)
 
 CHoverUI::~CHoverUI()
 {
-	for (int i = 0; i < mSprites.size(); i++)
+	for (unsigned int i = 0; i < mSprites.size(); i++)
 	{
 		mpMyEngine->RemoveSprite(mSprites[i]);
 		mpMyEngine->RemoveSprite(mHoverSprites[i]);

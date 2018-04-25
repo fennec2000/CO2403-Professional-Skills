@@ -76,7 +76,7 @@ void CPlayer::Update()
 		// damage
 		if (mIFrames <= 0.0f)
 		{
-			for (int i = 0; i < pBullets->size(); i++)
+			for (unsigned int i = 0; i < pBullets->size(); i++)
 			{
 				CBullet* check = pBullets->at(i);
 				// if valid,		if enemy,							if touching
@@ -223,7 +223,7 @@ void CPlayer::Shoot()
 	if (mShotgunAmmo > 0)
 	{
 		// set up spread
-		float firingAngle = BULLET_SPREAD_ANGLE * 3.14 / 180;
+		float firingAngle = BULLET_SPREAD_ANGLE * PI / 180.0f;
 		SVector2D<float> vec2;
 		SVector2D<float> vec3;
 		vec2.x = newBullet->travelVector.x * cos(firingAngle) - newBullet->travelVector.y * sin(firingAngle);

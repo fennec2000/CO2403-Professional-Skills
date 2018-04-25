@@ -41,7 +41,7 @@ void CLevel::Update()
 	if (currentRoom == -1)
 	{
 		bool inRoom = false;
-		for (int i = 0; i < mMapData.mRoomData.size(); i++)
+		for (unsigned int i = 0; i < mMapData.mRoomData.size(); i++)
 		{
 			SVector2D<float> roomMin = { static_cast<float>(mMapData.mRoomData[i].mMinPos.x) + 1.0f,  static_cast<float>(mMapData.mRoomData[i].mMinPos.y) + 1.0f };
 			SVector2D<float> roomMax = { static_cast<float>(mMapData.mRoomData[i].mMaxPos.x) - 1.0f,  static_cast<float>(mMapData.mRoomData[i].mMaxPos.y) - 1.0f };
@@ -71,7 +71,7 @@ void CLevel::Update()
 		else
 		{
 			// Updates the enemeys in the room
-			for (int i = 0; i < levelEnemies.size(); i++)
+			for (unsigned int i = 0; i < levelEnemies.size(); i++)
 			{	
 				bool meow = levelEnemies[i]->EUpdate();	
 				if (meow)
@@ -100,7 +100,7 @@ void CLevel::StartRoom(int roomNo)
 	currentRoom = roomNo;
 
 	// Close doors
-	for (int i = 0; i < mMapData.mRoomData[roomNo].mDoorPositions.size(); i++)
+	for (unsigned int i = 0; i < mMapData.mRoomData[roomNo].mDoorPositions.size(); i++)
 	{
 		if (GetTile(mMapData.mRoomData[roomNo].mDoorPositions[i]) == DOOR_OPEN)
 		{
@@ -141,7 +141,7 @@ void CLevel::StartRoom(int roomNo)
 void CLevel::ClearRoom()
 {
 	// Open the doors
-	for (int i = 0; i < mMapData.mRoomData[currentRoom].mDoorPositions.size(); i++)
+	for (unsigned int i = 0; i < mMapData.mRoomData[currentRoom].mDoorPositions.size(); i++)
 	{
 		if (GetTile(mMapData.mRoomData[currentRoom].mDoorPositions[i]) == DOOR)
 		{

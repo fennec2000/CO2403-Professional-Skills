@@ -55,6 +55,10 @@ private:
 	CWorldSprite* pBackgroundSprite;
 	CButton* pPlayButton;
 
+	// Skybox
+	tle::IMesh* mpSkyBoxMesh;
+	tle::IModel* mpSkyboxModel;
+
 	// music
 	CAudio* mGameMusic[EBackgroundMusic::NumOfBackgroundMusic];	// array of game music
 

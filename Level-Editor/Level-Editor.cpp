@@ -10,7 +10,6 @@ const char* TEMP_FILE_NAME = "..\\CO2403-Professional-Skills\\tempMap";
 	const char* GAME_EXE_FILE_PATH = "..\\CO2403-Professional-Skills\\CO2403-Professional-Skills.exe";
 #endif // DEBUG
 
-
 void main()
 {
 	// Creates the Core

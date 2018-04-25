@@ -60,6 +60,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(IncludePath);$(DXSDK_DIR)\include;</IncludePath>
     <LibraryPath>$(LibraryPath);$(DXSDK_DIR)\lib\x86;</LibraryPath>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -114,8 +115,11 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <OutputFile>$(SolutionDir)$(TargetName)$(TargetExt)</OutputFile>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <AdditionalDependencies>TL-Engine2017.lib;alut.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
       <Message>Copying DLLs &amp; shaders...</Message>
