@@ -57,6 +57,17 @@ bool CButtonSprite::CheckClick()
 	return false;
 }
 
+void CButtonSprite::ChangeSprites(const char* pSpriteName, const char* pHoverSpriteName)
+{
+	tle::I3DEngine* pEngine = CCore::GetInstance()->GetTLEngine();
+
+	pEngine->RemoveSprite(mpNormalSprite);
+	pEngine->RemoveSprite(mpHoverSprite);
+
+	mpNormalSprite = pEngine->CreateSprite(pSpriteName, mOrigin.x, mOrigin.y, DEFAULT_Z_POS - 0.1f);
+	mpHoverSprite = pEngine->CreateSprite(pHoverSpriteName, mOrigin.x, mOrigin.y, HIDE_Z_POS);
+}
+
 void CButtonSprite::CalculateColisionBox(SVector2D<float> position, SVector2D<float> size)
 {
 	minPos.x = static_cast<int>(position.x);

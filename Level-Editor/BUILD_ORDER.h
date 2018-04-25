@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <Windows.h>
 
 // TL-Engine
 #include <TL-Engine.h>
@@ -34,8 +35,10 @@
 #include "CButtonSprite.h"
 
 // Level System
+#include "EToolMode.h"
 #include "ETileType.h"
 #include "ESpawnerTypes.h"
+#include "SRoomData.h"
 #include "SMapData.h"
 #include "NameSettings.h"
 #include "CMapIO.h"

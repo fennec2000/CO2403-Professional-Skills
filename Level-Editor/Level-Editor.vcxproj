@@ -159,10 +159,12 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="ESpawnerTypes.h" />
     <ClInclude Include="ESpriteBlend.h" />
     <ClInclude Include="ETileType.h" />
+    <ClInclude Include="EToolMode.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="SBaseSprite.h" />
     <ClInclude Include="SMapData.h" />
     <ClInclude Include="SMatrix4x4.h" />
+    <ClInclude Include="SRoomData.h" />
     <ClInclude Include="SUIData.h" />
     <ClInclude Include="SVector2D.h" />
     <ClInclude Include="SVector3D.h" />

@@ -28,20 +28,25 @@ public:
 	vector<CEnemy*> getEnemies() { return levelEnemies; };
 	void UnloadLevel();
 
+	int currentRoom = -1;
+
 	static const SVector2D<int> MAP_MAX_SIZE;
 
 private:
 
 	void GenerateLevel();
+	void StartRoom(int roomNo);
+	void ClearRoom();
 
 	vector<CEnemy*> levelEnemies;
 
 	SMapData mMapData;
 	vector<vector<bool>*>* mCollisionMap;
 	vector<vector<CWorldSprite*>*> mWorldSprites;
+	vector<vector<CAnimatedWorldSprite*>*> mAnimWorldSprites;
 
 	SVector2D<float> mSpawnPos;
 
 	void GenerateSprite(const char* pSpriteName, SVector2D<int> position);
-
+	void GenerateAnimatedWorldSprite(vector<const char*> spriteList, SVector2D<int> position);
 };

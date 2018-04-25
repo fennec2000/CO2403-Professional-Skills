@@ -119,6 +119,12 @@
     <ClInclude Include="NameSettings.h">
       <Filter>LevelSystem</Filter>
     </ClInclude>
+    <ClInclude Include="SRoomData.h">
+      <Filter>LevelSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="EToolMode.h">
+      <Filter>LevelSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UI">

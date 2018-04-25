@@ -9,8 +9,10 @@ struct SMapData
 	~SMapData();
 
 	bool mMapDataValid = true;
+	SVector2D<int> mWinPosition;
 
 	vector<vector<ETileType>> mTileMap;
 	vector<vector<ESpawnTypes>> mSpawnerMap;
 	vector<vector<bool>> mCollisionMap;
+	vector<SRoomData> mRoomData;
 };

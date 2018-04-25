@@ -4,10 +4,11 @@
 class CEnemyShotgun : public CEnemy
 {
 private:
-
+	CAudio* gunSound;
+	const int POINTS = 5;
+	const int DROP_SHOTGUN_CHANCE = 40;	// out of 100
 	bool isActive = false;
 	bool shot = false;
-	CEProjectile * bullet;
 	float mMoveSpeed = 0.25f;
 	float bulletTimer = 0.0f;
 	float bulletSpreadAngle = 15;

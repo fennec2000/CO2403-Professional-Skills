@@ -25,7 +25,7 @@ SMapData CMapIO::ReadMapFile(const char* pMapFilePath)
 	// Reads the file
 	char ch;
 	int xPos = 0;
-	int yPos = 0;
+	int yPos = -1;
 	while (mapFile.get(ch))
 	{
 		switch (ch)
@@ -80,6 +80,21 @@ SMapData CMapIO::ReadMapFile(const char* pMapFilePath)
 			yPos++;
 			xPos = 0;
 			break;
+		case '{':
+			{ // Signals the start of somthing
+				mapFile.get(ch);
+				if (ch == 'M')
+				{
+					mapFile.get(ch);
+				}
+				else
+				{
+					// Close file and return
+					mapFile.close();
+					return mapData;
+				}
+			}
+			break;
 
 		default:
 			// The char is invalid or somthing has gone seriusly wrong
@@ -87,45 +102,6 @@ SMapData CMapIO::ReadMapFile(const char* pMapFilePath)
 			return mapData;
 			break;
 		}
-
-		//// Checks if char is valid
-		//switch (ch)
-		//{
-		//case (char)NO_TILE + 48:
-		//	delete levelSprites[xPos]->at(yPos);
-		//	levelSprites[xPos]->at(yPos) = nullptr;
-		//	break;
-		//
-		//case (char)WALL + 48:
-		//	newTileMap[xPos]->at(yPos) = WALL;
-		//	GenerateSprite("FullWall.png", { xPos, yPos });
-		//	break;
-		//
-		//case (char)FLOOR + 48:
-		//	newTileMap[xPos]->at(yPos) = FLOOR;
-		//	GenerateSprite("Floor.png", { xPos, yPos });
-		//	break;
-		//
-		//case (char)WALL_WITH_SIDE + 48:
-		//	newTileMap[xPos]->at(yPos) = WALL_WITH_SIDE;
-		//	GenerateSprite("WallSide.png", { xPos, yPos });
-		//	break;
-		//
-		//case (char)WALL_WITH_SIDE_FLIPPED_Y + 48:
-		//	newTileMap[xPos]->at(yPos) = WALL_WITH_SIDE_FLIPPED_Y;
-		//	GenerateSprite("WallSide.png", { xPos, yPos });
-		//	levelSprites[xPos]->at(yPos)->RotateZ(180.0f);
-		//	break;
-		//
-		//case (char)SPAWN + 48:
-		//	newTileMap[xPos]->at(yPos) = SPAWN;
-		//	GenerateSprite("FloorSpawn.png", { xPos, yPos });
-		//	break;
-
-		//if (ch != ' ' && ch != '\n')
-		//{
-		//	xPos++;
-		//}
 	}
 
 	// Close file and return
@@ -140,6 +116,9 @@ int CMapIO::SaveMapFile(SMapData* pMapData, const char* pMapFilePath)
 	fullFileName += ".edm";
 	mapFile.open(fullFileName);
 
+	// Write start of map positions signal
+	mapFile << "{M}" << "\n";
+	// Write map positions
 	for (int yPos = 0; yPos < CLevel::MAP_MAX_SIZE.y; yPos++)
 	{
 		for (int xPos = 0; xPos < CLevel::MAP_MAX_SIZE.x; xPos++)
@@ -164,6 +143,28 @@ int CMapIO::SaveMapFile(SMapData* pMapData, const char* pMapFilePath)
 		}
 		// New line
 		mapFile << "\n";
+	}
+
+	// Write start of rooms signal
+	mapFile << "{R}" << "\n";
+	for (int i = 0; i < pMapData->mRoomData.size(); i++)
+	{
+		SRoomData* currentRoom = &pMapData->mRoomData[i];
+
+		// Min position of room
+		mapFile << "<" << i << "|1|" << currentRoom->mMinPos.x << "|" << currentRoom->mMinPos.y << ">";
+		mapFile << " ";
+
+		// Max position of room
+		mapFile << "<" << i << "|2|" << currentRoom->mMaxPos.x << "|" << currentRoom->mMaxPos.y << ">";
+		mapFile << " ";
+
+		// Door positions in room
+		for (int j = 0; j < currentRoom->mDoorPositions.size(); j++)
+		{
+			mapFile << "<" << i << "|3|" << currentRoom->mDoorPositions[j].x << "|" << currentRoom->mDoorPositions[j].y << ">";
+			mapFile << " ";
+		}
 	}
 
 	mapFile.close();

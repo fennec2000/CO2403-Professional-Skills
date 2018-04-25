@@ -3,6 +3,9 @@
 
 struct bulletSetup;
 
+enum EPlayerSounds { PlayerMoveSound, PlayerFireSound, PlayerRoll, NumOfPlayerSounds };
+enum EGunSounds { PistolSound, ShotgunSound, NumOfGunSounds };
+
 class CPlayer : protected CCharacter
 {
 private:
@@ -11,8 +14,15 @@ private:
 	ICamera* pCamera;
 	CGUI* pGUI;
 	vector<CBullet*>* pBullets;
+	bool mFirstRun;
+
+	// player skin names
+	const char* PlayerSkins[2] = { "Player.png", "PlayerShielded.png" };
+
+	// take damage
 	const float mIFRAMES_MAX = 2.0f;
 	float mIFrames = 0;
+	bool mRenderedFirstFrame = false;
 
 	// keybindings
 	EKeyCode mPlayerMoveUp = EKeyCode::Key_W;
@@ -26,6 +36,10 @@ private:
 	int mScreenSize[2]; // 0 - height, 1 - width
 	SVector2D<float> mMovement;
 
+	// sound
+	CAudio* playerSounds[EPlayerSounds::NumOfPlayerSounds];
+	CAudio* gunSounds[EPlayerSounds::NumOfPlayerSounds];
+
 	// roll
 	SVector2D<float> mRollVector;
 	const float mROLL_DISTANCE_MAX = 3.0f;
@@ -35,7 +49,14 @@ private:
 	// firing
 	float mFireTimeMax = 0.5f;
 	float mFireTimeCurrent = 0.0f;
+	int mShotgunAmmo = 3;
+	const float BULLET_SPREAD_ANGLE = 15.0f;
 	bulletSetup* newBullet;
+
+	// items
+	vector<CPowerUp*>* pPowerUps;
+	const float ITEM_PICKUP_RANGE = 1.0f;
+	const int POWERUP_SHOTGUN_ADD_AMMO = 10;
 
 	// cheats
 	bool mCheatGod = false;
@@ -45,7 +66,8 @@ private:
 	void Move(SVector2D<float> movement);
 	void Death();
 	void Shoot();
-	void TakeDamage();
+	void LoadSounds();
+	void FreeSounds();
 
 public:
 	CPlayer(EPlayers player);
@@ -58,5 +80,6 @@ public:
 	float GetX() { return pCharSprite->GetX(); };
 	float GetY() { return pCharSprite->GetY(); };
 	SVector2D<float> GetPos2D() { return pCharSprite->GetPosition2D(); };
+	int GetShotgunAmmo() { return mShotgunAmmo; };
 };
 

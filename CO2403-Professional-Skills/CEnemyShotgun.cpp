@@ -7,17 +7,16 @@ CEnemyShotgun::CEnemyShotgun(float x, float y, float z, bool activate)
 	isActive = activate;
 	pCharSprite->SetSpriteSkin("zombie1_gun.png");
 	pLevel = pC->GetLevel();
+	gunSound = new CAudio("Media\\Sound\\ShotgunSound.wav", false);
 }
 
 CEnemyShotgun::~CEnemyShotgun()
-{
-	cout << "Hep, am ded";
-	pCharSprite->~CWorldSprite();
+{	//delete pCharSprite;
+	delete gunSound;
 }
+
 void CEnemyShotgun::Update()
-{
-	cout << "meggle";
-}
+{}
 
 bool CEnemyShotgun::EUpdate()
 {
@@ -92,6 +91,9 @@ void CEnemyShotgun::Shoot()
 	new CBullet(newBullet);
 	newBullet.travelVector = vec3;
 	new CBullet(newBullet);
+
+	// fire sound
+	gunSound->Play();
 }
 
 void CEnemyShotgun::Hit()
@@ -101,5 +103,8 @@ void CEnemyShotgun::Hit()
 
 void CEnemyShotgun::Death()
 {
-	CEnemyShotgun::~CEnemyShotgun();
+	pC->AddScore(POINTS);
+	if (rand() % 100 < DROP_SHOTGUN_CHANCE)
+		pC->pPowerUps.push_back(new CPowerShotgun(pCharSprite->GetPosition2D()));
+	delete this;
 }

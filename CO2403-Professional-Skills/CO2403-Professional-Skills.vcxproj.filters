@@ -8,23 +8,14 @@
     <ClCompile Include="CUISprite.cpp">
       <Filter>SpriteSystem</Filter>
     </ClCompile>
-    <ClCompile Include="CCharacter.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
     <ClCompile Include="CCore.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>Entity</Filter>
     </ClCompile>
     <ClCompile Include="Maths.cpp">
       <Filter>Maths</Filter>
     </ClCompile>
     <ClCompile Include="SMatrix4x4.cpp">
       <Filter>Maths</Filter>
-    </ClCompile>
-    <ClCompile Include="CTestEnemy.cpp">
-      <Filter>Entity</Filter>
     </ClCompile>
     <ClCompile Include="CLevel.cpp">
       <Filter>Level</Filter>
@@ -44,20 +35,47 @@
     <ClCompile Include="NameSettings.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="CEnemy.h">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="CEnemyChaingun.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="CBullet.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="CEnemyShotgun.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
     <ClCompile Include="CGUI.cpp">
       <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CInput.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CButton.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CHoverUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CPowerUp.cpp">
+      <Filter>Entity\PowerUp</Filter>
+    </ClCompile>
+    <ClCompile Include="CPowerShotgun.cpp">
+      <Filter>Entity\PowerUp</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy.h">
+      <Filter>Entity\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyChaingun.cpp">
+      <Filter>Entity\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyShotgun.cpp">
+      <Filter>Entity\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CCharacter.cpp">
+      <Filter>Entity\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Entity\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet.cpp">
+      <Filter>Entity\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CTestEnemy.cpp">
+      <Filter>Entity\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CAudio.cpp">
+      <Filter>Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +98,21 @@
     <Filter Include="Level">
       <UniqueIdentifier>{7bccba00-d0cc-46d3-adbb-6623162f76e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{3f3be5b1-e76d-4eb9-bc08-a486ec80f61f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\PowerUp">
+      <UniqueIdentifier>{0e3e0829-fc2e-446c-bae2-25bede0d49b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Enemy">
+      <UniqueIdentifier>{ddb8e96c-0a5e-4dfd-b353-ec7b447831e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Player">
+      <UniqueIdentifier>{2dbb70ab-b4f3-446a-a33d-f08597602b2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{d0f31dbb-45d6-4364-af3b-156df337a588}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SVector2D.h">
@@ -95,12 +128,6 @@
       <Filter>SpriteSystem</Filter>
     </ClInclude>
     <ClInclude Include="BUILD_ORDER.h" />
-    <ClInclude Include="CCharacter.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
     <ClInclude Include="CCore.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -109,9 +136,6 @@
     </ClInclude>
     <ClInclude Include="SMatrix4x4.h">
       <Filter>Maths</Filter>
-    </ClInclude>
-    <ClInclude Include="CTestEnemy.h">
-      <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="CLevel.h">
       <Filter>Level</Filter>
@@ -140,17 +164,50 @@
     <ClInclude Include="NameSettings.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="CEnemyChaingun.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="CBullet.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="CEnemyShotgun.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
     <ClInclude Include="CGUI.h">
       <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CInput.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CButton.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CHoverUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="SUIData.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CPowerUp.h">
+      <Filter>Entity\PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="CPowerShotgun.h">
+      <Filter>Entity\PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyChaingun.h">
+      <Filter>Entity\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyShotgun.h">
+      <Filter>Entity\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CCharacter.h">
+      <Filter>Entity\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Entity\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet.h">
+      <Filter>Entity\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CTestEnemy.h">
+      <Filter>Entity\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SRoomData.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="CAudio.h">
+      <Filter>Audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
