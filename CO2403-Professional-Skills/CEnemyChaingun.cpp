@@ -93,9 +93,9 @@ void CEnemyChaingun::Shoot()
 {
 	// Setup bullet
 	SVector2D<float> adjustedBullet;
-	float bulletSpreadAngle = rand() % 90;
+	float bulletSpreadAngle = (float)(rand() % 90);
 	bulletSpreadAngle = bulletSpreadAngle - 45;
-	float firingAngle = bulletSpreadAngle * 3.14 / 180;
+	float firingAngle = bulletSpreadAngle * PI / 180.0f;
 	bulletSetup newBullet;
 	newBullet.spawnPos = GetPos3D();
 	newBullet.BulletTimeMax = 3.0f;

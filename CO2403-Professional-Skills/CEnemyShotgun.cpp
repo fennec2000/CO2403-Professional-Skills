@@ -79,7 +79,7 @@ bool CEnemyShotgun::EUpdate()
 void CEnemyShotgun::Shoot()
 {
 	// Setup bullet
-	float firingAngle = bulletSpreadAngle * 3.14 / 180;
+	float firingAngle = bulletSpreadAngle * PI / 180.0f;
 	SVector2D<float> vec2;
 	SVector2D<float> vec3;
 	bulletSetup newBullet;

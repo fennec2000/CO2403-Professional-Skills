@@ -14,7 +14,7 @@ CGUI::CGUI(int givenHeight, int givenWidth)
 		hpPos.x += HEALTH_SPACING * i;
 		pHeartSprites[i] = new CUISprite("Heart.png", hpPos);
 	}
-	pWeaponIcon = new CUISprite(WEAPON_ICONS_NAMES[0], SVector2D<float>(WEAPON_ICON_OFFSET[0], height - WEAPON_ICON_OFFSET[1]));
+	pWeaponIcon = new CUISprite(WEAPON_ICONS_NAMES[0], SVector2D<float>((float)WEAPON_ICON_OFFSET[0], (float)(height - WEAPON_ICON_OFFSET[1])));
 }
 
 
@@ -51,13 +51,13 @@ void CGUI::SetWeaponHidden(bool hide)
 	if (hide)
 		pWeaponIcon->SetY(OFFSCREEN);
 	else
-		pWeaponIcon->SetY(height - WEAPON_ICON_OFFSET[1]);
+		pWeaponIcon->SetY(static_cast<float>(height - WEAPON_ICON_OFFSET[1]));
 }
 
 void CGUI::SetWeaponIcon(EWeapons newWeapon)
 {
 	delete pWeaponIcon;
-	pWeaponIcon = new CUISprite(WEAPON_ICONS_NAMES[newWeapon], SVector2D<float>(WEAPON_ICON_OFFSET[0], height - WEAPON_ICON_OFFSET[1]));
+	pWeaponIcon = new CUISprite(WEAPON_ICONS_NAMES[newWeapon], SVector2D<float>((float)WEAPON_ICON_OFFSET[0], (float)(height - WEAPON_ICON_OFFSET[1])));
 }
 
 void CGUI::Update()

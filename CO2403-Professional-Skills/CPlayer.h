@@ -6,7 +6,7 @@ struct bulletSetup;
 enum EPlayerSounds { PlayerMoveSound, PlayerFireSound, PlayerRoll, NumOfPlayerSounds };
 enum EGunSounds { PistolSound, ShotgunSound, NumOfGunSounds };
 
-class CPlayer : protected CCharacter
+class CPlayer : public CCharacter
 {
 private:
 	// data

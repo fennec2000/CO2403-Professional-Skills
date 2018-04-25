@@ -142,10 +142,6 @@ void CCore::UpdateCore()
 		for (int i = 0; i < pActiveBullets.size(); ++i)
 		{
 			pActiveBullets[i]->Update();
-			if (pActiveBullets[i] == NULL)
-			{
-				i++;
-			}
 			if (pActiveBullets[i]->returnTeam() == EnemyTeam)
 			{
 				SVector2D<float> bulletPos = pActiveBullets[i]->GetPos2D();
@@ -155,7 +151,10 @@ void CCore::UpdateCore()
 				{
 					pActiveBullets[i]->Remove();
 				}
-
+				else
+				{
+					pActiveBullets[i]->Update();
+				}
 			}
 			else if (pActiveBullets[i]->returnTeam() == PlayerTeam)
 			{
@@ -171,10 +170,7 @@ void CCore::UpdateCore()
 						pActiveBullets[i]->Remove();
 					}
 				}
-
-				
 			}
-			
 		}
 
 		// Draw GUI Text
